@@ -9,9 +9,27 @@ format:
 
 placeholder text for Column 1
 
-```{r}
+```{r, loadpackages}
+#load packages that are needed for all dashboards
+library(tidyverse)
+library(plotly)             
+library(reactable)
+library(bslib)
+library(dplyr)
+library(leaflet)
+library(bsicons)
+library(shiny)
+library(ggplot2)
+library(readr)
+set.seed(4242)
+```
+
+
+```{r, loaddatastats}
 #Plotting daily increase or decrease in water depth
 # Need to reverse because right now "decrease" is actually good recharge but plotted as bad water drawdown
+gwallhr <- read.csv("data/hourly_well_data.csv")
+gwallhr$Date.and.Time <- as.POSIXct(gwallhr$Date.and.Time, format = "%Y-%m-%d %H:%M:%S")
 
 df<-gwallhr
 colnames(df)<-c("FID","DateTime","WaterDepth","Date","Site")
@@ -46,7 +64,9 @@ daily_stats <- daily_stats %>%
   ) %>%
   ungroup()
 daily_stats$DailyChangerev<-daily_stats$DailyChange*-1
+```
 
+```{r,plotone}
 #Cactus pasture only
 CPDS<-daily_stats[daily_stats$Site=="Cactus pasture",]
 CPDS$Base_Depth<-CPDS$DailyAvgDepth[1]
@@ -65,16 +85,16 @@ ggplotly(s)
 
 ## Column{width="65%"}
 
-### Row {height="10%"}
+### Row {height="40%"}
 
 placeholder text for Column 2, Row 1
 
 
 
-### Row {height="70%"}
+### Row {height="40%"}
 
 placeholder text for Column 2, Row 2
-```{r}
+```{r, plottwo}
 
 #B&C well only
 BCDS<-daily_stats[daily_stats$Site=="B&C Ranch Well",]
@@ -91,11 +111,11 @@ ggplotly(b)
 
 ```
 
-### Row {height= "20%"}
+### Row {height= "40%"}
 
 placeholder text for Column 2, Row 3
 
-```{r}
+```{r, plotthree}
 #Cooper only
 CDS<-daily_stats[daily_stats$Site=="Cooper",]
 CDS$Base_Depth<-CDS$DailyAvgDepth[1]
