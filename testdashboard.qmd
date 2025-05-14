@@ -1,0 +1,442 @@
+---
+title: "CalGRO-Recharge"
+format: 
+  dashboard: 
+    orientation: columns
+---
+
+# Map
+
+## value boxes
+
+```{r}
+#load packages that are needed for all dashboards
+if(!require(pacman)) install.packages("pacman")
+pacman::p_load(tidyverse,
+               plotly,
+               reactable,
+               bslib,
+               bsicons,
+               shiny,
+               ggplot2,
+               dplyr,
+               leaflet,
+               readr)
+set.seed(4242)
+
+# create visual for first value box
+random_sparkline_plot <- function() {
+  timeseries <- cumsum(runif(100, -2, 2))
+  x_axis <- seq_along(timeseries)
+  x_lim <- c(1, length(timeseries))
+  y_lim <- range(timeseries) + c(-2, 0)
+
+  par(mar = c(0, 0, 0, 0))
+
+  # Set up the plot area
+  plot(
+    timeseries, type = "n",
+    axes = FALSE, frame.plot = FALSE,
+    ylim = y_lim, xlim = x_lim,
+    ylab = "",    xlab = "",
+    yaxs = "i",   xaxs = "i",
+  )
+
+  # Add the sparkline line
+  lines(timeseries, type = "l", pch = NA, col = "#0B538E", lwd = 3)
+
+  # Create polygon coordinates for shading
+  polygon_x <- c(1, x_axis, length(timeseries))
+  polygon_y <- c(min(y_lim), timeseries, min(y_lim))
+
+  # Add shading under the line
+  polygon(polygon_x, polygon_y, col = "#e6f2fd", border = NA)
+}
+
+sparkline_plot <- function() {
+  as_fill_item(
+    htmltools::plotTag(
+      random_sparkline_plot(),
+      width = 500,
+      height = 125,
+      suppressSize = "xy",
+      alt = paste(
+        "A sparkline plot with a randomly-generated timeseries.",
+        "The timeseries starts high and ends low, with lots of variation."
+      )
+    )
+  )
+}
+# All
+value_box(
+  title = "Number of sensors across all preserves",
+  value = "78",
+  showcase = sparkline_plot(),
+  showcase_layout = "bottom"
+)
+
+# Dangermond
+value_box(
+  title = "Number of sensors at Dangermond Preserve",
+  value = "40",
+  showcase = bsicons::bs_icon("database-check"),
+  theme = "bg-success"
+)
+
+
+# Las Piletas
+value_box(
+  title = "Number of sensors at Las Piletas Ranch",
+  value = "22",
+  showcase = bsicons::bs_icon("database-check"),
+  theme = "bg-success"
+)
+ 
+# Randall
+value_box(
+  title = "Numeber of sensors at the Randall preserve",
+  value = "6",
+  showcase = bsicons::bs_icon("database-check"),
+  theme = "primary"
+)
+
+# Santa Clara River
+value_box(
+  title = "Number of sensors at the Santa Clara River",
+  value = "4",
+  showcase = bsicons::bs_icon("database-check"),
+  theme = "primary"
+)
+
+# Other
+value_box(
+  title = "Number of sensors at other sites",
+  value = "6",
+  showcase = bsicons::bs_icon("database-check"),
+  theme = "primary"
+)
+
+
+```
+
+## load data and create a map that reads current wells depth and a map that shows monitoed and unmonitored wells
+
+```{r}
+ #load data
+gwalldaily <- read.csv("data/dailywelldata.csv")
+gwalldaily$Date <- as.Date(gwalldaily$Date, format = "%Y-%m-%d")
+
+# Create a formatted label (HTML style for line breaks)
+gwalldaily$label <- paste0(
+  "<b>Site:</b> ", gwalldaily$Well_Name, "<br/>",
+  "<b>Date:</b> ", gwalldaily$Date, "<br/>",
+  "<b>Water Level:</b> ", gwalldaily$ft..below.ground.
+)
+
+
+
+
+leaflet() %>%
+  addTiles() %>%
+  setView(lng = -118.63, lat = 35.29, zoom = 7) %>% 
+  addCircleMarkers(
+        data = gwalldaily,
+        lat = ~ y,
+        lng = ~ x,
+        # arbitrary scaling
+        fillColor = "gray",
+        fillOpacity = 1,
+        weight = 0.25,
+        color = "black",
+        label = lapply(gwalldaily$label, HTML),  # parse HTML for line breaks
+    labelOptions = labelOptions(
+      direction = "auto",
+      textsize = "13px")
+    )
+
+```
+
+
+```{r}
+ #load data
+allwells <- read_csv("data/CalGRO_well_locations_extended.csv")
+
+# Create a formatted label (HTML style for line breaks)
+allwells$label <- paste0(
+  "<b>Property:</b> ", allwells$TNC_Property, "<br/>",
+  "<b>County:</b> ", allwells$County, "<br/>",
+  "<b>Pressure Transducer:</b> ", allwells$PT_Y_or_N, "<br/>"
+)
+
+pal <- colorFactor(
+  palette = c("red", "green"),
+  domain = allwells$PT_Y_or_N
+)
+
+# Leaflet map with colored markers based on category
+leaflet(allwells) %>%
+  addTiles() %>%
+  addCircleMarkers(
+     data = allwells,
+        lat = ~ Latitude,
+        lng = ~ Longitude,
+    color = ~pal(PT_Y_or_N),  # color by category
+    radius = 4,
+    stroke = FALSE,
+    fillOpacity = 0.8,
+        weight = 0.25,
+        label = lapply(allwells$label, HTML),  # parse HTML for line breaks
+    labelOptions = labelOptions(
+      direction = "auto",
+      textsize = "13px")
+  ) %>%
+  addLegend(
+    position = "bottomright",
+    pal = pal,
+    values = ~PT_Y_or_N,
+    title = "Category"
+  )
+```
+
+# Water depth
+
+```{r}
+gwallhr <- read.csv("data/hourly_well_data.csv")
+gwallhr$Date.and.Time <- as.POSIXct(gwallhr$Date.and.Time, format = "%Y-%m-%d %H:%M:%S")
+
+p<-ggplot(gwallhr)+geom_line(aes(x=Date.and.Time,y=ft..below.ground.))+theme_light()+facet_wrap(vars(Well_Name),nrow = 6,scales = "free",)+scale_y_reverse()
+ggplotly(p)
+```
+
+# Recharge
+
+## Row {height=50%}
+
+```{r}
+#Plotting daily increase or decrease in water depth
+# Need to reverse because right now "decrease" is actually good recharge but plotted as bad water drawdown
+
+df<-gwallhr
+colnames(df)<-c("FID","DateTime","WaterDepth","Date","Site")
+# Ensure datetime column is in proper POSIXct format
+df$DateTime <- as.POSIXct(df$DateTime)
+
+# Add a Date column
+df <- df %>%
+  mutate(Date = as.Date(DateTime))
+
+# Group by Site and Date, compute daily mean and SD
+daily_stats <- df %>%
+  group_by(Site, Date) %>%
+  summarize(
+    DailyAvgDepth = mean(WaterDepth, na.rm = TRUE),
+    DailySD = sd(WaterDepth, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  arrange(Site, Date)
+
+# Remove the first two days per site
+daily_stats <- daily_stats %>%
+  group_by(Site) %>%
+  slice(-(1:2)) %>%
+  ungroup()
+
+# Calculate the change in daily average water depth (per site)
+daily_stats <- daily_stats %>%
+  group_by(Site) %>%
+  mutate(
+    DailyChange = DailyAvgDepth - lag(DailyAvgDepth)
+  ) %>%
+  ungroup()
+daily_stats$DailyChangerev<-daily_stats$DailyChange*-1
+
+
+#Cactus pasture only
+CPDS<-daily_stats[daily_stats$Site=="Cactus pasture",]
+CPDS$Base_Depth<-CPDS$DailyAvgDepth[1]
+CPDS$Depth_Diff<-CPDS$DailyAvgDepth-CPDS$Base_Depth
+CPDS$Depth_Diff_rev<-CPDS$Depth_Diff*-1
+
+s<-ggplot(CPDS, aes(x = Date, y = DailyChangerev)) +
+  geom_bar(stat = "identity", fill = ifelse(CPDS$DailyChangerev> 0, "blue", "red"), width = 0.7) +
+  geom_line(aes(y=Depth_Diff_rev))+
+  scale_y_continuous(breaks = seq(-10, 10, 2)) +
+  theme_bw()
+ggplotly(s)
+
+
+#B&C well only
+BCDS<-daily_stats[daily_stats$Site=="B&C Ranch Well",]
+BCDS$Base_Depth<-BCDS$DailyAvgDepth[1]
+BCDS$Depth_Diff<-BCDS$DailyAvgDepth-BCDS$Base_Depth
+BCDS$Depth_Diff_rev<-BCDS$Depth_Diff*-1
+
+b<-ggplot(BCDS, aes(x = Date, y = DailyChangerev)) +
+  geom_bar(stat = "identity", fill = ifelse(BCDS$DailyChangerev> 0, "blue", "red"), width = 0.7) +
+  geom_line(aes(y=Depth_Diff_rev))+
+  scale_y_continuous(breaks = seq(-10, 10, 2)) +
+  theme_bw()
+ggplotly(b)
+
+#Cooper only
+CDS<-daily_stats[daily_stats$Site=="Cooper",]
+CDS$Base_Depth<-CDS$DailyAvgDepth[1]
+CDS$Depth_Diff<-CDS$DailyAvgDepth-CDS$Base_Depth
+CDS$Depth_Diff_rev<-CDS$Depth_Diff*-1
+
+c<-ggplot(CDS, aes(x = Date, y = DailyChangerev)) +
+  geom_bar(stat = "identity", fill = ifelse(CDS$DailyChangerev> 0, "blue", "red"), width = 0.7) +
+  geom_line(aes(y=Depth_Diff_rev))+
+  scale_y_continuous(breaks = seq(-10, 10, 2)) +
+  theme_bw()
+ggplotly(c)
+
+# Create the bar chart with error bars
+#for (i in unique(daily_stats$Site)){
+#  p<-daily_stats[daily_stats$Site==i,]
+#t<-ggplot(p, aes(x = Date, y = DailyChange)) +
+#  geom_bar(stat = "identity", fill = ifelse(p$DailyChange> 0, "blue", "red"), width = 0.7) +  # Use geom_bar for bars
+#  scale_y_continuous(breaks = seq(-10, 10, 2)) + # Set y-axis ticks
+#  labs(title = p$Site,
+#       x = "Date",
+#       y = "Value") +
+#  theme_bw()
+#print(t)
+#}
+```
+
+
+```{r}
+#Lower Tweedy
+LDS<-daily_stats[daily_stats$Site=="Lower Tweedy",]
+LDS$Base_Depth<-LDS$DailyAvgDepth[1]
+LDS$Depth_Diff<-LDS$DailyAvgDepth-LDS$Base_Depth
+LDS$Depth_Diff_rev<-LDS$Depth_Diff*-1
+
+l<-ggplot(LDS, aes(x = Date, y = DailyChangerev)) +
+  geom_bar(stat = "identity", fill = ifelse(LDS$DailyChangerev> 0, "blue", "red"), width = 0.7) +
+  geom_line(aes(y=Depth_Diff_rev))+
+  scale_y_continuous(breaks = seq(-10, 10, 2)) +
+  theme_bw()
+ggplotly(l)
+
+#NE Corner Only
+NEDS<-daily_stats[daily_stats$Site=="NE Corner",]
+NEDS$Base_Depth<-NEDS$DailyAvgDepth[1]
+NEDS$Depth_Diff<-NEDS$DailyAvgDepth-NEDS$Base_Depth
+NEDS$Depth_Diff_rev<-NEDS$Depth_Diff*-1
+
+n<-ggplot(NEDS, aes(x = Date, y = DailyChangerev)) +
+  geom_bar(stat = "identity", fill = ifelse(NEDS$DailyChangerev> 0, "blue", "red"), width = 0.7) +
+  geom_line(aes(y=Depth_Diff_rev))+
+  scale_y_continuous(breaks = seq(-10, 10, 2)) +
+  theme_bw()
+ggplotly(n)
+
+#Pixley Only
+PDS<-daily_stats[daily_stats$Site=="Pixley Tulare",]
+PDS$Base_Depth<-PDS$DailyAvgDepth[1]
+PDS$Depth_Diff<-PDS$DailyAvgDepth-PDS$Base_Depth
+PDS$Depth_Diff_rev<-PDS$Depth_Diff*-1
+
+p<-ggplot(PDS, aes(x = Date, y = DailyChangerev)) +
+  geom_bar(stat = "identity", fill = ifelse(PDS$DailyChangerev> 0, "blue", "red"), width = 0.7) +
+  geom_line(aes(y=Depth_Diff_rev))+
+  scale_y_continuous(breaks = seq(-10, 10, 2)) +
+  theme_bw()
+ggplotly(p)
+```
+
+
+# Las Piletas
+
+```{r}
+#Cooper well is used to fill head quarters tank, a 10,000 gallon tank that is 87 inches tall
+#=114.9 gallons per inch
+
+
+#1. load pump data
+HQtank<-read.csv("data/Raw/HQ Tanks Water Tank 20250310-20250509.csv")
+HQtank$Date.and.Time<-as.POSIXct(HQtank$Date.and.Time)
+
+start<-"2025/04/28 05:00:00"
+end<-"2025/05/09 05:40:00"
+
+HQtank_osc<-HQtank[HQtank$Date.and.Time>start &HQtank$Date.and.Time<end,]
+
+HQtank_osc<-HQtank_osc %>%
+  mutate(Date = as.Date(Date.and.Time))
+
+colnames(HQtank_osc)<-c("DateTime","Level_in","Volume_gal","Date")
+
+q<-ggplot(data=HQtank_osc,aes(x=DateTime,y=Volume_gal))+geom_line()
+ggplotly(q)
+
+#calculate daily max and daily min
+HQtank_stats <- HQtank_osc %>%
+  group_by(Date) %>%
+  summarize(
+    DailyMax = max(Volume_gal, na.rm = TRUE),
+    DailyMin = min(Volume_gal, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  arrange(Date)
+
+#
+HQtank_stats <- HQtank_stats %>%
+  mutate(
+    Dailydraw = lag(DailyMax)-DailyMin
+  ) %>%
+  ungroup()
+
+
+# Remove the first two days per site
+HQtank_stats <- HQtank_stats %>%
+  slice(-(1)) 
+
+mean_Draw <- mean(HQtank_stats$Dailydraw)
+sd_Draw <- sd(HQtank_stats$Dailydraw)
+max_Draw <- max(HQtank_stats$Dailydraw)
+min_Draw <- min(HQtank_stats$Dailydraw)
+
+mean_Draw
+sd_Draw
+max_Draw
+min_Draw
+
+
+
+
+
+#5. calculate draw down of pump at 3653.364 gallon per day resulted in X draw down
+
+#6. 
+coop<-read.csv("data/Raw/Las Piletas Cooper Well 20250427-20250509.csv")
+coop$Date.and.Time<-as.POSIXct(coop$Date.and.Time)
+colnames(coop)<-c("DateTime","Depth_to_Water_ft")
+pump<-read.csv("data/Raw/Cooper_Pump_Control.csv")
+pump <- pump %>%
+  mutate(OnOff = ifelse(Action == "Turned on by automation due to the destination tank's levels", "on",
+                        ifelse(Action == "Turned off by automation due to the destination tank's levels", "off", NA)))
+pump$DateTime<-as.POSIXct(pump$DateTime)
+Cooper<-merge(coop,pump,by="DateTime",all.x=TRUE,all.y=TRUE)
+#Cooper<-merge(Cooper,HQtank_osc,by="DateTime",all.x=TRUE,all.y=TRUE)
+
+
+
+##Need to debug, vline is as.numeric and that is messing up the date.
+q<-ggplot(data=Cooper,aes(x=DateTime))+geom_line(aes(y=Depth_to_Water_ft))+geom_vline(
+    data = Cooper %>% filter(OnOff == "on"),
+    aes(xintercept = as.numeric(DateTime)),
+    color = "red", linetype = "dashed", alpha = 0.5
+  )+scale_y_reverse()+theme_bw()
+ggplotly(q)
+
+#End goal when X gallons per day are pumped groundwater receeds by X inches per day. With no pumping and just environmental influencers in play the groundwater receeds by x inches per day
+
+#Pumping intensity could affect the recovery time for back to a normal well depth Ex. Jan 6 pump event resulted in 6 days to recover to normal with a drawdown of 95 feet during pumping, while April 2 only took 1 day with a drawdown of 38 feet during pumping
+
+```
+
+
+## Rainfall
