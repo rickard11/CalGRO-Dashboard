@@ -22,11 +22,6 @@ jobs:
         with:
           r-version: '4.2.0'
 
-      - name: Install R Dependencies
-        uses: r-lib/actions/setup-renv@v2
-        with:
-          cache-version: 1
-          
       - name: Install system dependencies for terra
         run: |
           sudo apt-get update
@@ -35,15 +30,11 @@ jobs:
             libgeos-dev \
             libproj-dev \
             libudunits2-dev
-            
-      - name: Install R packages
-        uses: r-lib/actions/setup-r-dependencies@v2
+
+      - name: Restore renv environment
+        uses: r-lib/actions/setup-renv@v2
         with:
-          packages: |
-            any::terra
-            any::quarto
-            any::rmarkdown
-            any::tidyverse
+          cache-version: 1
 
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
@@ -51,4 +42,3 @@ jobs:
           target: gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
