@@ -10,9 +10,11 @@ website:
       - href: about.qmd
         text: About
       - href: testdashboard.qmd
-        text: Dashboard
+        text: Recharge
       - href: SecondDashboard.qmd
-        text: Dashboard two
+        text: Water depth
+      - href: ThirdDashboard.qmd
+        text: Las Piletas
 
 
 format:

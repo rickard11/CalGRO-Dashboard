@@ -1,0 +1,107 @@
+---
+title: "Las Piletas"
+format: 
+  dashboard: 
+    orientation: columns
+---
+
+
+```{r, loadpackages}
+#load packages that are needed for all dashboards
+library(tidyverse)
+library(plotly)             
+#library(reactable)
+#library(bslib)
+library(dplyr)
+#library(leaflet)
+#library(bsicons)
+#library(shiny)
+library(ggplot2)
+library(readr)
+set.seed(4242)
+```
+# Las Piletas
+
+```{r,calculateLasPiletasValues}
+#Cooper well is used to fill head quarters tank, a 10,000 gallon tank that is 87 inches tall
+#=114.9 gallons per inch
+
+
+#1. load pump data
+HQtank<-read.csv("data/HQ Tanks Water Tank 20250310-20250509.csv")
+HQtank$Date.and.Time<-as.POSIXct(HQtank$Date.and.Time)
+
+start<-"2025/04/28 05:00:00"
+end<-"2025/05/09 05:40:00"
+
+HQtank_osc<-HQtank[HQtank$Date.and.Time>start &HQtank$Date.and.Time<end,]
+
+HQtank_osc<-HQtank_osc %>%
+  mutate(Date = as.Date(Date.and.Time))
+
+colnames(HQtank_osc)<-c("DateTime","Level_in","Volume_gal","Date")
+```
+
+```{r,TankPlotandStats}
+q<-ggplot(data=HQtank_osc,aes(x=DateTime,y=Volume_gal))+geom_line()
+ggplotly(q)
+
+#calculate daily max and daily min
+HQtank_stats <- HQtank_osc %>%
+  group_by(Date) %>%
+  summarize(
+    DailyMax = max(Volume_gal, na.rm = TRUE),
+    DailyMin = min(Volume_gal, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  arrange(Date)
+
+#
+HQtank_stats <- HQtank_stats %>%
+  mutate(
+    Dailydraw = lag(DailyMax)-DailyMin
+  ) %>%
+  ungroup()
+
+
+# Remove the first two days per site
+HQtank_stats <- HQtank_stats %>%
+  slice(-(1)) 
+
+mean_Draw <- mean(HQtank_stats$Dailydraw)
+sd_Draw <- sd(HQtank_stats$Dailydraw)
+max_Draw <- max(HQtank_stats$Dailydraw)
+min_Draw <- min(HQtank_stats$Dailydraw)
+
+#5. calculate draw down of pump at 3653.364 gallon per day resulted in X draw down
+
+#6. 
+coop<-read.csv("data/Las Piletas Cooper Well 20250427-20250509.csv")
+coop$Date.and.Time<-as.POSIXct(coop$Date.and.Time)
+colnames(coop)<-c("DateTime","Depth_to_Water_ft")
+pump<-read.csv("data/Cooper_Pump_Control.csv")
+pump <- pump %>%
+  mutate(OnOff = ifelse(Action == "Turned on by automation due to the destination tank's levels", "on",
+                        ifelse(Action == "Turned off by automation due to the destination tank's levels", "off", NA)))
+pump$DateTime<-as.POSIXct(pump$DateTime)
+Cooper<-merge(coop,pump,by="DateTime",all.x=TRUE,all.y=TRUE)
+#Cooper<-merge(Cooper,HQtank_osc,by="DateTime",all.x=TRUE,all.y=TRUE)
+```
+
+
+
+```{r,WellPlot}
+
+##Need to debug, vline is as.numeric and that is messing up the date.
+q<-ggplot(data=Cooper,aes(x=DateTime))+geom_line(aes(y=Depth_to_Water_ft))+geom_vline(
+    data = Cooper %>% filter(OnOff == "on"),
+    aes(xintercept = as.numeric(DateTime)),
+    color = "red", linetype = "dashed", alpha = 0.5
+  )+scale_y_reverse()+theme_bw()
+ggplotly(q)
+
+#End goal when X gallons per day are pumped groundwater receeds by X inches per day. With no pumping and just environmental influencers in play the groundwater receeds by x inches per day
+
+#Pumping intensity could affect the recovery time for back to a normal well depth Ex. Jan 6 pump event resulted in 6 days to recover to normal with a drawdown of 95 feet during pumping, while April 2 only took 1 day with a drawdown of 38 feet during pumping
+
+```
