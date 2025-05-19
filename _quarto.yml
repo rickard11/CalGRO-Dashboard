@@ -15,6 +15,9 @@ website:
         text: Water depth
       - href: ThirdDashboard.qmd
         text: Las Piletas
+      - href: FourthDashboard.qmd
+        text: Maps
+
 
 
 format:

@@ -1,0 +1,101 @@
+---
+title: "FourthDashboard"
+format: 
+  dashboard: 
+    orientation: columns
+---
+
+
+## Column{width="50%"}
+
+
+```{r, loadpackages}
+#load packages that are needed for all dashboards
+library(tidyverse)
+library(plotly)             
+#library(reactable)
+#library(bslib)
+library(dplyr)
+library(leaflet)
+library(bsicons)
+library(shiny)
+library(ggplot2)
+library(readr)
+set.seed(4242)
+```
+
+
+```{r, loaddatafirstplot}
+ #load data
+gwalldaily <- read.csv("data/dailywelldata.csv")
+gwalldaily$Date <- as.Date(gwalldaily$Date, format = "%Y-%m-%d")
+
+# Create a formatted label (HTML style for line breaks)
+gwalldaily$label <- paste0(
+  "<b>Site:</b> ", gwalldaily$Well_Name, "<br/>",
+  "<b>Date:</b> ", gwalldaily$Date, "<br/>",
+  "<b>Water Level:</b> ", gwalldaily$ft..below.ground.
+)
+
+
+leaflet() %>%
+  addTiles() %>%
+  setView(lng = -118.63, lat = 35.29, zoom = 7) %>% 
+  addCircleMarkers(
+        data = gwalldaily,
+        lat = ~ y,
+        lng = ~ x,
+        # arbitrary scaling
+        fillColor = "gray",
+        fillOpacity = 1,
+        weight = 0.25,
+        color = "black",
+        label = lapply(gwalldaily$label, HTML),  # parse HTML for line breaks
+    labelOptions = labelOptions(
+      direction = "auto",
+      textsize = "13px")
+    )
+
+```
+
+
+```{r,loaddatasecondplot}
+ #load data
+allwells <- read_csv("data/CalGRO_well_locations_extended.csv")
+
+# Create a formatted label (HTML style for line breaks)
+allwells$label <- paste0(
+  "<b>Property:</b> ", allwells$TNC_Property, "<br/>",
+  "<b>County:</b> ", allwells$County, "<br/>",
+  "<b>Pressure Transducer:</b> ", allwells$PT_Y_or_N, "<br/>"
+)
+
+pal <- colorFactor(
+  palette = c("red", "green"),
+  domain = allwells$PT_Y_or_N
+)
+
+# Leaflet map with colored markers based on category
+leaflet(allwells) %>%
+  addTiles() %>%
+  addCircleMarkers(
+     data = allwells,
+        lat = ~ Latitude,
+        lng = ~ Longitude,
+    color = ~pal(PT_Y_or_N),  # color by category
+    radius = 4,
+    stroke = FALSE,
+    fillOpacity = 0.8,
+        weight = 0.25,
+        label = lapply(allwells$label, HTML),  # parse HTML for line breaks
+    labelOptions = labelOptions(
+      direction = "auto",
+      textsize = "13px")
+  ) %>%
+  addLegend(
+    position = "bottomright",
+    pal = pal,
+    values = ~PT_Y_or_N,
+    title = "Category"
+  )
+```
