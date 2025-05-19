@@ -8,6 +8,7 @@ format:
 ## Column{width="35%"}
 
 placeholder text for Column 1
+testing after redownloading rstudio to the newest version
 
 ```{r, loadpackages}
 #load packages that are needed for all dashboards
