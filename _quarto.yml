@@ -11,6 +11,9 @@ website:
         text: About
       - href: testdashboard.qmd
         text: Dashboard
+      - href: SecondDashboard.qmd
+        text: Dashboard two
+
 
 format:
   html:

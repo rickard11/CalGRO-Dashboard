@@ -1,0 +1,107 @@
+---
+title: "second dashboard"
+format: 
+  dashboard: 
+    orientation: columns
+---
+
+
+## Column{width="35%"}
+
+placeholder text for Column 1
+testing after redownloading rstudio to the newest version
+
+```{r, loadpackages}
+#load packages that are needed for all dashboards
+library(tidyverse)
+library(plotly)             
+#library(reactable)
+#library(bslib)
+library(dplyr)
+#library(leaflet)
+#library(bsicons)
+#library(shiny)
+library(ggplot2)
+library(readr)
+set.seed(4242)
+```
+
+
+```{r, loaddatastats}
+#Plotting daily increase or decrease in water depth
+# Need to reverse because right now "decrease" is actually good recharge but plotted as bad water drawdown
+gwallhr <- read.csv("data/hourly_well_data.csv")
+gwallhr$Date.and.Time <- as.POSIXct(gwallhr$Date.and.Time, format = "%Y-%m-%d %H:%M:%S")
+
+df<-gwallhr
+colnames(df)<-c("FID","DateTime","WaterDepth","Date","Site")
+# Ensure datetime column is in proper POSIXct format
+df$DateTime <- as.POSIXct(df$DateTime)
+
+# Add a Date column
+df <- df %>%
+  mutate(Date = as.Date(DateTime))
+
+# Group by Site and Date, compute daily mean and SD
+daily_stats <- df %>%
+  group_by(Site, Date) %>%
+  summarize(
+    DailyAvgDepth = mean(WaterDepth, na.rm = TRUE),
+    DailySD = sd(WaterDepth, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  arrange(Site, Date)
+
+# Remove the first two days per site
+daily_stats <- daily_stats %>%
+  group_by(Site) %>%
+  slice(-(1:2)) %>%
+  ungroup()
+
+# Calculate the change in daily average water depth (per site)
+daily_stats <- daily_stats %>%
+  group_by(Site) %>%
+  mutate(
+    DailyChange = DailyAvgDepth - lag(DailyAvgDepth)
+  ) %>%
+  ungroup()
+daily_stats$DailyChangerev<-daily_stats$DailyChange*-1
+```
+
+```{r,plotone}
+#Cactus pasture only
+CPDS<-daily_stats[daily_stats$Site=="Cactus pasture",]
+CPDS$Base_Depth<-CPDS$DailyAvgDepth[1]
+CPDS$Depth_Diff<-CPDS$DailyAvgDepth-CPDS$Base_Depth
+CPDS$Depth_Diff_rev<-CPDS$Depth_Diff*-1
+
+s<-ggplot(CPDS, aes(x = Date, y = DailyChangerev)) +
+  geom_bar(stat = "identity", fill = ifelse(CPDS$DailyChangerev> 0, "blue", "red"), width = 0.7) +
+  geom_line(aes(y=Depth_Diff_rev))+
+  scale_y_continuous(breaks = seq(-10, 10, 2)) +
+  theme_bw()
+ggplotly(s)
+
+```
+
+
+## Column{width="65%"}
+
+placeholder text for Column 2, Row 2
+```{r, plottwo}
+
+#B&C well only
+BCDS<-daily_stats[daily_stats$Site=="B&C Ranch Well",]
+BCDS$Base_Depth<-BCDS$DailyAvgDepth[1]
+BCDS$Depth_Diff<-BCDS$DailyAvgDepth-BCDS$Base_Depth
+BCDS$Depth_Diff_rev<-BCDS$Depth_Diff*-1
+
+b<-ggplot(BCDS, aes(x = Date, y = DailyChangerev)) +
+  geom_bar(stat = "identity", fill = ifelse(BCDS$DailyChangerev> 0, "blue", "red"), width = 0.7) +
+  geom_line(aes(y=Depth_Diff_rev))+
+  scale_y_continuous(breaks = seq(-10, 10, 2)) +
+  theme_bw()
+ggplotly(b)
+
+```
+
