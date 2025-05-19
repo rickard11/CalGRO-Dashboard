@@ -13,7 +13,7 @@ testing after redownloading rstudio to the newest version
 ```{r, loadpackages}
 #load packages that are needed for all dashboards
 library(tidyverse)
-#library(plotly)             
+library(plotly)             
 #library(reactable)
 #library(bslib)
 library(dplyr)
