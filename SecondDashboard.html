@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>second dashboard – CalGRO-Dashboard</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-dde8d7229bfee0f8bb5efd37f0f9ae1e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-dde8d7229bfee0f8bb5efd37f0f9ae1e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dde8d7229bfee0f8bb5efd37f0f9ae1e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-dashboard/quarto-dashboard.js"></script>
+<script src="site_libs/quarto-dashboard/stickythead.js"></script>
+
+
+
+<script src="site_libs/quarto-dashboard/web-components.js" type="module"></script>
+<script src="site_libs/quarto-dashboard/components.js"></script>
+
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.4/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+<script src="site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+</head>
+
+<body class="quarto-dashboard nav-sidebar dashboard-fill fullcontent quarto-light">
+
+<header id="quarto-dashboard-header">
+<nav class="navbar navbar-expand-md slim" data-bs-theme="dark">
+  <div class="navbar-container container-fluid">
+    <button class="navbar-toggler hidden" type="button" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-controls="dashboard-collapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>    
+
+
+    <div class="navbar-brand-container">       
+
+      <div class="navbar-title">
+        <div class="navbar-title-text"><a href="#">second dashboard</a></div>
+        
+        
+      </div>
+    </div>
+</div>
+</nav>
+</header>
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-layout-custom quarto-dashboard-content bslib-gap-spacing html-fill-container bslib-page-fill">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+<!-- main -->
+
+<div class="bslib-grid-item html-fill-item bslib-grid" data-layout="fill" style="display: grid; grid-template-columns: minmax(3em, 35fr) minmax(3em, 65fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content) minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="card bslib-card html-fill-container" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<p>placeholder text for Column 1 testing after redownloading rstudio to the newest version</p>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+<div class="card cell bslib-card html-fill-container" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container">
+<div class="plotly html-widget html-fill-item html-fill-container" id="htmlwidget-7103da30e93c3a2b6956" style="width:100%;height:406px;"></div>
+<script type="application/json" data-for="htmlwidget-7103da30e93c3a2b6956">{"x":{"data":[{"orientation":"v","width":[0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[20162,20163,20164,20165,20166,20167,20168,20169,20170,20171,20172,20173,20174,20175,20176,20177,20178,20179,20180,20181,20182,20183,20184,20185,20186,20188,20190,20192,20193,20194,20196,20199,20203,20204,20205,20206,20207,20208],"y":[0.72625000000000206,0.64232142857142804,0.52392857142857174,0.61749999999999972,0.66375000000000028,0.58000000000000007,0.5,0.36875000000000036,0.33499999999999908,0.14124999999999943,0.35749999999999993,0.22375000000000078,0.12374999999999936,0.16375000000000028,0.16624999999999979,0.12875000000000014,0.10374999999999979,0.077500000000000568,0.080000000000000071,0.2162500000000005,0.094999999999998863,0.057500000000000995,0.044999999999999929,0.044999999999999929,0.0075000000000002842,0.11875000000000036,0.098749999999999005,0.053749999999999076,0.0062499999999996447,0.026250000000000995,0.24874999999999936,0.015000000000000568,0.044107142857141568,0.024642857142858077,0.052500000000000213,0.059999999999998721,0.060000000000000497,0.0099999999999997868],"text":["Date: 2025-03-15<br />DailyChangerev: 0.72625000","Date: 2025-03-16<br />DailyChangerev: 0.64232143","Date: 2025-03-17<br />DailyChangerev: 0.52392857","Date: 2025-03-18<br />DailyChangerev: 0.61750000","Date: 2025-03-19<br />DailyChangerev: 0.66375000","Date: 2025-03-20<br />DailyChangerev: 0.58000000","Date: 2025-03-21<br />DailyChangerev: 0.50000000","Date: 2025-03-22<br />DailyChangerev: 0.36875000","Date: 2025-03-23<br />DailyChangerev: 0.33500000","Date: 2025-03-24<br />DailyChangerev: 0.14125000","Date: 2025-03-25<br />DailyChangerev: 0.35750000","Date: 2025-03-26<br />DailyChangerev: 0.22375000","Date: 2025-03-27<br />DailyChangerev: 0.12375000","Date: 2025-03-28<br />DailyChangerev: 0.16375000","Date: 2025-03-29<br />DailyChangerev: 0.16625000","Date: 2025-03-30<br />DailyChangerev: 0.12875000","Date: 2025-03-31<br />DailyChangerev: 0.10375000","Date: 2025-04-01<br />DailyChangerev: 0.07750000","Date: 2025-04-02<br />DailyChangerev: 0.08000000","Date: 2025-04-03<br />DailyChangerev: 0.21625000","Date: 2025-04-04<br />DailyChangerev: 0.09500000","Date: 2025-04-05<br />DailyChangerev: 0.05750000","Date: 2025-04-06<br />DailyChangerev: 0.04500000","Date: 2025-04-07<br />DailyChangerev: 0.04500000","Date: 2025-04-08<br />DailyChangerev: 0.00750000","Date: 2025-04-10<br />DailyChangerev: 0.11875000","Date: 2025-04-12<br />DailyChangerev: 0.09875000","Date: 2025-04-14<br />DailyChangerev: 0.05375000","Date: 2025-04-15<br />DailyChangerev: 0.00625000","Date: 2025-04-16<br />DailyChangerev: 0.02625000","Date: 2025-04-18<br />DailyChangerev: 0.24875000","Date: 2025-04-21<br />DailyChangerev: 0.01500000","Date: 2025-04-25<br />DailyChangerev: 0.04410714","Date: 2025-04-26<br />DailyChangerev: 0.02464286","Date: 2025-04-27<br />DailyChangerev: 0.05250000","Date: 2025-04-28<br />DailyChangerev: 0.06000000","Date: 2025-04-29<br />DailyChangerev: 0.06000000","Date: 2025-04-30<br />DailyChangerev: 0.01000000"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(0,0,255,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962],"base":[-0.15000000000000036,-0.013749999999999929,-0.053749999999999076,-0.14499999999999957,0,0,-0.015000000000000568,-0.022500000000000853,-0.038749999999998508],"x":[20187,20189,20191,20195,20197,20198,20200,20201,20202],"y":[0.15000000000000036,0.013749999999999929,0.053749999999999076,0.14499999999999957,0,0,0.015000000000000568,0.022500000000000853,0.038749999999998508],"text":["Date: 2025-04-09<br />DailyChangerev: 0.15000000","Date: 2025-04-11<br />DailyChangerev: 0.01375000","Date: 2025-04-13<br />DailyChangerev: 0.05375000","Date: 2025-04-17<br />DailyChangerev: 0.14500000","Date: 2025-04-19<br />DailyChangerev: 0.00000000","Date: 2025-04-20<br />DailyChangerev: 0.00000000","Date: 2025-04-22<br />DailyChangerev: 0.01500000","Date: 2025-04-23<br />DailyChangerev: 0.02250000","Date: 2025-04-24<br />DailyChangerev: 0.03875000"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,0,0,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":null,"base":null,"x":[null],"y":[null],"text":"Date: 2025-03-14<br />DailyChangerev:         NA","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"transparent","line":{"width":1.8897637795275593,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[20161,20162,20163,20164,20165,20166,20167,20168,20169,20170,20171,20172,20173,20174,20175,20176,20177,20178,20179,20180,20181,20182,20183,20184,20185,20186,20187,20188,20189,20190,20191,20192,20193,20194,20195,20196,20197,20198,20199,20200,20201,20202,20203,20204,20205,20206,20207,20208],"y":[-0,0.72625000000000206,1.3685714285714301,1.8925000000000018,2.5100000000000016,3.1737500000000018,3.7537500000000019,4.2537500000000019,4.6225000000000023,4.9575000000000014,5.0987500000000008,5.4562500000000007,5.6800000000000015,5.8037500000000009,5.9675000000000011,6.1337500000000009,6.2625000000000011,6.3662500000000009,6.4437500000000014,6.5237500000000015,6.740000000000002,6.8350000000000009,6.8925000000000018,6.9375000000000018,6.9825000000000017,6.990000000000002,6.8400000000000016,6.958750000000002,6.9450000000000021,7.0437500000000011,6.990000000000002,7.0437500000000011,7.0500000000000007,7.0762500000000017,6.9312500000000021,7.1800000000000015,7.1800000000000015,7.1800000000000015,7.1950000000000021,7.1800000000000015,7.1575000000000006,7.1187500000000021,7.1628571428571437,7.1875000000000018,7.240000000000002,7.3000000000000007,7.3600000000000012,7.370000000000001],"text":["Date: 2025-03-14<br />Depth_Diff_rev: 0.000000","Date: 2025-03-15<br />Depth_Diff_rev: 0.726250","Date: 2025-03-16<br />Depth_Diff_rev: 1.368571","Date: 2025-03-17<br />Depth_Diff_rev: 1.892500","Date: 2025-03-18<br />Depth_Diff_rev: 2.510000","Date: 2025-03-19<br />Depth_Diff_rev: 3.173750","Date: 2025-03-20<br />Depth_Diff_rev: 3.753750","Date: 2025-03-21<br />Depth_Diff_rev: 4.253750","Date: 2025-03-22<br />Depth_Diff_rev: 4.622500","Date: 2025-03-23<br />Depth_Diff_rev: 4.957500","Date: 2025-03-24<br />Depth_Diff_rev: 5.098750","Date: 2025-03-25<br />Depth_Diff_rev: 5.456250","Date: 2025-03-26<br />Depth_Diff_rev: 5.680000","Date: 2025-03-27<br />Depth_Diff_rev: 5.803750","Date: 2025-03-28<br />Depth_Diff_rev: 5.967500","Date: 2025-03-29<br />Depth_Diff_rev: 6.133750","Date: 2025-03-30<br />Depth_Diff_rev: 6.262500","Date: 2025-03-31<br />Depth_Diff_rev: 6.366250","Date: 2025-04-01<br />Depth_Diff_rev: 6.443750","Date: 2025-04-02<br />Depth_Diff_rev: 6.523750","Date: 2025-04-03<br />Depth_Diff_rev: 6.740000","Date: 2025-04-04<br />Depth_Diff_rev: 6.835000","Date: 2025-04-05<br />Depth_Diff_rev: 6.892500","Date: 2025-04-06<br />Depth_Diff_rev: 6.937500","Date: 2025-04-07<br />Depth_Diff_rev: 6.982500","Date: 2025-04-08<br />Depth_Diff_rev: 6.990000","Date: 2025-04-09<br />Depth_Diff_rev: 6.840000","Date: 2025-04-10<br />Depth_Diff_rev: 6.958750","Date: 2025-04-11<br />Depth_Diff_rev: 6.945000","Date: 2025-04-12<br />Depth_Diff_rev: 7.043750","Date: 2025-04-13<br />Depth_Diff_rev: 6.990000","Date: 2025-04-14<br />Depth_Diff_rev: 7.043750","Date: 2025-04-15<br />Depth_Diff_rev: 7.050000","Date: 2025-04-16<br />Depth_Diff_rev: 7.076250","Date: 2025-04-17<br />Depth_Diff_rev: 6.931250","Date: 2025-04-18<br />Depth_Diff_rev: 7.180000","Date: 2025-04-19<br />Depth_Diff_rev: 7.180000","Date: 2025-04-20<br />Depth_Diff_rev: 7.180000","Date: 2025-04-21<br />Depth_Diff_rev: 7.195000","Date: 2025-04-22<br />Depth_Diff_rev: 7.180000","Date: 2025-04-23<br />Depth_Diff_rev: 7.157500","Date: 2025-04-24<br />Depth_Diff_rev: 7.118750","Date: 2025-04-25<br />Depth_Diff_rev: 7.162857","Date: 2025-04-26<br />Depth_Diff_rev: 7.187500","Date: 2025-04-27<br />Depth_Diff_rev: 7.240000","Date: 2025-04-28<br />Depth_Diff_rev: 7.300000","Date: 2025-04-29<br />Depth_Diff_rev: 7.360000","Date: 2025-04-30<br />Depth_Diff_rev: 7.370000"],"type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":27.68949771689498,"r":7.3059360730593621,"b":41.643835616438366,"l":31.415525114155258},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[20158.6325,20210.717499999999],"tickmode":"array","ticktext":["Mar 15","Apr 01","Apr 15","May 01"],"tickvals":[20162,20179,20193,20209],"categoryorder":"array","categoryarray":["Mar 15","Apr 01","Apr 15","May 01"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Date","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.52600000000000047,7.7460000000000013],"tickmode":"array","ticktext":["0","2","4","6"],"tickvals":[0,2,4,6],"categoryorder":"array","categoryarray":["0","2","4","6"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716894984},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"DailyChangerev","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"200457a411ec":{"x":{},"y":{},"type":"bar"},"200416f3d5ff":{"x":{},"y":{}}},"cur_data":"200457a411ec","visdat":{"200457a411ec":["function (y) ","x"],"200416f3d5ff":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div><div class="bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content) minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
+<div class="card bslib-card html-fill-container" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<p>placeholder text for Column 2, Row 2</p>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+<div class="card cell bslib-card html-fill-container" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container">
+<div class="plotly html-widget html-fill-item html-fill-container" id="htmlwidget-a3833c9256a0efa844a7" style="width:100%;height:406px;"></div>
+<script type="application/json" data-for="htmlwidget-a3833c9256a0efa844a7">{"x":{"data":[{"orientation":"v","width":[0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[20162,20163,20165,20166,20167,20169,20170,20171,20172,20174,20175,20176,20177,20179,20180,20181,20183,20184,20186,20187,20188,20190,20191,20193,20194,20195,20196,20198,20200,20201,20202,20203,20204,20208],"y":[0.21522727272727593,0.36227272727272464,3.0167857142857173,0.3629545454545422,0.22579545454544814,4.8137777777777728,3.5952500000000072,0.12999999999999545,0.15874999999999773,3.7037815126050333,0.10857142857142321,0.10375000000000512,0.076250000000001705,4.3177500000000038,3.4762499999999932,0.091250000000002274,0.057500000000004547,0.16749999999998977,3.6375833333333247,0.08624999999999261,0.072500000000005116,3.5016666666666652,0.037500000000008527,4.1349999999999909,0.094999999999998863,0.071250000000006253,0.067500000000009663,0.09375,3.4752857142857181,3.5994642857142907,0.13874999999998749,0.064999999999997726,0.052500000000009095,7.5517857142857281],"text":["Date: 2025-03-15<br />DailyChangerev: 0.2152273","Date: 2025-03-16<br />DailyChangerev: 0.3622727","Date: 2025-03-18<br />DailyChangerev: 3.0167857","Date: 2025-03-19<br />DailyChangerev: 0.3629545","Date: 2025-03-20<br />DailyChangerev: 0.2257955","Date: 2025-03-22<br />DailyChangerev: 4.8137778","Date: 2025-03-23<br />DailyChangerev: 3.5952500","Date: 2025-03-24<br />DailyChangerev: 0.1300000","Date: 2025-03-25<br />DailyChangerev: 0.1587500","Date: 2025-03-27<br />DailyChangerev: 3.7037815","Date: 2025-03-28<br />DailyChangerev: 0.1085714","Date: 2025-03-29<br />DailyChangerev: 0.1037500","Date: 2025-03-30<br />DailyChangerev: 0.0762500","Date: 2025-04-01<br />DailyChangerev: 4.3177500","Date: 2025-04-02<br />DailyChangerev: 3.4762500","Date: 2025-04-03<br />DailyChangerev: 0.0912500","Date: 2025-04-05<br />DailyChangerev: 0.0575000","Date: 2025-04-06<br />DailyChangerev: 0.1675000","Date: 2025-04-08<br />DailyChangerev: 3.6375833","Date: 2025-04-09<br />DailyChangerev: 0.0862500","Date: 2025-04-10<br />DailyChangerev: 0.0725000","Date: 2025-04-12<br />DailyChangerev: 3.5016667","Date: 2025-04-13<br />DailyChangerev: 0.0375000","Date: 2025-04-15<br />DailyChangerev: 4.1350000","Date: 2025-04-16<br />DailyChangerev: 0.0950000","Date: 2025-04-17<br />DailyChangerev: 0.0712500","Date: 2025-04-18<br />DailyChangerev: 0.0675000","Date: 2025-04-20<br />DailyChangerev: 0.0937500","Date: 2025-04-22<br />DailyChangerev: 3.4752857","Date: 2025-04-23<br />DailyChangerev: 3.5994643","Date: 2025-04-24<br />DailyChangerev: 0.1387500","Date: 2025-04-25<br />DailyChangerev: 0.0650000","Date: 2025-04-26<br />DailyChangerev: 0.0525000","Date: 2025-04-30<br />DailyChangerev: 7.5517857"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(0,0,255,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962,0.69999999999708962],"base":[-2.8992857142857105,-8.1190277777777737,-3.2123529411764622,-7.8089999999999975,-0.0087500000000062528,-3.6938333333333162,-3.4416666666666629,-4.1487500000000068,-0.015000000000014779,-7.1522499999999951,-0.0074999999999931788,-9.3834090909090975,-3.5065909090909173],"x":[20164,20168,20173,20178,20182,20185,20189,20192,20197,20199,20205,20206,20207],"y":[2.8992857142857105,8.1190277777777737,3.2123529411764622,7.8089999999999975,0.0087500000000062528,3.6938333333333162,3.4416666666666629,4.1487500000000068,0.015000000000014779,7.1522499999999951,0.0074999999999931788,9.3834090909090975,3.5065909090909173],"text":["Date: 2025-03-17<br />DailyChangerev: 2.8992857","Date: 2025-03-21<br />DailyChangerev: 8.1190278","Date: 2025-03-26<br />DailyChangerev: 3.2123529","Date: 2025-03-31<br />DailyChangerev: 7.8090000","Date: 2025-04-04<br />DailyChangerev: 0.0087500","Date: 2025-04-07<br />DailyChangerev: 3.6938333","Date: 2025-04-11<br />DailyChangerev: 3.4416667","Date: 2025-04-14<br />DailyChangerev: 4.1487500","Date: 2025-04-19<br />DailyChangerev: 0.0150000","Date: 2025-04-21<br />DailyChangerev: 7.1522500","Date: 2025-04-27<br />DailyChangerev: 0.0075000","Date: 2025-04-28<br />DailyChangerev: 9.3834091","Date: 2025-04-29<br />DailyChangerev: 3.5065909"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(255,0,0,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":null,"base":null,"x":[null],"y":[null],"text":"Date: 2025-03-14<br />DailyChangerev:        NA","type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"transparent","line":{"width":1.8897637795275593,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[20161,20162,20163,20164,20165,20166,20167,20168,20169,20170,20171,20172,20173,20174,20175,20176,20177,20178,20179,20180,20181,20182,20183,20184,20185,20186,20187,20188,20189,20190,20191,20192,20193,20194,20195,20196,20197,20198,20199,20200,20201,20202,20203,20204,20205,20206,20207,20208],"y":[-0,0.21522727272727593,0.57750000000000057,-2.3217857142857099,0.69500000000000739,1.0579545454545496,1.2837499999999977,-6.835277777777776,-2.0215000000000032,1.573750000000004,1.7037499999999994,1.8624999999999972,-1.349852941176465,2.3539285714285683,2.4624999999999915,2.5662499999999966,2.6424999999999983,-5.1664999999999992,-0.84874999999999545,2.6274999999999977,2.71875,2.7099999999999937,2.7674999999999983,2.9349999999999881,-0.75883333333332814,2.8787499999999966,2.9649999999999892,3.0374999999999943,-0.40416666666666856,3.0974999999999966,3.1350000000000051,-1.0137500000000017,3.1212499999999892,3.2162499999999881,3.2874999999999943,3.355000000000004,3.3399999999999892,3.4337499999999892,-3.7185000000000059,-0.24321428571428783,3.3562500000000028,3.4949999999999903,3.5599999999999881,3.6124999999999972,3.605000000000004,-5.7784090909090935,-9.2850000000000108,-1.7332142857142827],"text":["Date: 2025-03-14<br />Depth_Diff_rev:  0.0000000","Date: 2025-03-15<br />Depth_Diff_rev:  0.2152273","Date: 2025-03-16<br />Depth_Diff_rev:  0.5775000","Date: 2025-03-17<br />Depth_Diff_rev: -2.3217857","Date: 2025-03-18<br />Depth_Diff_rev:  0.6950000","Date: 2025-03-19<br />Depth_Diff_rev:  1.0579545","Date: 2025-03-20<br />Depth_Diff_rev:  1.2837500","Date: 2025-03-21<br />Depth_Diff_rev: -6.8352778","Date: 2025-03-22<br />Depth_Diff_rev: -2.0215000","Date: 2025-03-23<br />Depth_Diff_rev:  1.5737500","Date: 2025-03-24<br />Depth_Diff_rev:  1.7037500","Date: 2025-03-25<br />Depth_Diff_rev:  1.8625000","Date: 2025-03-26<br />Depth_Diff_rev: -1.3498529","Date: 2025-03-27<br />Depth_Diff_rev:  2.3539286","Date: 2025-03-28<br />Depth_Diff_rev:  2.4625000","Date: 2025-03-29<br />Depth_Diff_rev:  2.5662500","Date: 2025-03-30<br />Depth_Diff_rev:  2.6425000","Date: 2025-03-31<br />Depth_Diff_rev: -5.1665000","Date: 2025-04-01<br />Depth_Diff_rev: -0.8487500","Date: 2025-04-02<br />Depth_Diff_rev:  2.6275000","Date: 2025-04-03<br />Depth_Diff_rev:  2.7187500","Date: 2025-04-04<br />Depth_Diff_rev:  2.7100000","Date: 2025-04-05<br />Depth_Diff_rev:  2.7675000","Date: 2025-04-06<br />Depth_Diff_rev:  2.9350000","Date: 2025-04-07<br />Depth_Diff_rev: -0.7588333","Date: 2025-04-08<br />Depth_Diff_rev:  2.8787500","Date: 2025-04-09<br />Depth_Diff_rev:  2.9650000","Date: 2025-04-10<br />Depth_Diff_rev:  3.0375000","Date: 2025-04-11<br />Depth_Diff_rev: -0.4041667","Date: 2025-04-12<br />Depth_Diff_rev:  3.0975000","Date: 2025-04-13<br />Depth_Diff_rev:  3.1350000","Date: 2025-04-14<br />Depth_Diff_rev: -1.0137500","Date: 2025-04-15<br />Depth_Diff_rev:  3.1212500","Date: 2025-04-16<br />Depth_Diff_rev:  3.2162500","Date: 2025-04-17<br />Depth_Diff_rev:  3.2875000","Date: 2025-04-18<br />Depth_Diff_rev:  3.3550000","Date: 2025-04-19<br />Depth_Diff_rev:  3.3400000","Date: 2025-04-20<br />Depth_Diff_rev:  3.4337500","Date: 2025-04-21<br />Depth_Diff_rev: -3.7185000","Date: 2025-04-22<br />Depth_Diff_rev: -0.2432143","Date: 2025-04-23<br />Depth_Diff_rev:  3.3562500","Date: 2025-04-24<br />Depth_Diff_rev:  3.4950000","Date: 2025-04-25<br />Depth_Diff_rev:  3.5600000","Date: 2025-04-26<br />Depth_Diff_rev:  3.6125000","Date: 2025-04-27<br />Depth_Diff_rev:  3.6050000","Date: 2025-04-28<br />Depth_Diff_rev: -5.7784091","Date: 2025-04-29<br />Depth_Diff_rev: -9.2850000","Date: 2025-04-30<br />Depth_Diff_rev: -1.7332143"],"type":"scatter","mode":"lines","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":27.68949771689498,"r":7.3059360730593621,"b":41.643835616438366,"l":43.105022831050242},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[20158.6325,20210.717499999999],"tickmode":"array","ticktext":["Mar 15","Apr 01","Apr 15","May 01"],"tickvals":[20162,20179,20193,20209],"categoryorder":"array","categoryarray":["Mar 15","Apr 01","Apr 15","May 01"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.68949771689498},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"y","title":{"text":"Date","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-10.230168831168839,8.3985454545454701],"tickmode":"array","ticktext":["-10","-8","-6","-4","-2","0","2","4","6","8"],"tickvals":[-10,-8,-6,-4,-2,0,2.0000000000000018,4,6,8],"categoryorder":"array","categoryarray":["-10","-8","-6","-4","-2","0","2","4","6","8"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.6529680365296811,"tickwidth":0.66417600664176002,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716894984},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":{"text":"DailyChangerev","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(51,51,51,1)","width":0.66417600664176002,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.8897637795275593,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.68949771689498}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"20041009868b":{"x":{},"y":{},"type":"bar"},"200463c52f08":{"x":{},"y":{}}},"cur_data":"20041009868b","visdat":{"20041009868b":["function (y) ","x"],"200463c52f08":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+
+
+<div id="3ade8a4a-fb1d-4a6c-8409-ac45482d5fc9" class="hidden">
+
+</div>
+</div>
+</div>
+
+
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/rickard11\.github\.io\/CalGRO-Dashboard\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (_event) {
+  if (window.bslib.Card) {
+    window.bslib.Card.initializeAllCards();
+  }
+}); 
+</script>
+  
+
+
+
+</body></html>
