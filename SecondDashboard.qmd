@@ -9,6 +9,18 @@ format:
 # Water depth
 
 ```{r}
+library(tidyverse)
+library(plotly)             
+#library(reactable)
+#library(bslib)
+library(dplyr)
+#library(leaflet)
+#library(bsicons)
+#library(shiny)
+library(ggplot2)
+library(readr)
+set.seed(4242)
+
 gwallhr<-read.csv("data/hourly_well_data.csv")
 gwallhr$Date.and.Time<-as.POSIXct(gwallhr$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
 
