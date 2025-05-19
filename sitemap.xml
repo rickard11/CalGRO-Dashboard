@@ -2,22 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://rickard11.github.io/CalGRO-Dashboard/SecondDashboard.html</loc>
-    <lastmod>2025-05-19T20:48:29.817Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rickard11.github.io/CalGRO-Dashboard/about.html</loc>
-    <lastmod>2025-05-19T20:48:29.817Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rickard11.github.io/CalGRO-Dashboard/testdashboard.html</loc>
-    <lastmod>2025-05-19T20:48:29.826Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rickard11.github.io/CalGRO-Dashboard/ThirdDashboard.html</loc>
-    <lastmod>2025-05-19T20:48:29.817Z</lastmod>
+    <lastmod>2025-05-19T21:07:10.191Z</lastmod>
   </url>
   <url>
     <loc>https://rickard11.github.io/CalGRO-Dashboard/index.html</loc>
-    <lastmod>2025-05-19T20:48:29.825Z</lastmod>
+    <lastmod>2025-05-19T21:07:10.209Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rickard11.github.io/CalGRO-Dashboard/ThirdDashboard.html</loc>
+    <lastmod>2025-05-19T21:07:10.191Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rickard11.github.io/CalGRO-Dashboard/testdashboard.html</loc>
+    <lastmod>2025-05-19T21:07:10.210Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rickard11.github.io/CalGRO-Dashboard/about.html</loc>
+    <lastmod>2025-05-19T21:07:10.191Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rickard11.github.io/CalGRO-Dashboard/FourthDashboard.html</loc>
+    <lastmod>2025-05-19T21:07:10.187Z</lastmod>
   </url>
 </urlset>
