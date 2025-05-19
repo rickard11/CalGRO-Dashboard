@@ -5,10 +5,9 @@ format:
     orientation: columns
 ---
 
-## Column{width="35%"}
+## Column{width="50%"}
 
-placeholder text for Column 1
-testing after redownloading rstudio to the newest version
+### Row {height="33%"}
 
 ```{r, loadpackages}
 #load packages that are needed for all dashboards
@@ -83,20 +82,9 @@ ggplotly(s)
 
 ```
 
+### Row {height="33%"}
 
-## Column{width="65%"}
-
-### Row {height="40%"}
-
-placeholder text for Column 2, Row 1
-
-
-
-### Row {height="40%"}
-
-placeholder text for Column 2, Row 2
-```{r, plottwo}
-
+```{r,plottwo}
 #B&C well only
 BCDS<-daily_stats[daily_stats$Site=="B&C Ranch Well",]
 BCDS$Base_Depth<-BCDS$DailyAvgDepth[1]
@@ -112,11 +100,9 @@ ggplotly(b)
 
 ```
 
-### Row {height= "40%"}
+### Row {height="33%"}
 
-placeholder text for Column 2, Row 3
-
-```{r, plotthree}
+```{r,plotthree}
 #Cooper only
 CDS<-daily_stats[daily_stats$Site=="Cooper",]
 CDS$Base_Depth<-CDS$DailyAvgDepth[1]
@@ -129,5 +115,64 @@ c<-ggplot(CDS, aes(x = Date, y = DailyChangerev)) +
   scale_y_continuous(breaks = seq(-10, 10, 2)) +
   theme_bw()
 ggplotly(c)
+
+```
+## Column{width="50%"}
+
+### Row {height="33%"}
+
+
+```{r,plotfour}
+#Lower Tweedy
+LDS<-daily_stats[daily_stats$Site=="Lower Tweedy",]
+LDS$Base_Depth<-LDS$DailyAvgDepth[1]
+LDS$Depth_Diff<-LDS$DailyAvgDepth-LDS$Base_Depth
+LDS$Depth_Diff_rev<-LDS$Depth_Diff*-1
+
+l<-ggplot(LDS, aes(x = Date, y = DailyChangerev)) +
+  geom_bar(stat = "identity", fill = ifelse(LDS$DailyChangerev> 0, "blue", "red"), width = 0.7) +
+  geom_line(aes(y=Depth_Diff_rev))+
+  scale_y_continuous(breaks = seq(-10, 10, 2)) +
+  theme_bw()
+ggplotly(l)
+
+```
+
+
+### Row {height="33%"}
+
+
+```{r,plotfive}
+#NE Corner Only
+NEDS<-daily_stats[daily_stats$Site=="NE Corner",]
+NEDS$Base_Depth<-NEDS$DailyAvgDepth[1]
+NEDS$Depth_Diff<-NEDS$DailyAvgDepth-NEDS$Base_Depth
+NEDS$Depth_Diff_rev<-NEDS$Depth_Diff*-1
+
+n<-ggplot(NEDS, aes(x = Date, y = DailyChangerev)) +
+  geom_bar(stat = "identity", fill = ifelse(NEDS$DailyChangerev> 0, "blue", "red"), width = 0.7) +
+  geom_line(aes(y=Depth_Diff_rev))+
+  scale_y_continuous(breaks = seq(-10, 10, 2)) +
+  theme_bw()
+ggplotly(n)
+
+```
+
+### Row {height= "33%"}
+
+```{r,plotsix}
+#Pixley Only
+PDS<-daily_stats[daily_stats$Site=="Pixley Tulare",]
+PDS$Base_Depth<-PDS$DailyAvgDepth[1]
+PDS$Depth_Diff<-PDS$DailyAvgDepth-PDS$Base_Depth
+PDS$Depth_Diff_rev<-PDS$Depth_Diff*-1
+
+p<-ggplot(PDS, aes(x = Date, y = DailyChangerev)) +
+  geom_bar(stat = "identity", fill = ifelse(PDS$DailyChangerev> 0, "blue", "red"), width = 0.7) +
+  geom_line(aes(y=Depth_Diff_rev))+
+  scale_y_continuous(breaks = seq(-10, 10, 2)) +
+  theme_bw()
+ggplotly(p)
+
 ```
 
