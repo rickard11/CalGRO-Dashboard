@@ -75,7 +75,7 @@ CPDS$Depth_Diff_rev<-CPDS$Depth_Diff*-1
 
 s<-ggplot(CPDS, aes(x = Date, y = DailyChangerev)) +
   geom_bar(stat = "identity", fill = ifelse(CPDS$DailyChangerev> 0, "blue", "red"), width = 0.7) +
-  geom_line(aes(y=Depth_Diff_rev))+
+  geom_line(aes(y=Depth_Diff_rev))+ggtitle("Cactus Pasture")+
   scale_y_continuous(breaks = seq(-10, 10, 2)) +
   theme_bw()
 ggplotly(s)
@@ -93,7 +93,7 @@ BCDS$Depth_Diff_rev<-BCDS$Depth_Diff*-1
 
 b<-ggplot(BCDS, aes(x = Date, y = DailyChangerev)) +
   geom_bar(stat = "identity", fill = ifelse(BCDS$DailyChangerev> 0, "blue", "red"), width = 0.7) +
-  geom_line(aes(y=Depth_Diff_rev))+
+  geom_line(aes(y=Depth_Diff_rev))+ggtitle("B & C Ranch Well")+
   scale_y_continuous(breaks = seq(-10, 10, 2)) +
   theme_bw()
 ggplotly(b)
@@ -111,7 +111,7 @@ CDS$Depth_Diff_rev<-CDS$Depth_Diff*-1
 
 c<-ggplot(CDS, aes(x = Date, y = DailyChangerev)) +
   geom_bar(stat = "identity", fill = ifelse(CDS$DailyChangerev> 0, "blue", "red"), width = 0.7) +
-  geom_line(aes(y=Depth_Diff_rev))+
+  geom_line(aes(y=Depth_Diff_rev))+ggtitle("Cooper Well")+
   scale_y_continuous(breaks = seq(-10, 10, 2)) +
   theme_bw()
 ggplotly(c)
@@ -131,7 +131,7 @@ LDS$Depth_Diff_rev<-LDS$Depth_Diff*-1
 
 l<-ggplot(LDS, aes(x = Date, y = DailyChangerev)) +
   geom_bar(stat = "identity", fill = ifelse(LDS$DailyChangerev> 0, "blue", "red"), width = 0.7) +
-  geom_line(aes(y=Depth_Diff_rev))+
+  geom_line(aes(y=Depth_Diff_rev))+ggtitle("Lower Tweedy")+
   scale_y_continuous(breaks = seq(-10, 10, 2)) +
   theme_bw()
 ggplotly(l)
@@ -151,7 +151,7 @@ NEDS$Depth_Diff_rev<-NEDS$Depth_Diff*-1
 
 n<-ggplot(NEDS, aes(x = Date, y = DailyChangerev)) +
   geom_bar(stat = "identity", fill = ifelse(NEDS$DailyChangerev> 0, "blue", "red"), width = 0.7) +
-  geom_line(aes(y=Depth_Diff_rev))+
+  geom_line(aes(y=Depth_Diff_rev))+ggtitle("North East Corner")+
   scale_y_continuous(breaks = seq(-10, 10, 2)) +
   theme_bw()
 ggplotly(n)
@@ -169,7 +169,7 @@ PDS$Depth_Diff_rev<-PDS$Depth_Diff*-1
 
 p<-ggplot(PDS, aes(x = Date, y = DailyChangerev)) +
   geom_bar(stat = "identity", fill = ifelse(PDS$DailyChangerev> 0, "blue", "red"), width = 0.7) +
-  geom_line(aes(y=Depth_Diff_rev))+
+  geom_line(aes(y=Depth_Diff_rev))+ggtitle("Pixley Tulare")+
   scale_y_continuous(breaks = seq(-10, 10, 2)) +
   theme_bw()
 ggplotly(p)
