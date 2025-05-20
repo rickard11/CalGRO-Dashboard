@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "CalGRO-Dashboard",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2",
+    "text": "Welcome to CalGRO!!!",
     "crumbs": [
       "Home"
     ]
@@ -14,7 +14,7 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2",
+    "text": "The CalGRO project is about monitoring groundwater depth and measuring rainfall quantity with a high spatial resolution.\nThere are many different tabs that will be changing as this site is currently under construction. The end goal is to have automated groundwater level updates every day and to be able to calculate groundwater recharge from the water level data.",
     "crumbs": [
       "About"
     ]
