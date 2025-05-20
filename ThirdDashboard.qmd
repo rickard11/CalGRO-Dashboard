@@ -6,8 +6,6 @@ format:
 ---
 
 
-### Row {height="50%"}
-
 ```{r, loadpackages}
 #load packages that are needed for all dashboards
 library(tidyverse)
@@ -90,7 +88,6 @@ Cooper<-merge(coop,pump,by="DateTime",all.x=TRUE,all.y=TRUE)
 #Cooper<-merge(Cooper,HQtank_osc,by="DateTime",all.x=TRUE,all.y=TRUE)
 ```
 
-### Row {height="50%"}
 
 ```{r,WellPlot}
 
