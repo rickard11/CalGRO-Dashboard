@@ -2,11 +2,9 @@
 title: "Las Piletas"
 format: 
   dashboard: 
-    orientation: columns
+    orientation: rows
 ---
 
-
-## Column{width="100%"}
 
 ### Row {height="50%"}
 
