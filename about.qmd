@@ -2,8 +2,6 @@
 title: "About"
 ---
 
-About this site
+The CalGRO project is about monitoring groundwater depth and measuring rainfall quantity with a high spatial resolution.
 
-```{r}
-1 + 1
-```
+There are many different tabs that will be changing as this site is currently under construction. The end goal is to have automated groundwater level updates every day and to be able to calculate groundwater recharge from the water level data.
