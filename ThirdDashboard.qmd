@@ -92,10 +92,16 @@ Cooper<-merge(coop,pump,by="DateTime",all.x=TRUE,all.y=TRUE)
 ```{r,WellPlot}
 
 ##Need to debug, vline is as.numeric and that is messing up the date.
-q<-ggplot(data=Cooper,aes(x=DateTime))+geom_line(aes(y=Depth_to_Water_ft))+geom_vline(
+q<-ggplot(data=Cooper,aes(x=DateTime))+
+  geom_line(aes(y=Depth_to_Water_ft))+
+  geom_vline(
     data = Cooper %>% filter(OnOff == "on"),
-    aes(xintercept = as.numeric(DateTime)),
+    aes(xintercept = DateTime),
     color = "red", linetype = "dashed", alpha = 0.5
+  )+geom_vline(
+    data = Cooper %>% filter(OnOff == "off"),
+    aes(xintercept = DateTime),
+    color = "lightblue", linetype = "dashed", alpha = 0.5
   )+scale_y_reverse()+theme_bw()
 ggplotly(q)
 
@@ -103,4 +109,30 @@ ggplotly(q)
 
 #Pumping intensity could affect the recovery time for back to a normal well depth Ex. Jan 6 pump event resulted in 6 days to recover to normal with a drawdown of 95 feet during pumping, while April 2 only took 1 day with a drawdown of 38 feet during pumping
 
+# Get line length to span y-axis (adjust as needed)
+y_min <- min(Cooper$Depth_to_Water_ft, na.rm = TRUE)
+y_max <- max(Cooper$Depth_to_Water_ft, na.rm = TRUE)
+
+# Create a transition dataset
+vlines_df <- Cooper %>%
+  filter(OnOff %in% c("on", "off")) %>%
+  mutate(
+    color = ifelse(OnOff == "on", "red", "lightblue")
+  )
+
+# Create plot using geom_segment
+q <- ggplot(Cooper, aes(x = DateTime, y = Depth_to_Water_ft)) +
+  geom_line() +
+  geom_segment(
+    data = vlines_df,
+    aes(x = DateTime, xend = DateTime, y = y_min, yend = y_max, color = color),
+    linetype = "dashed", alpha = 0.5
+  ) +
+  scale_color_identity() +  # Use actual colors in the color column
+  scale_y_reverse() +
+  theme_bw()
+
+ggplotly(q)
+
 ```
+
