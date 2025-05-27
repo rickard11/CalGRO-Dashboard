@@ -7,10 +7,6 @@ website:
     contents:
       - href: index.qmd
         text: Home
-      - href: about.qmd
-        text: About
-      - href: testdashboard.qmd
-        text: Recharge
       - href: SecondDashboard.qmd
         text: Water depth
       - href: ThirdDashboard.qmd

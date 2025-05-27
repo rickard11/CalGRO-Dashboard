@@ -7,10 +7,23 @@ format:
 
 # Randall
 
-```{r, LowerTweedy}
+```{r, PandD}
+library(tidyverse)
+library(plotly)             
+#library(reactable)
+#library(bslib)
+library(dplyr)
+#library(leaflet)
+#library(bsicons)
+#library(shiny)
+library(ggplot2)
+library(readr)
 r<-read.csv("data/hourly_well_data.csv")
 r$Date<-as.Date(r$Date)
 r$Date.and.Time<-as.POSIXct(r$Date.and.Time)
+```
+
+```{r, LowerTweedy}
 ltwell<-r[r$Well_Name=="Lower Tweedy",]
 ltrain<-read.csv("data/rain/Randall Lower tweedy rain gauge Rain Gauge 20250301-20250527.csv")
 ltrain$Date<-as.Date(ltrain$Date)
@@ -76,7 +89,6 @@ p<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
 
 ggplotly(p)
 ```
-
 
 ```{r,BCWell}
 
