@@ -7,7 +7,7 @@ format:
 
 # Randall
 
-Estimating ground water recharge using the water-table fluctuation (WTF) method
+Estimating ground water recharge using the water-table fluctuation (WTF) method https://water.usgs.gov/ogw/gwrp/methods/wtf/. We are assuming the extrapolated antecedent recession curve is continuous with the water depth at start date, since we do not have any dry season historic data to base our measurements on.
 
 ## Column{width="50%"}
 
@@ -134,6 +134,7 @@ ggplotly(b)
 ## Column{width="50%"}
 
 ### Row {height="33%"}
+Lower Tweedy Recharge
 ```{r, LowerTweedyRecharge}
 1+1
 ```
@@ -151,6 +152,7 @@ inre
 ```
 
 ### Row {height="33%"}
+B and C Ranch Well Recharge
 ```{r, BandCRecharge}
 #Inches of Rain
 sum(bcrain$Rain..in.)
@@ -161,7 +163,7 @@ inre<-ftre*12
 inre
 ```
 
-# Snata Cruz Island
+# Santa Cruz Island
 
 Plot 2
 
