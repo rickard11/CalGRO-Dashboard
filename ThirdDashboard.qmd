@@ -22,6 +22,12 @@ set.seed(4242)
 ```
 # Las Piletas
 
+On Average 3653 gallons are pumped per day from the Cooper well from April 28-May 9th 2025. That equates to 1.3 million gallons or 4.1 acre feet per year. 
+
+Groundwater receeds by about X inches per day. If this pattern continues water level would decrease by X feet per year and X feet of recharge were observed in the 2025 water year.
+
+With no pumping and just environmental influencers in play the groundwater receeds by x inches per day
+
 ```{r,calculateLasPiletasValues}
 #Cooper well is used to fill head quarters tank, a 10,000 gallon tank that is 87 inches tall
 #=114.9 gallons per inch
@@ -89,12 +95,6 @@ pump$DateTime<-as.POSIXct(pump$DateTime)
 Cooper<-merge(coop,pump,by="DateTime",all.x=TRUE,all.y=TRUE)
 #Cooper<-merge(Cooper,HQtank_osc,by="DateTime",all.x=TRUE,all.y=TRUE)
 ```
-
-# On Average 3653 gallons are pumped per day from the Cooper well from April 28-May 9th 2025. That equates to 1.3 million gallons or 4.1 acre feet per year. 
-
-Groundwater receeds by about X inches per day. If this pattern continues water level would decrease by X feet per year and X feet of recharge were observed in the 2025 water year.
-
-With no pumping and just environmental influencers in play the groundwater receeds by x inches per day
 
 ```{r,WellPlot}
 
