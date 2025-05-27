@@ -1,6 +1,8 @@
 ---
 title: "Recharge calculations"
-editor: visual
+format: 
+  dashboard: 
+    orientation: rows
 ---
 
 # Randall
@@ -22,6 +24,9 @@ Plot 2
 Plot 3 is here
 ```{r}
 r<-read.csv("data/hourly_well_data.csv")
+ltrain<-read.csv("data/rain/Randall Lower tweedy rain gauge Rain Gauge 20250301-20250527.csv")
+cprain<-read.csv("data/rain/Randall cactus pasture rain gauge Rain Gauge 20250301-20250527.csv")
+bcrain<-read.csv("data/rain/Randall B and C Ranch. Rain gauge Rain Gauge 20250301-20250527.csv")
 head(r)
 tail(r)
 ```
