@@ -193,13 +193,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#randall" id="toc-randall" class="nav-link active" data-scroll-target="#randall">Randall</a>
-  <ul class="collapse">
-  <li><a href="#column" id="toc-column" class="nav-link" data-scroll-target="#column">column</a></li>
-  <li><a href="#column-1" id="toc-column-1" class="nav-link" data-scroll-target="#column-1">column</a></li>
-  <li><a href="#column-2" id="toc-column-2" class="nav-link" data-scroll-target="#column-2">column</a></li>
-  </ul></li>
-  <li><a href="#santa-cruz-island" id="toc-santa-cruz-island" class="nav-link" data-scroll-target="#santa-cruz-island">Santa Cruz Island</a></li>
+  <li><a href="#randall" id="toc-randall" class="nav-link active" data-scroll-target="#randall">Randall</a></li>
+  <li><a href="#snata-cruz-island" id="toc-snata-cruz-island" class="nav-link" data-scroll-target="#snata-cruz-island">Snata Cruz Island</a></li>
   <li><a href="#dangermond-preserve" id="toc-dangermond-preserve" class="nav-link" data-scroll-target="#dangermond-preserve">Dangermond Preserve</a></li>
   <li><a href="#parks-creek" id="toc-parks-creek" class="nav-link" data-scroll-target="#parks-creek">Parks Creek</a></li>
   <li><a href="#santa-clara-river" id="toc-santa-clara-river" class="nav-link" data-scroll-target="#santa-clara-river">Santa Clara River</a></li>
@@ -232,16 +227,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="randall" class="level1">
 <h1>Randall</h1>
-<section id="column" class="level2" width="33%">
-<h2 width="33%" class="anchored" data-anchor-id="column">column</h2>
 <p>Plot1</p>
 </section>
-<section id="column-1" class="level2" width="33%">
-<h2 width="33%" class="anchored" data-anchor-id="column-1">column</h2>
+<section id="snata-cruz-island" class="level1">
+<h1>Snata Cruz Island</h1>
 <p>Plot 2</p>
 </section>
-<section id="column-2" class="level2" width="33%">
-<h2 width="33%" class="anchored" data-anchor-id="column-2">column</h2>
+<section id="dangermond-preserve" class="level1">
+<h1>Dangermond Preserve</h1>
 <p>Plot 3 is here</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>r<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">"data/hourly_well_data.csv"</span>)</span>
@@ -255,26 +248,117 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 5 5 2025-05-05 02:48:58             14.23 2025-05-05 NE Corner
 6 6 2025-05-04 23:48:21             14.23 2025-05-04 NE Corner</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          X       Date.and.Time ft..below.ground.       Date    Well_Name
+39409 59318 2025-03-01 15:46:17             63.50 2025-03-01 Quail Canyon
+39410 59417 2025-03-01 12:45:41             63.50 2025-03-01 Quail Canyon
+39411 59517 2025-03-01 09:45:02             63.50 2025-03-01 Quail Canyon
+39412 59617 2025-03-01 06:44:23             63.50 2025-03-01 Quail Canyon
+39413 59717 2025-03-01 03:43:47             63.56 2025-03-01 Quail Canyon
+39414 59817 2025-03-01 00:43:05             63.56 2025-03-01 Quail Canyon</code></pre>
 </div>
-</section>
-</section>
-<section id="santa-cruz-island" class="level1">
-<h1>Santa Cruz Island</h1>
-</section>
-<section id="dangermond-preserve" class="level1">
-<h1>Dangermond Preserve</h1>
+</div>
 </section>
 <section id="parks-creek" class="level1">
 <h1>Parks Creek</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  X       Date.and.Time ft..below.ground.       Date Well_Name
+1 1 2025-05-05 14:51:31             14.23 2025-05-05 NE Corner
+2 2 2025-05-05 11:50:53             14.23 2025-05-05 NE Corner
+3 3 2025-05-05 08:50:12             14.30 2025-05-05 NE Corner
+4 4 2025-05-05 05:49:36             14.23 2025-05-05 NE Corner
+5 5 2025-05-05 02:48:58             14.23 2025-05-05 NE Corner
+6 6 2025-05-04 23:48:21             14.23 2025-05-04 NE Corner</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          X       Date.and.Time ft..below.ground.       Date    Well_Name
+39409 59318 2025-03-01 15:46:17             63.50 2025-03-01 Quail Canyon
+39410 59417 2025-03-01 12:45:41             63.50 2025-03-01 Quail Canyon
+39411 59517 2025-03-01 09:45:02             63.50 2025-03-01 Quail Canyon
+39412 59617 2025-03-01 06:44:23             63.50 2025-03-01 Quail Canyon
+39413 59717 2025-03-01 03:43:47             63.56 2025-03-01 Quail Canyon
+39414 59817 2025-03-01 00:43:05             63.56 2025-03-01 Quail Canyon</code></pre>
+</div>
+</div>
 </section>
 <section id="santa-clara-river" class="level1">
 <h1>Santa Clara River</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  X       Date.and.Time ft..below.ground.       Date Well_Name
+1 1 2025-05-05 14:51:31             14.23 2025-05-05 NE Corner
+2 2 2025-05-05 11:50:53             14.23 2025-05-05 NE Corner
+3 3 2025-05-05 08:50:12             14.30 2025-05-05 NE Corner
+4 4 2025-05-05 05:49:36             14.23 2025-05-05 NE Corner
+5 5 2025-05-05 02:48:58             14.23 2025-05-05 NE Corner
+6 6 2025-05-04 23:48:21             14.23 2025-05-04 NE Corner</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          X       Date.and.Time ft..below.ground.       Date    Well_Name
+39409 59318 2025-03-01 15:46:17             63.50 2025-03-01 Quail Canyon
+39410 59417 2025-03-01 12:45:41             63.50 2025-03-01 Quail Canyon
+39411 59517 2025-03-01 09:45:02             63.50 2025-03-01 Quail Canyon
+39412 59617 2025-03-01 06:44:23             63.50 2025-03-01 Quail Canyon
+39413 59717 2025-03-01 03:43:47             63.56 2025-03-01 Quail Canyon
+39414 59817 2025-03-01 00:43:05             63.56 2025-03-01 Quail Canyon</code></pre>
+</div>
+</div>
 </section>
 <section id="las-piletas" class="level1">
 <h1>Las Piletas</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  X       Date.and.Time ft..below.ground.       Date Well_Name
+1 1 2025-05-05 14:51:31             14.23 2025-05-05 NE Corner
+2 2 2025-05-05 11:50:53             14.23 2025-05-05 NE Corner
+3 3 2025-05-05 08:50:12             14.30 2025-05-05 NE Corner
+4 4 2025-05-05 05:49:36             14.23 2025-05-05 NE Corner
+5 5 2025-05-05 02:48:58             14.23 2025-05-05 NE Corner
+6 6 2025-05-04 23:48:21             14.23 2025-05-04 NE Corner</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          X       Date.and.Time ft..below.ground.       Date    Well_Name
+39409 59318 2025-03-01 15:46:17             63.50 2025-03-01 Quail Canyon
+39410 59417 2025-03-01 12:45:41             63.50 2025-03-01 Quail Canyon
+39411 59517 2025-03-01 09:45:02             63.50 2025-03-01 Quail Canyon
+39412 59617 2025-03-01 06:44:23             63.50 2025-03-01 Quail Canyon
+39413 59717 2025-03-01 03:43:47             63.56 2025-03-01 Quail Canyon
+39414 59817 2025-03-01 00:43:05             63.56 2025-03-01 Quail Canyon</code></pre>
+</div>
+</div>
 </section>
 <section id="tulare" class="level1">
 <h1>Tulare</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  X       Date.and.Time ft..below.ground.       Date Well_Name
+1 1 2025-05-05 14:51:31             14.23 2025-05-05 NE Corner
+2 2 2025-05-05 11:50:53             14.23 2025-05-05 NE Corner
+3 3 2025-05-05 08:50:12             14.30 2025-05-05 NE Corner
+4 4 2025-05-05 05:49:36             14.23 2025-05-05 NE Corner
+5 5 2025-05-05 02:48:58             14.23 2025-05-05 NE Corner
+6 6 2025-05-04 23:48:21             14.23 2025-05-04 NE Corner</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          X       Date.and.Time ft..below.ground.       Date    Well_Name
+39409 59318 2025-03-01 15:46:17             63.50 2025-03-01 Quail Canyon
+39410 59417 2025-03-01 12:45:41             63.50 2025-03-01 Quail Canyon
+39411 59517 2025-03-01 09:45:02             63.50 2025-03-01 Quail Canyon
+39412 59617 2025-03-01 06:44:23             63.50 2025-03-01 Quail Canyon
+39413 59717 2025-03-01 03:43:47             63.56 2025-03-01 Quail Canyon
+39414 59817 2025-03-01 00:43:05             63.56 2025-03-01 Quail Canyon</code></pre>
+</div>
+</div>
 
 
 </section>
