@@ -79,6 +79,7 @@ min_Draw <- min(HQtank_stats$Dailydraw)
 coop<-read.csv("data/Las Piletas Cooper Well 20250427-20250509.csv")
 coop$Date.and.Time<-as.POSIXct(coop$Date.and.Time)
 colnames(coop)<-c("DateTime","Depth_to_Water_ft")
+#Matching with Joe from slo county manual meaurement
 coop$Depth_to_Water_ft<-coop$Depth_to_Water_ft+43.6
 pump<-read.csv("data/Cooper_Pump_Control.csv")
 pump <- pump %>%
@@ -128,13 +129,6 @@ ggplotly(q)
 #  scale_color_identity() +  # Use actual colors in the color column
 #  scale_y_reverse() +
 #  theme_bw()
-
-#ggplotly(q)
-#4/27/2025 at 855 -15.06
-
-#is 28.54
-#diff=43.6
--15.06+43.6
 ```
 
 
@@ -143,7 +137,7 @@ ggplotly(q)
 #Cooper well math
 coop$Date<-as.Date(coop$DateTime)
 coopdaily_min<-aggregate(Depth_to_Water_ft~Date,coop,FUN=min)
-gwallhr
+
 
 gwallhr<-read.csv("data/hourly_well_data.csv")
 gwallhr$Date.and.Time<-as.POSIXct(gwallhr$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
