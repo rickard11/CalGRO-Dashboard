@@ -79,6 +79,7 @@ min_Draw <- min(HQtank_stats$Dailydraw)
 coop<-read.csv("data/Las Piletas Cooper Well 20250427-20250509.csv")
 coop$Date.and.Time<-as.POSIXct(coop$Date.and.Time)
 colnames(coop)<-c("DateTime","Depth_to_Water_ft")
+coop$Depth_to_Water_ft<-coop$Depth_to_Water_ft+43.6
 pump<-read.csv("data/Cooper_Pump_Control.csv")
 pump <- pump %>%
   mutate(OnOff = ifelse(Action == "Turned on by automation due to the destination tank's levels", "on",
@@ -88,21 +89,17 @@ Cooper<-merge(coop,pump,by="DateTime",all.x=TRUE,all.y=TRUE)
 #Cooper<-merge(Cooper,HQtank_osc,by="DateTime",all.x=TRUE,all.y=TRUE)
 ```
 
+# On Average 3653 gallons are pumped per day from the Cooper well from April 28-May 9th 2025. That equates to 1.3 million gallons or 4.1 acre feet per year. 
+
+Groundwater receeds by about X inches per day. If this pattern continues water level would decrease by X feet per year and X feet of recharge were observed in the 2025 water year.
+
+With no pumping and just environmental influencers in play the groundwater receeds by x inches per day
 
 ```{r,WellPlot}
 
-##Need to debug, vline is as.numeric and that is messing up the date.
-q<-ggplot(data=Cooper,aes(x=DateTime))+
-  geom_line(aes(y=Depth_to_Water_ft))+
-  geom_vline(
-    data = Cooper %>% filter(OnOff == "on"),
-    aes(xintercept = DateTime),
-    color = "red", linetype = "dashed", alpha = 0.5
-  )+geom_vline(
-    data = Cooper %>% filter(OnOff == "off"),
-    aes(xintercept = DateTime),
-    color = "lightblue", linetype = "dashed", alpha = 0.5
-  )+scale_y_reverse()+theme_bw()
+##Just well depth
+q<-ggplot(data=coop,aes(x=DateTime))+
+  geom_line(aes(y=Depth_to_Water_ft))+scale_y_reverse()+theme_bw()
 ggplotly(q)
 
 #End goal when X gallons per day are pumped groundwater receeds by X inches per day. With no pumping and just environmental influencers in play the groundwater receeds by x inches per day
@@ -110,29 +107,73 @@ ggplotly(q)
 #Pumping intensity could affect the recovery time for back to a normal well depth Ex. Jan 6 pump event resulted in 6 days to recover to normal with a drawdown of 95 feet during pumping, while April 2 only took 1 day with a drawdown of 38 feet during pumping
 
 # Get line length to span y-axis (adjust as needed)
-y_min <- min(Cooper$Depth_to_Water_ft, na.rm = TRUE)
-y_max <- max(Cooper$Depth_to_Water_ft, na.rm = TRUE)
+#y_min <- min(Cooper$Depth_to_Water_ft, na.rm = TRUE)
+#y_max <- max(Cooper$Depth_to_Water_ft, na.rm = TRUE)
 
 # Create a transition dataset
-vlines_df <- Cooper %>%
-  filter(OnOff %in% c("on", "off")) %>%
-  mutate(
-    color = ifelse(OnOff == "on", "red", "lightblue")
-  )
+#vlines_df <- Cooper %>%
+#  filter(OnOff %in% c("on", "off")) %>%
+#  mutate(
+#    color = ifelse(OnOff == "on", "red", "lightblue")
+#  )
 
 # Create plot using geom_segment
-q <- ggplot(Cooper, aes(x = DateTime, y = Depth_to_Water_ft)) +
-  geom_line() +
-  geom_segment(
-    data = vlines_df,
-    aes(x = DateTime, xend = DateTime, y = y_min, yend = y_max, color = color),
-    linetype = "dashed", alpha = 0.5
-  ) +
-  scale_color_identity() +  # Use actual colors in the color column
-  scale_y_reverse() +
-  theme_bw()
+#q <- ggplot(Cooper, aes(x = DateTime, y = Depth_to_Water_ft)) +
+# geom_line() +
+#  geom_segment(
+#    data = vlines_df,
+#    aes(x = DateTime, xend = DateTime, y = y_min, yend = y_max, color = color),
+#   linetype = "dashed", alpha = 0.5
+#  ) +
+#  scale_color_identity() +  # Use actual colors in the color column
+#  scale_y_reverse() +
+#  theme_bw()
 
+#ggplotly(q)
+#4/27/2025 at 855 -15.06
+
+#is 28.54
+#diff=43.6
+-15.06+43.6
+```
+
+
+
+```{r}
+#Cooper well math
+coop$Date<-as.Date(coop$DateTime)
+coopdaily_min<-aggregate(Depth_to_Water_ft~Date,coop,FUN=min)
+gwallhr
+
+gwallhr<-read.csv("data/hourly_well_data.csv")
+gwallhr$Date.and.Time<-as.POSIXct(gwallhr$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
+
+Coopall<-gwallhr[gwallhr$Well_Name=="Cooper",]
+Coopall
+
+q<-ggplot(data=coop,aes(x=DateTime))+
+  geom_line(aes(y=Depth_to_Water_ft))+scale_y_reverse()+theme_bw()
 ggplotly(q)
 
+r<-ggplot(data=Coopall,aes(x=Date.and.Time))+
+  geom_line(aes(y=ft..below.ground.))+scale_y_reverse()+theme_bw()
+ggplotly(r)
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
