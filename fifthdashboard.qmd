@@ -5,33 +5,41 @@ editor: visual
 
 # Randall
 
-## column{width="33%"}
 
 Plot1
 
-## column{width="33%"}
+# Snata Cruz Island
 
 Plot 2
 
-## column{width="33%"}
+# Dangermond Preserve
 
 Plot 3 is here
 ```{r}
 r<-read.csv("data/hourly_well_data.csv")
 head(r)
+tail(r)
 ```
 
 
-
-
-# Santa Cruz Island
-
-# Dangermond Preserve
-
 # Parks Creek
+```{r}
+head(r)
+tail(r)
+```
 
 # Santa Clara River
-
+```{r}
+head(r)
+tail(r)
+```
 # Las Piletas
-
+```{r}
+head(r)
+tail(r)
+```
 # Tulare
+```{r}
+head(r)
+tail(r)
+```
