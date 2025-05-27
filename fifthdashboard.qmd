@@ -5,8 +5,13 @@ editor: visual
 
 # Randall
 
+```{r}
+r<-read.csv("data/hourly_well_data.csv")
+randall<-r[r$Well_Name=="Cactus pasture"|r$Well_Name=="Lower Tweedy"|r$Well_Name=="B&C Ranch Well",]
+unique(randall$Well_Name)
 
-Plot1
+```
+
 
 # Snata Cruz Island
 
