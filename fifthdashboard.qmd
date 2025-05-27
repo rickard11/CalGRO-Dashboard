@@ -1,0 +1,37 @@
+---
+title: "Recharge calculations"
+editor: visual
+---
+
+# Randall
+
+## column{width="33%"}
+
+Plot1
+
+## column{width="33%"}
+
+Plot 2
+
+## column{width="33%"}
+
+Plot 3 is here
+```{r}
+r<-read.csv("data/hourly_well_data.csv")
+head(r)
+```
+
+
+
+
+# Santa Cruz Island
+
+# Dangermond Preserve
+
+# Parks Creek
+
+# Santa Clara River
+
+# Las Piletas
+
+# Tulare

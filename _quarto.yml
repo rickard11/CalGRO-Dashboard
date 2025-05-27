@@ -17,6 +17,8 @@ website:
         text: Las Piletas
       - href: FourthDashboard.qmd
         text: Maps
+      - href: fifthdashboard.qmd
+        text: Recharge Calculations
 
 
 

@@ -8,6 +8,8 @@ format:
 
 ## Column{width="50%"}
 
+data
+
 
 ```{r, loadpackages}
 #load packages that are needed for all dashboards
