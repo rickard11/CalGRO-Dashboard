@@ -143,7 +143,6 @@ gwallhr<-read.csv("data/hourly_well_data.csv")
 gwallhr$Date.and.Time<-as.POSIXct(gwallhr$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
 
 Coopall<-gwallhr[gwallhr$Well_Name=="Cooper",]
-Coopall
 
 q<-ggplot(data=coop,aes(x=DateTime))+
   geom_line(aes(y=Depth_to_Water_ft))+scale_y_reverse()+theme_bw()

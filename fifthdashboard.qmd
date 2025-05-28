@@ -124,7 +124,7 @@ b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
   geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
   scale_y_reverse()+
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Cactus Pasture Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "B & C Ranch Well Depth and Rainfall") +
   theme_minimal()
 
 ggplotly(b)
