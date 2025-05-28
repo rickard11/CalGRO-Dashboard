@@ -141,7 +141,6 @@ ggplotly(l)
 
 ### Row {height="33%"}
 
-
 ```{r,plotfive}
 #NE Corner Only
 NEDS<-daily_stats[daily_stats$Site=="NE Corner",]
