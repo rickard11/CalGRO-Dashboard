@@ -142,15 +142,15 @@ coopdaily_min<-aggregate(Depth_to_Water_ft~Date,coop,FUN=min)
 gwallhr<-read.csv("data/hourly_well_data.csv")
 gwallhr$Date.and.Time<-as.POSIXct(gwallhr$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
 
-Coopall<-gwallhr[gwallhr$Well_Name=="Cooper",]
+#Coopall<-gwallhr[gwallhr$Well_Name=="Cooper",]
 
-q<-ggplot(data=coop,aes(x=DateTime))+
+#q<-ggplot(data=coop,aes(x=DateTime))+
   geom_line(aes(y=Depth_to_Water_ft))+scale_y_reverse()+theme_bw()
-ggplotly(q)
+#ggplotly(q)
 
-r<-ggplot(data=Coopall,aes(x=Date.and.Time))+
+#r<-ggplot(data=Coopall,aes(x=Date.and.Time))+
   geom_line(aes(y=ft..below.ground.))+scale_y_reverse()+theme_bw()
-ggplotly(r)
+#ggplotly(r)
 ```
 
 
