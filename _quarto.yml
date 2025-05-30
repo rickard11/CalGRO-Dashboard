@@ -7,12 +7,12 @@ website:
     contents:
       - href: index.qmd
         text: Home
-      - href: SecondDashboard.qmd
-        text: Water depth
       - href: ThirdDashboard.qmd
         text: Las Piletas
       - href: fifthdashboard.qmd
         text: Recharge Calculations
+      - href: Welldepth_rainfall_scatter.qmd
+        text: Rainfall and Well Depth
 
 
 
