@@ -119,7 +119,7 @@ storm_summary <- left_join(well_depth_summary, storm_rainfall_summary, by = "sto
 storm_summary$well_change<-storm_summary$max_well_depth-storm_summary$min_well_depth
 #change to df so I can read it all
 storm_summary<-as.data.frame(storm_summary)
-storm_summary
+
 
 #Take water year into account when calculating storm number
 data_with_storm_year <- storm_summary %>%
