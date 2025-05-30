@@ -9,19 +9,19 @@ format:
 # Water depth
 
 ```{r, loadE5data}
-E5R<-read.csv("data/raw/other CalGro Sites/Rain/Escondido 5 Rain Gauge Rain Gauge 20231001-20250417.csv")
+E5R<-read.csv("data/rain/Dangermond- Escondido 5 new Rain Gauge 20231001-20250417.csv")
 E5R$Date<-as.POSIXct(E5R$Date, format="%Y-%m-%d")
 E5R<-E5R %>% arrange(E5R$Date)
 E5R$Location<-"Escondido 5"
 #Uploading rain data from new device
-E5RN<-read.csv("data/raw/other CalGro Sites/Rain/Dangermond- Escondido 5 new Rain Gauge 20231001-20250417.csv")
+E5RN<-read.csv("data/rain/Dangermond- Escondido 5 new Rain Gauge 20231001-20250417.csv")
 E5RN$Date<-as.POSIXct(E5RN$Date, format="%Y-%m-%d")
 E5RN<-E5RN %>% arrange(E5RN$Date)
 E5RN$Location<-"Escondido 5"
 E5R<-merge(E5R,E5RN,all.x=TRUE,all.y=TRUE) #Merge the 2 rain datasets together
 
 #Uploading well data
-E5W<-read.csv("data/raw/other CalGro Sites/Well/Dangermond- Escondido 5 Well 20231001-20250417.csv")
+E5W<-read.csv("data/Well/Dangermond- Escondido 5 Well 20231001-20250417.csv")
 E5W$Date.and.Time<-as.POSIXct(E5W$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
 E5W$Date<-format(E5W$Date.and.Time,format="%Y-%m-%d")
 E5W$Date<-as.POSIXct(E5W$Date,format="%Y-%m-%d")
