@@ -7,8 +7,6 @@ format:
 
 # Randall
 
-Estimating ground water recharge using the water-table fluctuation (WTF) method https://water.usgs.gov/ogw/gwrp/methods/wtf/. We are assuming the extrapolated antecedent recession curve is continuous with the water depth at start date, since we do not have any dry season historic data to base our measurements on.
-
 ## Column{width="50%"}
 
 ### Row {height="33%"}
@@ -134,13 +132,12 @@ ggplotly(b)
 ## Column{width="50%"}
 
 ### Row {height="33%"}
-Lower Tweedy Recharge
+Lower Tweedy Recharge Unknown for now
 ```{r, LowerTweedyRecharge}
-1+1
+#Unknown for now
 ```
 
 ### Row {height="33%"}
-Cactus Pasture Recharge
 ```{r, CactusPastureRecharge}
 #Inches of Rain
 sum(cprain$Rain..in.)
@@ -152,7 +149,6 @@ inre
 ```
 
 ### Row {height="33%"}
-B and C Ranch Well Recharge
 ```{r, BandCRecharge}
 #Inches of Rain
 sum(bcrain$Rain..in.)
@@ -165,7 +161,37 @@ inre
 
 # Santa Cruz Island
 
-Plot 2
+```{r}
+
+scirain<-read.csv("data/rain/Prisoners wells Rain Gauge 20250301-20250530.csv")
+sciwell<-r[r$Well_Name=="Prisoners Harbor Well",]
+scirain<-scirain[scirain$Date<="2025-05-13",]
+sciall<-merge(sciwell,scirain,by="Date",all.x=TRUE,all.y=TRUE)
+hourly_data<-sciwell
+daily_data<-scirain
+
+# Prepare data for faceting
+hourly_data_long <- hourly_data %>%
+  mutate(Date.and.Time = as.POSIXct(Date.and.Time),variable = "Water Depth", value = ft..below.ground.) %>%
+  select(Date.and.Time, variable, value)
+
+daily_data_long <- daily_data %>%
+  mutate(Date.and.Time = as.POSIXct(Date), variable = "Rainfall", value = Rain..in.) %>%
+  select(Date.and.Time, variable, value)
+
+combined <- bind_rows(hourly_data_long, daily_data_long)
+
+b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
+  geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
+  geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
+  scale_y_reverse()+
+  facet_wrap(~variable, ncol = 1, scales = "free_y") +
+  labs(x = "Date", y = NULL, title = "Santa Cruz Island Well Depth and Rainfall") +
+  theme_minimal()
+
+ggplotly(b)
+```
+
 
 # Dangermond Preserve
 
@@ -182,22 +208,213 @@ tail(r)
 
 # Parks Creek
 ```{r}
-head(r)
-tail(r)
+pcrain<-read.csv("data/rain/Parks Creek Well Rain Gauge 20250101-20250530.csv")
+pcwell<-r[r$Well_Name=="Parks Creek Well",]
+pcrain<-pcrain[pcrain$Date<="2025-05-13",]
+pcall<-merge(pcwell,pcrain,by="Date",all.x=TRUE,all.y=TRUE)
+hourly_data<-pcwell
+daily_data<-pcrain
+
+# Prepare data for faceting
+hourly_data_long <- hourly_data %>%
+  mutate(Date.and.Time = as.POSIXct(Date.and.Time),variable = "Water Depth", value = ft..below.ground.) %>%
+  select(Date.and.Time, variable, value)
+
+daily_data_long <- daily_data %>%
+  mutate(Date.and.Time = as.POSIXct(Date), variable = "Rainfall", value = Rain..in.) %>%
+  select(Date.and.Time, variable, value)
+
+combined <- bind_rows(hourly_data_long, daily_data_long)
+
+b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
+  geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
+  geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
+  scale_y_reverse()+
+  facet_wrap(~variable, ncol = 1, scales = "free_y") +
+  labs(x = "Date", y = NULL, title = "Parks Creek Well Depth and Rainfall") +
+  theme_minimal()
+
+ggplotly(b)
 ```
 
 # Santa Clara River
-```{r}
-head(r)
-tail(r)
+```{r, aflalo}
+Arain<-read.csv("data/rain/Aflalo Rain Gauge 20250508-20250530.csv")
+Awell<-r[r$Well_Name=="Aflalo",]
+Arain<-Arain[Arain$Date<="2025-05-13",]
+pcall<-merge(Awell,Arain,by="Date",all.x=TRUE,all.y=TRUE)
+hourly_data<-Awell
+daily_data<-Arain
+
+# Prepare data for faceting
+hourly_data_long <- hourly_data %>%
+  mutate(Date.and.Time = as.POSIXct(Date.and.Time),variable = "Water Depth", value = ft..below.ground.) %>%
+  select(Date.and.Time, variable, value)
+
+daily_data_long <- daily_data %>%
+  mutate(Date.and.Time = as.POSIXct(Date), variable = "Rainfall", value = Rain..in.) %>%
+  select(Date.and.Time, variable, value)
+
+combined <- bind_rows(hourly_data_long, daily_data_long)
+
+b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
+  geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
+  geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
+  scale_y_reverse()+
+  facet_wrap(~variable, ncol = 1, scales = "free_y") +
+  labs(x = "Date", y = NULL, title = "Aflalo Well Depth and Rainfall") +
+  theme_minimal()
+
+ggplotly(b)
 ```
+
+```{r, Hanson Retired}
+Hrain<-read.csv("data/rain/Hanson Retired Rain Gauge 20250508-20250530.csv")
+Hwell<-r[r$Well_Name=="Hanson Retired Well",]
+Hrain<-Hrain[Hrain$Date<="2025-05-13",]
+pcall<-merge(Hwell,Hrain,by="Date",all.x=TRUE,all.y=TRUE)
+hourly_data<-Hwell
+daily_data<-Hrain
+
+# Prepare data for faceting
+hourly_data_long <- hourly_data %>%
+  mutate(Date.and.Time = as.POSIXct(Date.and.Time),variable = "Water Depth", value = ft..below.ground.) %>%
+  select(Date.and.Time, variable, value)
+
+daily_data_long <- daily_data %>%
+  mutate(Date.and.Time = as.POSIXct(Date), variable = "Rainfall", value = Rain..in.) %>%
+  select(Date.and.Time, variable, value)
+
+combined <- bind_rows(hourly_data_long, daily_data_long)
+
+b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
+  geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
+  geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
+  scale_y_reverse()+
+  facet_wrap(~variable, ncol = 1, scales = "free_y") +
+  labs(x = "Date", y = NULL, title = "B & C Ranch Well Depth and Rainfall") +
+  theme_minimal()
+
+ggplotly(b)
+```
+
 # Las Piletas
-```{r}
-head(r)
-tail(r)
+```{r, Cooper}
+Crain<-read.csv("data/rain/Las Piletas Cooper Rain Gauge 20241205-20250214.csv")
+Cwell<-r[r$Well_Name=="Cooper",]
+Crain<-Crain[Crain$Date<="2025-05-13",]
+pcall<-merge(Cwell,Crain,by="Date",all.x=TRUE,all.y=TRUE)
+hourly_data<-Cwell
+daily_data<-Crain
+
+# Prepare data for faceting
+hourly_data_long <- hourly_data %>%
+  mutate(Date.and.Time = as.POSIXct(Date.and.Time),variable = "Water Depth", value = ft..below.ground.) %>%
+  select(Date.and.Time, variable, value)
+
+daily_data_long <- daily_data %>%
+  mutate(Date.and.Time = as.POSIXct(Date), variable = "Rainfall", value = Rain..in.) %>%
+  select(Date.and.Time, variable, value)
+
+combined <- bind_rows(hourly_data_long, daily_data_long)
+
+b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
+  geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
+  geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
+  scale_y_reverse()+
+  facet_wrap(~variable, ncol = 1, scales = "free_y") +
+  labs(x = "Date", y = NULL, title = "Cooper Well Depth and Rainfall") +
+  theme_minimal()
+
+ggplotly(b)
+```
+
+```{r, NECorner}
+NErain<-read.csv("data/rain/Las Piletas NE Corner Rain Gauge Rain Gauge 20241211-20250530.csv")
+NEwell<-r[r$Well_Name=="NE Corner",]
+NErain<-NErain[NErain$Date<="2025-05-13",]
+pcall<-merge(NEwell,NErain,by="Date",all.x=TRUE,all.y=TRUE)
+hourly_data<-NEwell
+daily_data<-NErain
+
+# Prepare data for faceting
+hourly_data_long <- hourly_data %>%
+  mutate(Date.and.Time = as.POSIXct(Date.and.Time),variable = "Water Depth", value = ft..below.ground.) %>%
+  select(Date.and.Time, variable, value)
+
+daily_data_long <- daily_data %>%
+  mutate(Date.and.Time = as.POSIXct(Date), variable = "Rainfall", value = Rain..in.) %>%
+  select(Date.and.Time, variable, value)
+
+combined <- bind_rows(hourly_data_long, daily_data_long)
+
+b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
+  geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
+  geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
+  scale_y_reverse()+
+  facet_wrap(~variable, ncol = 1, scales = "free_y") +
+  labs(x = "Date", y = NULL, title = "NE Corner Well Depth and Rainfall") +
+  theme_minimal()
+
+ggplotly(b)
+```
+
+```{r, Windmill}
+Wrain<-read.csv("data/rain/Las Piletas Windmill Rain Gauge Rain Gauge 20250224-20250530.csv")
+Wwell<-r[r$Well_Name=="Windmill",]
+Wrain<-Wrain[Wrain$Date<="2025-05-13",]
+pcall<-merge(Wwell,Wrain,by="Date",all.x=TRUE,all.y=TRUE)
+hourly_data<-Wwell
+daily_data<-Wrain
+
+# Prepare data for faceting
+hourly_data_long <- hourly_data %>%
+  mutate(Date.and.Time = as.POSIXct(Date.and.Time),variable = "Water Depth", value = ft..below.ground.) %>%
+  select(Date.and.Time, variable, value)
+
+daily_data_long <- daily_data %>%
+  mutate(Date.and.Time = as.POSIXct(Date), variable = "Rainfall", value = Rain..in.) %>%
+  select(Date.and.Time, variable, value)
+
+combined <- bind_rows(hourly_data_long, daily_data_long)
+
+b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
+  geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
+  geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
+  scale_y_reverse()+
+  facet_wrap(~variable, ncol = 1, scales = "free_y") +
+  labs(x = "Date", y = NULL, title = "Windmill Well Depth and Rainfall") +
+  theme_minimal()
+
+ggplotly(b)
 ```
 # Tulare
 ```{r}
-head(r)
-tail(r)
+PTrain<-read.csv("data/rain/Pixley_Tulare Rain Gauge Rain Gauge 20241213-20250530.csv")
+PTwell<-r[r$Well_Name=="Pixley Tulare",]
+PTrain<-PTrain[PTrain$Date<="2025-05-13",]
+pcall<-merge(PTwell,PTrain,by="Date",all.x=TRUE,all.y=TRUE)
+hourly_data<-PTwell
+daily_data<-PTrain
+
+# Prepare data for faceting
+hourly_data_long <- hourly_data %>%
+  mutate(Date.and.Time = as.POSIXct(Date.and.Time),variable = "Water Depth", value = ft..below.ground.) %>%
+  select(Date.and.Time, variable, value)
+
+daily_data_long <- daily_data %>%
+  mutate(Date.and.Time = as.POSIXct(Date), variable = "Rainfall", value = Rain..in.) %>%
+  select(Date.and.Time, variable, value)
+
+combined <- bind_rows(hourly_data_long, daily_data_long)
+
+b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
+  geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
+  geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
+  scale_y_reverse()+
+  facet_wrap(~variable, ncol = 1, scales = "free_y") +
+  labs(x = "Date", y = NULL, title = "Windmill Well Depth and Rainfall") +
+  theme_minimal()
+
+ggplotly(b)
 ```
