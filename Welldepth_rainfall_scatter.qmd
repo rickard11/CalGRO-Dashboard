@@ -25,20 +25,22 @@ E5W<-read.csv("data/Well/Dangermond- Escondido 5 Well 20231001-20250417.csv")
 E5W$Date.and.Time<-as.POSIXct(E5W$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
 E5W$Date<-format(E5W$Date.and.Time,format="%Y-%m-%d")
 E5W$Date<-as.POSIXct(E5W$Date,format="%Y-%m-%d")
-E5Whr<-E5W
-E5W<-aggregate(ft..below.ground.~Date,E5W,FUN=mean)
+#E5W<-aggregate(ft..below.ground.~Date,E5W,FUN=mean)
 
 #Loading packages
 library(dplyr)
 library(dataRetrieval)
+library(plotly)
+library(ggplot2)
 
 #Adjusting escondido 5 well depth data for differential
 E5W <- E5W %>%
   mutate(ft..below.ground. = ifelse(ft..below.ground. < 20, ft..below.ground. + 56, ft..below.ground.))
 E5W<-E5W[E5W$ft..below.ground.>=53&E5W$ft..below.ground.<=70,]
+E5Whr<-E5W
 
 ##Making plot of rainfall quantity and groundwater depth increase
-#E5<-merge(E5R,E5W,by="Date",all.x=TRUE,all.y=TRUE)
+E5<-merge(E5R,E5W,by="Date",all.x=TRUE,all.y=TRUE)
 ```
 
 
@@ -137,22 +139,22 @@ final_data <- storm_summary %>%
 
 final_data$Site<-"Escondido 5" #add site neame so i can merge with others later on.
 
-ggplot(final_data)+geom_point(aes(x=total_rainfall,y=well_change,color = storm_in_year),size=3)+
-  scale_color_gradient(low = "lightyellow", high = "red3", name = "Storm # in Year")+theme_bw()+
-  ggtitle("Rainfall Intensity and Well Water Recharge")
+#ggplot(final_data)+geom_point(aes(x=total_rainfall,y=well_change,color = storm_in_year),size=3)+
+#  scale_color_gradient(low = "lightyellow", high = "red3", name = "Storm # in #Year")+theme_bw()+
+#  ggtitle("Rainfall Intensity and Well Water Recharge")
 ```
 
 
 ```{r,dataE3}
-Uploading rain data
-E3R<-read.csv("data/raw/other CalGro Sites/Rain/Dangermond- Escondido 3 Rain Gauge 20240131-20250401.csv")
+#Uploading rain data
+E3R<-read.csv("data/rain/Dangermond- Escondido 3 Rain Gauge 20240131-20250401.csv")
 E3R$Date<-as.POSIXct(E3R$Date, format="%Y-%m-%d")
 E3R<-E3R %>% arrange(E3R$Date)
 E3R$Location<-"Escondido 5"
 
 
 #Uploading well data
-E3W<-read.csv("data/raw/other CalGro Sites/Well/Dangermond- Escondido 3 Well 20240101-20250214.csv")
+E3W<-read.csv("data/Well/Dangermond- Escondido 3 Well 20240101-20250214.csv")
 E3W$Date.and.Time<-as.POSIXct(E3W$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
 E3W$Date<-format(E3W$Date.and.Time,format="%Y-%m-%d")
 E3W$Date<-as.POSIXct(E3W$Date,format="%Y-%m-%d")
@@ -175,7 +177,7 @@ E3_daily_data_long <- E3_daily_data %>%
 E3_combined <- bind_rows(E3_hourly_data_long, E3_daily_data_long)
 
 #Plot the data
-s<-ggplot(E3_combined, aes(x = Date.and.Time, y = value)) +
+t<-ggplot(E3_combined, aes(x = Date.and.Time, y = value)) +
   geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
   geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
   scale_y_reverse()+
@@ -183,7 +185,7 @@ s<-ggplot(E3_combined, aes(x = Date.and.Time, y = value)) +
   labs(x = "Date", y = NULL, title = "Escondido 5 Well Depth and Rainfall") +
   theme_minimal()
 #nmake it interactive
-ggplotly(s)
+ggplotly(t)
 
 #Preparing to make scatter plot of change in well depth~total storm rainfall
 # Create storm number for days with more than 0.1 in of rain
