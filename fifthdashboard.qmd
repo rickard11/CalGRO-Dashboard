@@ -200,6 +200,55 @@ Plot 3 is here
 ```
 
 ```{r, E3}
+unique(r$Well_Name)
+```
+
+```{r, E2}
+unique(r$Well_Name)
+```
+
+```{r, O1}
+unique(r$Well_Name)
+```
+
+```{r, O2}
+unique(r$Well_Name)
+```
+
+```{r, O4}
+unique(r$Well_Name)
+```
+
+```{r, O5}
+unique(r$Well_Name)
+```
+
+```{r, T3}
+unique(r$Well_Name)
+```
+
+```{r, T5}
+unique(r$Well_Name)
+```
+
+```{r, T6}
+unique(r$Well_Name)
+```
+
+```{r, T10}
+unique(r$Well_Name)
+```
+
+```{r, T11}
+unique(r$Well_Name)
+```
+
+```{r, WC}
+unique(r$Well_Name)
+```
+
+```{r, QC}
+unique(r$Well_Name)
 ```
 
 

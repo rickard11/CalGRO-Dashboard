@@ -65,7 +65,7 @@ s<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
   labs(x = "Date", y = NULL, title = "Escondido 5 Well Depth and Rainfall") +
   theme_minimal()
 #nmake it interactive
-ggplotly(s)
+#ggplotly(s)
 ```
 
 ```{r, scatter}
@@ -179,12 +179,11 @@ s<-ggplot(E3_combined, aes(x = Date.and.Time, y = value)) +
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
   labs(x = "Date", y = NULL, title = "Escondido 5 Well Depth and Rainfall") +
   theme_minimal()
-#nmake it interactive
-ggplotly(s)
+#make it interactive
+#ggplotly(s)
 ```
 
 ```{r,E3Scatter}
-
 #Preparing to make scatter plot of change in well depth~total storm rainfall
 # Create storm number for days with more than 0.1 in of rain
 E3_rain_data <- E3R %>%
@@ -234,7 +233,6 @@ E3_storm_summary <- left_join(E3_well_depth_summary, E3_storm_rainfall_summary, 
 E3_storm_summary$well_change<-E3_storm_summary$max_well_depth-E3_storm_summary$min_well_depth
 #change to df so I can read it all
 E3_storm_summary<-as.data.frame(E3_storm_summary)
-E3_storm_summary
 
 #Take water year into account when calculating storm number
 E3_data_with_storm_year <- E3_storm_summary %>%
