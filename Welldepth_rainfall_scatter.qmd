@@ -255,11 +255,10 @@ E3_final_data$Site<-"Escondido 3" #add site neame so i can merge with others lat
 r<-ggplot(E3_final_data)+geom_point(aes(x=total_rainfall,y=well_change,color = storm_in_year),size=3)+
   scale_color_gradient(low = "lightyellow", high = "red3", name = "Storm # in Year")+theme_bw()+
   ggtitle("Rainfall Intensity and Well Water Recharge")
+```
 
 
-
-###############################################################################
-###################Merge Sites##################################################
+```{r,merged}
 all_final_data<-rbind(final_data,E3_final_data)
 
 a<-ggplot(all_final_data)+
