@@ -159,7 +159,7 @@ rain_data <- E5R %>%
     storm_number = ifelse(rainy, storm_group, NA)  # only assign storm number to rainy days
   )
 
-rain_data <- rain_data %>%
+E5_rain_data <- E5_rain_data %>%
   filter(!is.na(storm_number))
 
 extra_days <- E5_rain_data %>%
