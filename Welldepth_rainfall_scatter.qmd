@@ -147,7 +147,7 @@ q<-ggplot(final_data)+geom_point(aes(x=total_rainfall,y=well_change,color = stor
 E3R<-read.csv("data/rain/Dangermond- Escondido 3 Rain Gauge 20240131-20250401.csv")
 E3R$Date<-as.POSIXct(E3R$Date, format="%Y-%m-%d")
 E3R<-E3R %>% arrange(E3R$Date)
-E3R$Location<-"Escondido 5"
+E3R$Location<-"Escondido 3"
 
 #Uploading well data
 E3W<-read.csv("data/Well/Dangermond- Escondido 3 Well 20240101-20250214.csv")
@@ -177,7 +177,7 @@ s<-ggplot(E3_combined, aes(x = Date.and.Time, y = value)) +
   geom_col(data = filter(E3_combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
   scale_y_reverse()+
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Escondido 5 Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Escondido 3 Well Depth and Rainfall") +
   theme_minimal()
 #make it interactive
 #ggplotly(s)
@@ -245,7 +245,7 @@ E3_data_with_storm_year <- E3_storm_summary %>%
 
 # Now join back to original data
 E3_final_data <- E3_storm_summary %>%
-  left_join(data_with_storm_year %>% select(wtr_yr, storm_number, storm_in_year),
+  left_join(E3_data_with_storm_year %>% select(wtr_yr, storm_number, storm_in_year),
             by = c("wtr_yr", "storm_number"))
 
 E3_final_data$Site<-"Escondido 3" #add site neame so i can merge with others later on.

@@ -60,7 +60,7 @@ df_extended <- bind_rows(E3_rain_data, extra_days) %>%
   arrange(storm_number, Date)
 
 #merge rain data and well data
-E3all<-merge(E3Whr,df_extended,by="Date",all.x=FALSE,all.y=TRUE)
+E3all<-merge(E3W,df_extended,by="Date",all.x=FALSE,all.y=TRUE)
 
 # Step 1: Extract unique rainfall per day per storm
 E3_daily_rainfall <- E3all %>%
