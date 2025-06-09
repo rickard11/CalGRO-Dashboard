@@ -1,0 +1,556 @@
+---
+title: "Welldepth_rainfall_scatter_1dlag"
+editor: visual
+---
+
+
+
+```{r,E3data}
+#Loading packages
+library(dplyr)
+library(dataRetrieval)
+library(ggplot2)
+library(lubridate)
+library(plotly)
+# Water depth
+#Uploading rain data
+
+
+#Uploading rain data
+E3R<-read.csv("data/rain/Dangermond- Escondido 3 Rain Gauge 20240131-20250401.csv")
+E3R$Date<-as.POSIXct(E3R$Date, format="%Y-%m-%d")
+E3R<-E3R %>% arrange(E3R$Date)
+E3R$Location<-"Escondido 3"
+
+#Uploading well data
+E3W<-read.csv("data/Well/Dangermond- Escondido 3 Well 20240101-20250214.csv")
+E3W$Date.and.Time<-as.POSIXct(E3W$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
+E3W$Date<-format(E3W$Date.and.Time,format="%Y-%m-%d")
+E3W$Date<-as.POSIXct(E3W$Date,format="%Y-%m-%d")
+E3W<-E3W[E3W$ft..below.ground.<70,]
+```
+
+```{r,E3Scatter}
+#Preparing to make scatter plot of change in well depth~total storm rainfall
+# Create storm number for days with more than 0.1 in of rain
+E3_rain_data <- E3R %>%
+  mutate(
+    rainy = Rain..in. > 0.15,
+    gap = !rainy,  # identifies dry days
+    storm_group = cumsum(lag(gap, default = TRUE) & rainy)  # increment on first rainy day after dry
+  ) %>%
+  mutate(
+    storm_number = ifelse(rainy, storm_group, NA)  # only assign storm number to rainy days
+  )
+
+E3_rain_data <- E3_rain_data %>%
+  filter(!is.na(storm_number))
+
+
+extra_days <- E3_rain_data %>%
+  group_by(storm_number) %>%
+  slice_tail(n = 1) %>%
+  mutate(
+    Date = Date + days(1),
+    Rain..in. = 0
+  )
+
+# Combine original and new rows
+df_extended <- bind_rows(E3_rain_data, extra_days) %>%
+  arrange(storm_number, Date)
+
+#merge rain data and well data
+E3all<-merge(E3Whr,df_extended,by="Date",all.x=FALSE,all.y=TRUE)
+
+# Step 1: Extract unique rainfall per day per storm
+E3_daily_rainfall <- E3all %>%
+  select(Date, storm_number, Rain..in.) %>%
+  distinct() %>%
+  filter(!is.na(storm_number))
+
+E3_daily_rainfall$wtr_yr<-calcWaterYear(E3_daily_rainfall$Date) #Calc water year
+
+# Step 2: Sum rainfall per storm using cleaned daily data
+E3_storm_rainfall_summary <- E3_daily_rainfall %>%
+  group_by(storm_number,wtr_yr) %>%
+  summarise(
+    total_rainfall = sum(Rain..in., na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# Step 3: Get well depth stats (from full merged data)
+E3_well_depth_summary <- E3all %>%
+  filter(!is.na(storm_number)) %>%
+  group_by(storm_number) %>%
+  summarise(
+    min_well_depth = min(ft..below.ground., na.rm = TRUE),
+    max_well_depth = max(ft..below.ground., na.rm = TRUE),
+    max_intensity=max(Rain..in.,na.rm=TRUE),
+    .groups = "drop"
+  )
+
+# Step 4: Join rainfall and well depth summaries
+E3_storm_summary <- left_join(E3_well_depth_summary, E3_storm_rainfall_summary, by = "storm_number")
+#Calculate difference in well depth
+E3_storm_summary$well_change<-E3_storm_summary$max_well_depth-E3_storm_summary$min_well_depth
+#change to df so I can read it all
+E3_storm_summary<-as.data.frame(E3_storm_summary)
+
+#Take water year into account when calculating storm number
+E3_data_with_storm_year <- E3_storm_summary %>%
+  filter(!is.na(storm_number)) %>%
+  group_by(wtr_yr, storm_number) %>%  # make sure storm_number isn't repeated per storm
+  summarise(.groups = "drop_last") %>%     # drop after storm_number to keep water_year grouping
+  arrange(wtr_yr, storm_number) %>%
+  mutate(storm_in_year = row_number()) %>%
+  ungroup()
+
+# Now join back to original data
+E3_final_data <- E3_storm_summary %>%
+  left_join(E3_data_with_storm_year %>% select(wtr_yr, storm_number,storm_in_year),
+            by = c("wtr_yr", "storm_number"))
+
+E3_final_data$Site<-"Escondido 3" #add site neame so i can merge with others later on.
+
+r<-ggplot(E3_final_data)+geom_point(aes(x=total_rainfall,y=well_change,color = max_intensity, size=-storm_in_year))+
+  scale_color_gradient(low = "lightyellow", high = "red3", name = "max storm intensity (in/day)")+theme_bw()+
+  ggtitle("Rainfall Intensity and Well Water Recharge")
+```
+
+```{r, E5data}
+E5R<-read.csv("data/rain/Escondido 5 Rain Gauge Rain Gauge 20231001-20250417.csv")
+E5R$Date<-as.POSIXct(E5R$Date, format="%Y-%m-%d")
+E5R<-E5R %>% arrange(E5R$Date)
+E5R$Location<-"Escondido 5"
+#Uploading rain data from new device
+E5RN<-read.csv("data/rain/Dangermond- Escondido 5 new Rain Gauge 20231001-20250417.csv")
+E5RN$Date<-as.POSIXct(E5RN$Date, format="%Y-%m-%d")
+E5RN<-E5RN %>% arrange(E5RN$Date)
+E5RN$Location<-"Escondido 5"
+E5R<-merge(E5R,E5RN,all.x=TRUE,all.y=TRUE) #Merge the 2 rain datasets together
+
+#Uploading well data
+E5W<-read.csv("data/Well/Dangermond- Escondido 5 Well 20231001-20250417.csv")
+E5W$Date.and.Time<-as.POSIXct(E5W$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
+E5W$Date<-format(E5W$Date.and.Time,format="%Y-%m-%d")
+E5W$Date<-as.POSIXct(E5W$Date,format="%Y-%m-%d")
+
+#Adjusting escondido 5 well depth data for differential
+E5W <- E5W %>%
+  mutate(ft..below.ground. = ifelse(ft..below.ground. < 20, ft..below.ground. + 56, ft..below.ground.))
+E5W<-E5W[E5W$ft..below.ground.>=53&E5W$ft..below.ground.<=70,]
+
+##Making plot of rainfall quantity and groundwater depth increase
+E5<-merge(E5R,E5W,by="Date",all.x=TRUE,all.y=TRUE)
+E5Whr<-E5W
+```
+
+```{r, E5scatter}
+
+#Preparing to make scatter plot of change in well depth~total storm rainfall
+# Create storm number for days with more than 0.1 in of rain
+rain_data <- E5R %>%
+  mutate(
+    rainy = Rain..in. > 0.15,
+    gap = !rainy,  # identifies dry days
+    storm_group = cumsum(lag(gap, default = TRUE) & rainy)  # increment on first rainy day after dry
+  ) %>%
+  mutate(
+    storm_number = ifelse(rainy, storm_group, NA)  # only assign storm number to rainy days
+  )
+
+rain_data <- rain_data %>%
+  filter(!is.na(storm_number))
+
+extra_days <- E5_rain_data %>%
+  group_by(storm_number) %>%
+  slice_tail(n = 1) %>%
+  mutate(
+    Date = Date + days(1),
+    Rain..in. = 0
+  )
+
+# Combine original and new rows
+df_extended <- bind_rows(E5_rain_data, extra_days) %>%
+  arrange(storm_number, Date)
+
+#merge rain data and well data
+E5all<-merge(E5Whr,rain_data,by="Date",all.x=FALSE,all.y=TRUE)
+
+# Step 1: Extract unique rainfall per day per storm
+daily_rainfall <- E5all %>%
+  select(Date, storm_number, Rain..in.) %>%
+  distinct() %>%
+  filter(!is.na(storm_number))
+
+daily_rainfall$wtr_yr<-calcWaterYear(daily_rainfall$Date) #Calc water year
+
+# Step 2: Sum rainfall per storm using cleaned daily data
+storm_rainfall_summary <- daily_rainfall %>%
+  group_by(storm_number,wtr_yr) %>%
+  summarise(
+    total_rainfall = sum(Rain..in., na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# Step 3: Get well depth stats (from full merged data)
+well_depth_summary <- E5all %>%
+  filter(!is.na(storm_number)) %>%
+  group_by(storm_number) %>%
+  summarise(
+    min_well_depth = min(ft..below.ground., na.rm = TRUE),
+    max_well_depth = max(ft..below.ground., na.rm = TRUE),
+    max_intensity=max(Rain..in.,na.rm=TRUE),
+    .groups = "drop"
+  )
+
+# Step 4: Join rainfall and well depth summaries
+storm_summary <- left_join(well_depth_summary, storm_rainfall_summary, by = "storm_number")
+#Calculate difference in well depth
+storm_summary$well_change<-storm_summary$max_well_depth-storm_summary$min_well_depth
+#change to df so I can read it all
+storm_summary<-as.data.frame(storm_summary)
+
+
+#Take water year into account when calculating storm number
+data_with_storm_year <- storm_summary %>%
+  filter(!is.na(storm_number)) %>%
+  group_by(wtr_yr, storm_number) %>%  # make sure storm_number isn't repeated per storm
+  summarise(.groups = "drop_last") %>%     # drop after storm_number to keep water_year grouping
+  arrange(wtr_yr, storm_number) %>%
+  mutate(storm_in_year = row_number()) %>%
+  ungroup()
+
+# Now join back to original data
+E5_final_data <- storm_summary %>%
+  left_join(data_with_storm_year %>% select(wtr_yr, storm_number, storm_in_year),
+            by = c("wtr_yr", "storm_number"))
+
+E5_final_data$Site<-"Escondido 5" #add site neame so i can merge with others later on.
+
+r<-ggplot(E5_final_data)+geom_point(aes(x=total_rainfall,y=well_change,color = max_intensity, size=-storm_in_year))+
+  scale_color_gradient(low = "lightyellow", high = "red3", name = "max storm intensity (in/day)")+theme_bw()+
+  ggtitle("Rainfall Intensity and Well Water Recharge")
+```
+
+```{r, E2addin}
+#Uploading rain data
+E2R<-read.csv("data/rain/Dangermond- Escondido 2 Rain Gauge 20231101-20250408.csv")
+E2R$Date<-as.POSIXct(E2R$Date, format="%Y-%m-%d")
+E2R<-E2R %>% arrange(E2R$Date)
+E2R$Location<-"Escondido 2"
+
+#Uploading well data
+E2W<-read.csv("data/Well/Dangermond- Escondido 2 Well 20240101-20250214.csv")
+E2W$Date.and.Time<-as.POSIXct(E2W$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
+E2W$Date<-format(E2W$Date.and.Time,format="%Y-%m-%d")
+E2W$Date<-as.POSIXct(E2W$Date,format="%Y-%m-%d")
+E2Whr<-E2W
+
+
+#Preparing to make scatter plot of change in well depth~total storm rainfall
+# Create storm number for days with more than 0.1 in of rain
+E2_rain_data <- E2R %>%
+  mutate(
+    rainy = Rain..in. > 0.15,
+    gap = !rainy,  # identifies dry days
+    storm_group = cumsum(lag(gap, default = TRUE) & rainy)  # increment on first rainy day after dry
+  ) %>%
+  mutate(
+    storm_number = ifelse(rainy, storm_group, NA)  # only assign storm number to rainy days
+  )
+
+E2_rain_data <- E2_rain_data %>%
+  filter(!is.na(storm_number))
+
+extra_days <- E2_rain_data %>%
+  group_by(storm_number) %>%
+  slice_tail(n = 1) %>%
+  mutate(
+    Date = Date + days(1),
+    Rain..in. = 0
+  )
+
+# Combine original and new rows
+df_extended <- bind_rows(E2_rain_data, extra_days) %>%
+  arrange(storm_number, Date)
+
+#merge rain data and well data
+E2all<-merge(E2Whr,E2_rain_data,by="Date",all.x=FALSE,all.y=TRUE)
+
+# Step 1: Extract unique rainfall per day per storm
+E2_daily_rainfall <- E2all %>%
+  select(Date, storm_number, Rain..in.) %>%
+  distinct() %>%
+  filter(!is.na(storm_number))
+
+E2_daily_rainfall$wtr_yr<-calcWaterYear(E2_daily_rainfall$Date) #Calc water year
+
+# Step 2: Sum rainfall per storm using cleaned daily data
+E2_storm_rainfall_summary <- E2_daily_rainfall %>%
+  group_by(storm_number,wtr_yr) %>%
+  summarise(
+    total_rainfall = sum(Rain..in., na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+```{r, E2scatter}
+# Step 3: Get well depth stats (from full merged data)
+E2_well_depth_summary <- E2all %>%
+  filter(!is.na(storm_number)) %>%
+  group_by(storm_number) %>%
+  summarise(
+    min_well_depth = min(ft..below.ground., na.rm = TRUE),
+    max_well_depth = max(ft..below.ground., na.rm = TRUE),
+    max_intensity=max(Rain..in.,na.rm=TRUE),
+    .groups = "drop"
+  )
+
+# Step 4: Join rainfall and well depth summaries
+E2_storm_summary <- left_join(E2_well_depth_summary, E2_storm_rainfall_summary, by = "storm_number")
+#Calculate difference in well depth
+E2_storm_summary$well_change<-E2_storm_summary$max_well_depth-E2_storm_summary$min_well_depth
+#change to df so I can read it all
+E2_storm_summary<-as.data.frame(E2_storm_summary)
+
+#Take water year into account when calculating storm number
+E2_data_with_storm_year <- E2_storm_summary %>%
+  filter(!is.na(storm_number)) %>%
+  group_by(wtr_yr, storm_number) %>%  # make sure storm_number isn't repeated per storm
+  summarise(.groups = "drop_last") %>%     # drop after storm_number to keep water_year grouping
+  arrange(wtr_yr, storm_number) %>%
+  mutate(storm_in_year = row_number()) %>%
+  ungroup()
+
+# Now join back to original data
+E2_final_data <- E2_storm_summary %>%
+  left_join(data_with_storm_year %>% select(wtr_yr, storm_number, storm_in_year),
+            by = c("wtr_yr", "storm_number"))
+
+E2_final_data$Site<-"Escondido 2" #add site neame so i can merge with others later on.
+```
+
+```{r, O5addin}
+#Uploading rain data
+O5R<-read.csv("data/rain/Dangermond- Oaks 5 Rain Gauge 20240131-20250401.csv")
+O5R$Date<-as.POSIXct(O5R$Date, format="%Y-%m-%d")
+O5R<-O5R %>% arrange(O5R$Date)
+O5R$Location<-"Oaks 5"
+
+#Uploading well data
+O5W<-read.csv("data/Well/Dangermond- Oaks 5 Well 20240101-20250214.csv")
+O5W$Date.and.Time<-as.POSIXct(O5W$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
+O5W$Date<-format(O5W$Date.and.Time,format="%Y-%m-%d")
+O5W$Date<-as.POSIXct(O5W$Date,format="%Y-%m-%d")
+O5Whr<-O5W
+
+
+#Preparing to make scatter plot of change in well depth~total storm rainfall
+# Create storm number for days with more than 0.1 in of rain
+O5_rain_data <- O5R %>%
+  mutate(
+    rainy = Rain..in. > 0.15,
+    gap = !rainy,  # identifies dry days
+    storm_group = cumsum(lag(gap, default = TRUE) & rainy)  # increment on first rainy day after dry
+  ) %>%
+  mutate(
+    storm_number = ifelse(rainy, storm_group, NA)  # only assign storm number to rainy days
+  )
+
+O5_rain_data <- O5_rain_data %>%
+  filter(!is.na(storm_number))
+
+extra_days <- O5_rain_data %>%
+  group_by(storm_number) %>%
+  slice_tail(n = 1) %>%
+  mutate(
+    Date = Date + days(1),
+    Rain..in. = 0
+  )
+
+# Combine original and new rows
+df_extended <- bind_rows(O5_rain_data, extra_days) %>%
+  arrange(storm_number, Date)
+
+#merge rain data and well data
+O5all<-merge(O5Whr,O5_rain_data,by="Date",all.x=FALSE,all.y=TRUE)
+
+# Step 1: Extract unique rainfall per day per storm
+O5_daily_rainfall <- O5all %>%
+  select(Date, storm_number, Rain..in.) %>%
+  distinct() %>%
+  filter(!is.na(storm_number))
+
+O5_daily_rainfall$wtr_yr<-calcWaterYear(O5_daily_rainfall$Date) #Calc water year
+
+# Step 2: Sum rainfall per storm using cleaned daily data
+O5_storm_rainfall_summary <- O5_daily_rainfall %>%
+  group_by(storm_number,wtr_yr) %>%
+  summarise(
+    total_rainfall = sum(Rain..in., na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+```{r, O5scatter}
+# Step 3: Get well depth stats (from full merged data)
+O5_well_depth_summary <- O5all %>%
+  filter(!is.na(storm_number)) %>%
+  group_by(storm_number) %>%
+  summarise(
+    min_well_depth = min(ft..below.ground., na.rm = TRUE),
+    max_well_depth = max(ft..below.ground., na.rm = TRUE),
+    max_intensity=max(Rain..in.,na.rm=TRUE),
+    .groups = "drop"
+  )
+
+# Step 4: Join rainfall and well depth summaries
+O5_storm_summary <- left_join(O5_well_depth_summary, O5_storm_rainfall_summary, by = "storm_number")
+#Calculate difference in well depth
+O5_storm_summary$well_change<-O5_storm_summary$max_well_depth-O5_storm_summary$min_well_depth
+#change to df so I can read it all
+O5_storm_summary<-as.data.frame(O5_storm_summary)
+
+#Take water year into account when calculating storm number
+O5_data_with_storm_year <- O5_storm_summary %>%
+  filter(!is.na(storm_number)) %>%
+  group_by(wtr_yr, storm_number) %>%  # make sure storm_number isn't repeated per storm
+  summarise(.groups = "drop_last") %>%     # drop after storm_number to keep water_year grouping
+  arrange(wtr_yr, storm_number) %>%
+  mutate(storm_in_year = row_number()) %>%
+  ungroup()
+
+# Now join back to original data
+O5_final_data <- O5_storm_summary %>%
+  left_join(data_with_storm_year %>% select(wtr_yr, storm_number, storm_in_year),
+            by = c("wtr_yr", "storm_number"))
+
+O5_final_data$Site<-"Oaks 5" #add site neame so i can merge with others later on.
+
+r<-ggplot(O5_final_data)+geom_point(aes(x=total_rainfall,y=well_change,color = max_intensity, size=-storm_in_year))+
+  scale_color_gradient(low = "lightyellow", high = "red3", name = "max storm intensity (in/day)")+theme_bw()+
+  ggtitle("Rainfall Intensity and Well Water Recharge")
+```
+
+```{r, T3addin}
+#Uploading rain data
+T3R<-read.csv("data/rain/Dangermond- Tinta 3  Rain Gauge 20241001-20250214.csv")
+T3R$Date<-as.POSIXct(T3R$Date, format="%Y-%m-%d")
+T3R<-T3R %>% arrange(T3R$Date)
+T3R$Location<-"Tinta 3"
+
+#Uploading well data
+T3W<-read.csv("data/Well/Dangermond- Tinta 3 Well 20241030-20250401.csv")
+T3W$Date.and.Time<-as.POSIXct(T3W$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
+T3W$Date<-format(T3W$Date.and.Time,format="%Y-%m-%d")
+T3W$Date<-as.POSIXct(T3W$Date,format="%Y-%m-%d")
+T3Whr<-T3W
+
+
+#Preparing to make scatter plot of change in well depth~total storm rainfall
+# Create storm number for days with more than 0.1 in of rain
+T3_rain_data <- T3R %>%
+  mutate(
+    rainy = Rain..in. > 0.15,
+    gap = !rainy,  # identifies dry days
+    storm_group = cumsum(lag(gap, default = TRUE) & rainy)  # increment on first rainy day after dry
+  ) %>%
+  mutate(
+    storm_number = ifelse(rainy, storm_group, NA)  # only assign storm number to rainy days
+  )
+
+T3_rain_data <- T3_rain_data %>%
+  filter(!is.na(storm_number))
+
+extra_days <- T3_rain_data %>%
+  group_by(storm_number) %>%
+  slice_tail(n = 1) %>%
+  mutate(
+    Date = Date + days(1),
+    Rain..in. = 0
+  )
+
+df_extended <- bind_rows(T3_rain_data, extra_days) %>%
+  arrange(storm_number, Date)# Combine original and new rows
+
+T3all<-merge(T3Whr,T3_rain_data,by="Date",all.x=FALSE,all.y=TRUE) #merge rain data and well data
+
+T3_daily_rainfall <- T3all %>%
+  select(Date, storm_number, Rain..in.) %>%
+  distinct() %>%
+  filter(!is.na(storm_number))#Extract unique rainfall per day per storm
+
+T3_daily_rainfall$wtr_yr<-calcWaterYear(T3_daily_rainfall$Date) #Calc water year
+
+# Step 2: Sum rainfall per storm using cleaned daily data
+T3_storm_rainfall_summary <- T3_daily_rainfall %>%
+  group_by(storm_number,wtr_yr) %>%
+  summarise(
+    total_rainfall = sum(Rain..in., na.rm = TRUE),
+    .groups = "drop"
+  )
+```
+
+```{r, T3scatter}
+# Step 3: Get well depth stats (from full merged data)
+T3_well_depth_summary <- T3all %>%
+  filter(!is.na(storm_number)) %>%
+  group_by(storm_number) %>%
+  summarise(
+    min_well_depth = min(ft..below.ground., na.rm = TRUE),
+    max_well_depth = max(ft..below.ground., na.rm = TRUE),
+    max_intensity=max(Rain..in.,na.rm=TRUE),
+    .groups = "drop"
+  )
+
+# Step 4: Join rainfall and well depth summaries
+T3_storm_summary <- left_join(T3_well_depth_summary, T3_storm_rainfall_summary, by = "storm_number")
+#Calculate difference in well depth
+T3_storm_summary$well_change<-T3_storm_summary$max_well_depth-T3_storm_summary$min_well_depth
+#change to df so I can read it all
+T3_storm_summary<-as.data.frame(T3_storm_summary)
+
+#Take water year into account when calculating storm number
+T3_data_with_storm_year <- T3_storm_summary %>%
+  filter(!is.na(storm_number)) %>%
+  group_by(wtr_yr, storm_number) %>%  # make sure storm_number isn't repeated per storm
+  summarise(.groups = "drop_last") %>%     # drop after storm_number to keep water_year grouping
+  arrange(wtr_yr, storm_number) %>%
+  mutate(storm_in_year = row_number()) %>%
+  ungroup()
+
+# Now join back to original data
+T3_final_data <- T3_storm_summary %>%
+  left_join(T3_data_with_storm_year %>% select(wtr_yr, storm_number, storm_in_year),
+            by = c("wtr_yr", "storm_number"))
+
+T3_final_data$Site<-"Tinta 3" #add site neame so i can merge with others later on.
+
+r<-ggplot(T3_final_data)+geom_point(aes(x=total_rainfall,y=well_change,color = storm_in_year),size=3)+
+  scale_color_gradient(low = "lightyellow", high = "red3", name = "Storm # in Year")+theme_bw()+
+  ggtitle("Rainfall Intensity and Well Water Recharge")
+```
+
+
+
+```{r,merged}
+all_final_data<-rbind(E5_final_data,E3_final_data)
+all_final_data<-rbind(all_final_data,E2_final_data)
+all_final_data<-rbind(all_final_data,O5_final_data)
+all_final_data<-rbind(all_final_data,T3_final_data)
+
+a<-ggplot(all_final_data)+
+  geom_point(aes(x=total_rainfall,y=well_change,color = max_intensity, size=-storm_in_year,
+                 text = paste0("<br>Total Rain (in): ", total_rainfall, " in",
+                    "<br>Storm Number: ", storm_number,
+                    "<br>Site: ", Site,"<br>Max Intensity: ", max_intensity, " in/day",
+                    "<br>Well Change: ", well_change, " feet")))+
+  scale_color_gradient(low = "lightyellow", high = "red3", name = "Max Storm intensity (in/hr)") +
+  scale_size_continuous(name = "Storm number in Year")+theme_bw()+
+  ggtitle("Rainfall Intensity and Well Water Rise")
+
+
+ggplotly(a,tooltip = "text")
+```
+

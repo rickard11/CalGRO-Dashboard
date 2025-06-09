@@ -11,7 +11,7 @@ website:
         text: Las Piletas
       - href: fifthdashboard.qmd
         text: Recharge Calculations
-      - href: Welldepth_rainfall_scatter.qmd
+      - href: Rain_intensity_well_rise_scatter.qmd
         text: Rainfall and Well Depth
 
 
