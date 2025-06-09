@@ -2,7 +2,7 @@
 title: "Welldepth_rainfall_scatter_1dlag"
 format: 
   dashboard: 
-    orientation: columns
+    orientation: rows
 ---
 
 
@@ -534,7 +534,7 @@ r<-ggplot(T3_final_data)+geom_point(aes(x=total_rainfall,y=well_change,color = s
   ggtitle("Rainfall Intensity and Well Water Recharge")
 ```
 
-
+## Row {height="75%"}
 
 ```{r,merged}
 all_final_data<-rbind(E5_final_data,E3_final_data)
@@ -555,5 +555,7 @@ a<-ggplot(all_final_data)+
 
 ggplotly(a,tooltip = "text")
 ```
+
+## Row {height="25%"}
 
 In this plot a storm is considered consecutive days of more than 0.15 inches of rain. The intensity, visualized by the color is the maximum daily rainfall for the duration of the storm. the value of 0.15 as the storm cutoff is somewhat arbetrary and may be changed for future analysis. For puposes here, 0.15 is the value in which we start seeing an affect on groundwater level, but this could be different for different wells. The storm number is the number storm it is in the year of the given site selection. If a site device is installed halfway through the rainy season and there is no way to tell how many storms happened prior to installation the first storm after installation is considered storm 1. All sites for this figure are from the jack and Laura Dangermond preserve.
