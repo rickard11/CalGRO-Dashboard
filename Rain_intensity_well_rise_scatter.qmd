@@ -175,7 +175,7 @@ df_extended <- bind_rows(E5_rain_data, extra_days) %>%
   arrange(storm_number, Date)
 
 #merge rain data and well data
-E5all<-merge(E5Whr,rain_data,by="Date",all.x=FALSE,all.y=TRUE)
+E5all<-merge(E5Whr,E5_rain_data,by="Date",all.x=FALSE,all.y=TRUE)
 
 # Step 1: Extract unique rainfall per day per storm
 daily_rainfall <- E5all %>%
