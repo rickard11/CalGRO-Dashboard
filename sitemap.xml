@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://rickard11.github.io/CalGRO-Dashboard/FourthDashboard.html</loc>
-    <lastmod>2025-06-09T23:12:44.597Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rickard11.github.io/CalGRO-Dashboard/fifthdashboard.html</loc>
-    <lastmod>2025-06-09T23:12:44.639Z</lastmod>
-  </url>
-  <url>
     <loc>https://rickard11.github.io/CalGRO-Dashboard/SecondDashboard.html</loc>
-    <lastmod>2025-06-09T23:12:44.601Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rickard11.github.io/CalGRO-Dashboard/testdashboard.html</loc>
-    <lastmod>2025-06-09T23:12:44.640Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rickard11.github.io/CalGRO-Dashboard/about.html</loc>
-    <lastmod>2025-06-09T23:12:44.601Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rickard11.github.io/CalGRO-Dashboard/ThirdDashboard.html</loc>
-    <lastmod>2025-06-09T23:12:44.601Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rickard11.github.io/CalGRO-Dashboard/Rain_intensity_well_rise_scatter.html</loc>
-    <lastmod>2025-06-09T23:12:44.601Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rickard11.github.io/CalGRO-Dashboard/Welldepth_rainfall_scatter.html</loc>
-    <lastmod>2025-06-09T23:12:44.601Z</lastmod>
+    <lastmod>2025-06-09T23:26:38.777Z</lastmod>
   </url>
   <url>
     <loc>https://rickard11.github.io/CalGRO-Dashboard/index.html</loc>
-    <lastmod>2025-06-09T23:12:44.639Z</lastmod>
+    <lastmod>2025-06-09T23:26:38.816Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rickard11.github.io/CalGRO-Dashboard/fifthdashboard.html</loc>
+    <lastmod>2025-06-09T23:26:38.815Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rickard11.github.io/CalGRO-Dashboard/about.html</loc>
+    <lastmod>2025-06-09T23:26:38.778Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rickard11.github.io/CalGRO-Dashboard/testdashboard.html</loc>
+    <lastmod>2025-06-09T23:26:38.816Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rickard11.github.io/CalGRO-Dashboard/ThirdDashboard.html</loc>
+    <lastmod>2025-06-09T23:26:38.778Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rickard11.github.io/CalGRO-Dashboard/Welldepth_rainfall_scatter.html</loc>
+    <lastmod>2025-06-09T23:26:38.778Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rickard11.github.io/CalGRO-Dashboard/Rain_intensity_well_rise_scatter.html</loc>
+    <lastmod>2025-06-09T23:26:38.777Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rickard11.github.io/CalGRO-Dashboard/FourthDashboard.html</loc>
+    <lastmod>2025-06-09T23:26:38.774Z</lastmod>
   </url>
 </urlset>
