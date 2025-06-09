@@ -149,7 +149,7 @@ E5Whr<-E5W
 
 #Preparing to make scatter plot of change in well depth~total storm rainfall
 # Create storm number for days with more than 0.1 in of rain
-rain_data <- E5R %>%
+E5_rain_data <- E5R %>%
   mutate(
     rainy = Rain..in. > 0.15,
     gap = !rainy,  # identifies dry days
