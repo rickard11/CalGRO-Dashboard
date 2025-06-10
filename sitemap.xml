@@ -1,39 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://rickard11.github.io/CalGRO-Dashboard/SecondDashboard.html</loc>
-    <lastmod>2025-06-09T23:38:21.502Z</lastmod>
+    <loc>https://rickard11.github.io/CalGRO-Dashboard/FourthDashboard.html</loc>
+    <lastmod>2025-06-10T20:42:16.535Z</lastmod>
   </url>
   <url>
-    <loc>https://rickard11.github.io/CalGRO-Dashboard/index.html</loc>
-    <lastmod>2025-06-09T23:38:21.541Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rickard11.github.io/CalGRO-Dashboard/fifthdashboard.html</loc>
-    <lastmod>2025-06-09T23:38:21.540Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rickard11.github.io/CalGRO-Dashboard/about.html</loc>
-    <lastmod>2025-06-09T23:38:21.502Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rickard11.github.io/CalGRO-Dashboard/testdashboard.html</loc>
-    <lastmod>2025-06-09T23:38:21.541Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rickard11.github.io/CalGRO-Dashboard/ThirdDashboard.html</loc>
-    <lastmod>2025-06-09T23:38:21.502Z</lastmod>
+    <loc>https://rickard11.github.io/CalGRO-Dashboard/python_code_test.html</loc>
+    <lastmod>2025-06-10T20:42:16.578Z</lastmod>
   </url>
   <url>
     <loc>https://rickard11.github.io/CalGRO-Dashboard/Welldepth_rainfall_scatter.html</loc>
-    <lastmod>2025-06-09T23:38:21.502Z</lastmod>
+    <lastmod>2025-06-10T20:42:16.538Z</lastmod>
   </url>
   <url>
     <loc>https://rickard11.github.io/CalGRO-Dashboard/Rain_intensity_well_rise_scatter.html</loc>
-    <lastmod>2025-06-09T23:38:21.502Z</lastmod>
+    <lastmod>2025-06-10T20:42:16.538Z</lastmod>
   </url>
   <url>
-    <loc>https://rickard11.github.io/CalGRO-Dashboard/FourthDashboard.html</loc>
-    <lastmod>2025-06-09T23:38:21.498Z</lastmod>
+    <loc>https://rickard11.github.io/CalGRO-Dashboard/ThirdDashboard.html</loc>
+    <lastmod>2025-06-10T20:42:16.538Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rickard11.github.io/CalGRO-Dashboard/about.html</loc>
+    <lastmod>2025-06-10T20:42:16.539Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rickard11.github.io/CalGRO-Dashboard/testdashboard.html</loc>
+    <lastmod>2025-06-10T20:42:16.578Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rickard11.github.io/CalGRO-Dashboard/SecondDashboard.html</loc>
+    <lastmod>2025-06-10T20:42:16.538Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rickard11.github.io/CalGRO-Dashboard/fifthdashboard.html</loc>
+    <lastmod>2025-06-10T20:42:16.577Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rickard11.github.io/CalGRO-Dashboard/index.html</loc>
+    <lastmod>2025-06-10T20:42:16.577Z</lastmod>
   </url>
 </urlset>

@@ -1,5 +1,19 @@
 [
   {
+    "objectID": "python_code_test.html",
+    "href": "python_code_test.html",
+    "title": "pythontestagain",
+    "section": "",
+    "text": "library(reticulate)\n\n# Use GitHub Actions Python when running in CI\nif (Sys.getenv(\"GITHUB_ACTIONS\") == \"true\") {\n  use_python(\"/opt/hostedtoolcache/Python/3.10.17/x64/bin/python3\", required = TRUE)\n\n# Use local Anaconda Python when working interactively in RStudio\n} else if (interactive()) {\n  use_python(\"C:/Users/ricka/anaconda3/python.exe\", required = TRUE)\n}\n\n\nprint(\"python is working\")\n\npython is working\n\n# If in the same folder:\nimport myfunctions\nfrom myfunctions import time_format\n\n# Use a function\norg_id = myfunctions.get_organization_id(\"tnc\")\nprint(org_id)\n\n5eb41ff0883adf89568569d0\n\ndata = myfunctions.get_datapoints('6643edfcc05ad60e4a75f58e',\"2025-01-04T00:00:00\",ends_before=time_format(),time_type='local',name='default')\n\nprint(data)\n\n                                timestamp_utc  DangermondEscondido3_Ranchbot_Cumulative_Daily_Rainfall\ntimestamp_local                                                                                       \n2025-01-04 01:21:56 2025-01-04 09:21:56+00:00                                                0.0      \n2025-01-04 04:22:35 2025-01-04 12:22:35+00:00                                                0.0      \n2025-01-04 07:23:15 2025-01-04 15:23:15+00:00                                                0.0      \n2025-01-04 10:23:55 2025-01-04 18:23:55+00:00                                                0.0      \n2025-01-04 13:24:33 2025-01-04 21:24:33+00:00                                                0.0      \n...                                       ...                                                ...      \n2025-06-09 22:56:29 2025-06-10 06:56:29+00:00                                                0.0      \n2025-06-10 01:57:06 2025-06-10 09:57:06+00:00                                                0.0      \n2025-06-10 04:57:45 2025-06-10 12:57:45+00:00                                                0.0      \n2025-06-10 07:58:23 2025-06-10 15:58:23+00:00                                                0.0      \n2025-06-10 10:59:06 2025-06-10 18:59:06+00:00                                                0.0      \n\n[1289 rows x 2 columns]\n\n\n\ndf_r&lt;-py$data\nhead(df_r)\n\n                          timestamp_utc\n2025-01-04 01:21:56 2025-01-04 09:21:56\n2025-01-04 04:22:35 2025-01-04 12:22:35\n2025-01-04 07:23:15 2025-01-04 15:23:15\n2025-01-04 10:23:55 2025-01-04 18:23:55\n2025-01-04 13:24:33 2025-01-04 21:24:33\n2025-01-04 16:25:09 2025-01-05 00:25:09\n                    DangermondEscondido3_Ranchbot_Cumulative_Daily_Rainfall\n2025-01-04 01:21:56                                                       0\n2025-01-04 04:22:35                                                       0\n2025-01-04 07:23:15                                                       0\n2025-01-04 10:23:55                                                       0\n2025-01-04 13:24:33                                                       0\n2025-01-04 16:25:09                                                       0"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "The CalGRO project is about monitoring groundwater depth and measuring rainfall quantity with a high spatial resolution.\nThere are many different tabs that will be changing as this site is currently under construction. The end goal is to have automated groundwater level updates every day and to be able to calculate groundwater recharge from the water level data."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "CalGRO-Dashboard",
@@ -8,12 +22,5 @@
     "crumbs": [
       "Home"
     ]
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "The CalGRO project is about monitoring groundwater depth and measuring rainfall quantity with a high spatial resolution.\nThere are many different tabs that will be changing as this site is currently under construction. The end goal is to have automated groundwater level updates every day and to be able to calculate groundwater recharge from the water level data."
   }
 ]
