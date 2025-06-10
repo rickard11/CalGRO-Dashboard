@@ -1,0 +1,45 @@
+---
+title: "pythontestagain"
+editor: visual
+---
+
+
+```{r}
+library(reticulate)
+
+# Point to your Anaconda Python
+use_python("C:/Users/ricka/anaconda3/python.exe", required = TRUE)
+
+# OR if you used a named conda env like 'myenv'
+use_condaenv("base", required = TRUE)
+
+py_config()  # Check if pandas shows up here
+
+```
+
+
+```{python}
+print("python is working")
+
+# If in the same folder:
+import myfunctions
+from myfunctions import time_format
+
+# Use a function
+org_id = myfunctions.get_organization_id("tnc")
+print(org_id)
+
+data = myfunctions.get_datapoints('6643edfcc05ad60e4a75f58e',"2025-01-04T00:00:00",ends_before=time_format(),time_type='local',name='default')
+
+print(data)
+
+
+```
+
+
+```{r}
+df_r<-py$data
+head(df_r)
+```
+
+
