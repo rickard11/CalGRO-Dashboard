@@ -6,14 +6,15 @@ editor: visual
 
 ```{r}
 library(reticulate)
-# OR if you used a named conda env like 'myenv'
-use_condaenv("base", required = TRUE)
 
-if (interactive()) {
-  library(reticulate)
+# Use GitHub Actions Python when running in CI
+if (Sys.getenv("GITHUB_ACTIONS") == "true") {
+  use_python("/opt/hostedtoolcache/Python/3.10.17/x64/bin/python3", required = TRUE)
+
+# Use local Anaconda Python when working interactively in RStudio
+} else if (interactive()) {
   use_python("C:/Users/ricka/anaconda3/python.exe", required = TRUE)
 }
-
 
 ```
 
