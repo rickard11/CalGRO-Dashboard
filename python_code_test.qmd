@@ -6,14 +6,14 @@ editor: visual
 
 ```{r}
 library(reticulate)
-
-# Point to your Anaconda Python
-use_python("C:/Users/ricka/anaconda3/python.exe", required = TRUE)
-
 # OR if you used a named conda env like 'myenv'
 use_condaenv("base", required = TRUE)
 
-py_config()  # Check if pandas shows up here
+if (interactive()) {
+  library(reticulate)
+  use_python("C:/Users/ricka/anaconda3/python.exe", required = TRUE)
+}
+
 
 ```
 
