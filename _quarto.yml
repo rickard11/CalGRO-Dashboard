@@ -13,6 +13,8 @@ website:
         text: Recharge Calculations
       - href: Rain_intensity_well_rise_scatter.qmd
         text: Rainfall and Well Depth
+      - href: python_code_test.qmd
+        text: Rendering Python Data
 
 
 
