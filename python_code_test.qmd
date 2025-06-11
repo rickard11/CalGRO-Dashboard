@@ -54,12 +54,10 @@ library(ggplot2)
 library(readr)
 #raindata
 E3rain_r<-py$E3rain
-head(E3rain_r)
 colnames(E3rain_r)<-c("DateTime_utc","Rainfall_mm")
 
 #Well data
 E3well<-py$E3Well
-head(E3well)
 colnames(E3well)<-c("DateTime_utc","Depth_to_GW")
 ```
 
