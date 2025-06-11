@@ -1,9 +1,9 @@
 ---
-title: "pythontestagain"
-editor: visual
+title: "Python Download Escondido 3"
+format: 
+  dashboard: 
+    orientation: rows
 ---
-
-
 ```{r}
 library(reticulate)
 
@@ -20,27 +20,74 @@ if (Sys.getenv("GITHUB_ACTIONS") == "true") {
 
 
 ```{python}
-print("python is working")
-
 # If in the same folder:
 import myfunctions
 from myfunctions import time_format
 
 # Use a function
-org_id = myfunctions.get_organization_id("tnc")
-print(org_id)
+E3wellDepth = '6511f7ea55264589773edcdb'
+E3Rainfall = '6643edfcc05ad60e4a75f58e'
 
-data = myfunctions.get_datapoints('6643edfcc05ad60e4a75f58e',"2025-01-04T00:00:00",ends_before=time_format(),time_type='local',name='default')
 
-print(data)
+E3rain = myfunctions.get_datapoints('6643edfcc05ad60e4a75f58e',"2024-02-01T00:00:00",ends_before=time_format(),time_type='local',name='default')
 
+print(E3rain)
+
+E3Well = myfunctions.get_datapoints('6643edfc71c87f2d574b0a35',"2024-02-01T00:00:00",ends_before=time_format(),time_type='local',name='default')
+
+print(E3Well)
 
 ```
 
 
 ```{r}
-df_r<-py$data
-head(df_r)
+library(ggplot2)
+library(tidyverse)
+library(plotly)             
+#library(reactable)
+#library(bslib)
+library(dplyr)
+#library(leaflet)
+#library(bsicons)
+#library(shiny)
+library(ggplot2)
+library(readr)
+#raindata
+E3rain_r<-py$E3rain
+head(E3rain_r)
+colnames(E3rain_r)<-c("DateTime_utc","Rainfall_mm")
+
+#Well data
+E3well<-py$E3Well
+head(E3well)
+colnames(E3well)<-c("DateTime_utc","Depth_to_GW")
+```
+
+```{r}
+
+# Prepare data for faceting
+hourly_data_long <- E3well %>%
+  mutate(DateTime_utc = as.POSIXct(DateTime_utc),variable = "Water Depth", value = Depth_to_GW) %>%
+  select(DateTime_utc, variable, value)
+
+E3rain_r$Date<-as.Date(E3rain_r$DateTime_utc)
+E3rain_Daily<-aggregate(Rainfall_mm~Date,E3rain_r,FUN=sum)
+
+daily_data_long <- E3rain_Daily %>%
+  mutate(DateTime_utc = as.POSIXct(Date), variable = "Rainfall", value = Rainfall_mm) %>%
+  select(DateTime_utc, variable, value)
+
+combined <- bind_rows(hourly_data_long, daily_data_long)
+
+b<-ggplot(combined, aes(x = DateTime_utc, y = value)) +
+  geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
+  geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue") +
+  scale_y_reverse()+
+  facet_wrap(~variable, ncol = 1, scales = "free_y") +
+  labs(x = "Date", y = NULL, title = "Escondido 3 Well Depth and Rainfall") +
+  theme_minimal()
+
+ggplotly(b)
 ```
 
 
