@@ -50,15 +50,38 @@ daily_data_long <- daily_data %>%
 
 combined <- bind_rows(hourly_data_long, daily_data_long)
 
-s<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
+# Get x-axis range
+x_range <- range(combined$Date.and.Time)
+
+# Create hline data manually
+hline_data <- data.frame(
+  variable = "Water Depth",
+  x = x_range[1],
+  xend = x_range[2],
+  y = c(-18.99, 2.34),
+  yend = c(-18.99, 2.34),
+  color = c("green4", "red3"),
+  alpha = c(0.5, 0.5)
+)
+
+p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
   geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
   geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
-  scale_y_reverse()+
+  scale_y_reverse() +
+  geom_segment(
+    data = hline_data,
+    aes(x = x, xend = xend, y = y, yend = yend),
+    inherit.aes = FALSE,
+    color = hline_data$color,
+    linetype = "dashed",
+    alpha = hline_data$alpha
+  ) +
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
   labs(x = "Date", y = NULL, title = "Lower Tweedy Well Depth and Rainfall") +
   theme_minimal()
 
-ggplotly(s)
+# Convert to interactive plot
+ggplotly(p)
 ```
 
 ### Row {height="33%"}
@@ -84,14 +107,34 @@ daily_data_long <- daily_data %>%
 
 combined <- bind_rows(hourly_data_long, daily_data_long)
 
-p<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
+# Create hline data manually
+hline_data <- data.frame(
+  variable = "Water Depth",
+  x = x_range[1],
+  xend = x_range[2],
+  y = c(8.64, 18.34),
+  yend = c(8.64, 18.34),
+  color = c("green4", "red3"),
+  alpha = c(0.5, 0.5)
+)
+
+p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
   geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
   geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
-  scale_y_reverse()+
+  scale_y_reverse() +
+  geom_segment(
+    data = hline_data,
+    aes(x = x, xend = xend, y = y, yend = yend),
+    inherit.aes = FALSE,
+    color = hline_data$color,
+    linetype = "dashed",
+    alpha = hline_data$alpha
+  ) +
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Cactus Pasture Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Lower Tweedy Well Depth and Rainfall") +
   theme_minimal()
 
+# Convert to interactive plot
 ggplotly(p)
 ```
 
@@ -117,46 +160,80 @@ daily_data_long <- daily_data %>%
 
 combined <- bind_rows(hourly_data_long, daily_data_long)
 
-b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
+# Create hline data manually
+hline_data <- data.frame(
+  variable = "Water Depth",
+  x = x_range[1],
+  xend = x_range[2],
+  y = c(74.97, 78.78),
+  yend = c(74.97, 78.78),
+  color = c("green4", "red3"),
+  alpha = c(0.5, 0.5)
+)
+
+p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
   geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
   geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
-  scale_y_reverse()+
+  scale_y_reverse() +
+  geom_segment(
+    data = hline_data,
+    aes(x = x, xend = xend, y = y, yend = yend),
+    inherit.aes = FALSE,
+    color = hline_data$color,
+    linetype = "dashed",
+    alpha = hline_data$alpha
+  ) +
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "B & C Ranch Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Lower Tweedy Well Depth and Rainfall") +
   theme_minimal()
 
-ggplotly(b)
+# Convert to interactive plot
+ggplotly(p)
 
 ```
 
 ## Column{width="50%"}
 
 ### Row {height="33%"}
-Lower Tweedy Recharge Unknown for now
+Lower Tweedy Recharge:
+03/12 = 2.34
+04/18 = -18.99
+
 ```{r, LowerTweedyRecharge}
-#Unknown for now
+LTRe<-2.34-(-18.99)
+print(LTRe)
 ```
 
 ### Row {height="33%"}
+Cactus Pasture Recharge:
+03/12 18.34
+04/30 8.64
 ```{r, CactusPastureRecharge}
 #Inches of Rain
-sum(cprain$Rain..in.)
+#sum(cprain$Rain..in.)
 #Feet of Recharge
-ftre<-(max(cpwell$ft..below.ground.)-min(cpwell$ft..below.ground.))*0.1
+#ftre<-(max(cpwell$ft..below.ground.)-min(cpwell$ft..below.ground.))*0.1
 #Inches Recharge equivilent
-inre<-ftre*12
-inre
+#inre<-ftre*12
+#inre
+CPRe<-18.34-8.64
+print(CPRe)
+
 ```
 
 ### Row {height="33%"}
+B & C Ranch Well Recharge:
+03/12 78.78
+04/27 74.97
 ```{r, BandCRecharge}
 #Inches of Rain
-sum(bcrain$Rain..in.)
+#sum(bcrain$Rain..in.)
 #Feet of Recharge
-ftre<-(78.85-74.97)*0.1
+#ftre<-(78.85-74.97)*0.1
 #Inches Recharge equivilent
-inre<-ftre*12
-inre
+#inre<-ftre*12
+#inre
+BCRe<-78.78-74.97
 ```
 
 # Santa Cruz Island

@@ -6,6 +6,17 @@ format:
 ---
 ```{r}
 library(reticulate)
+library(ggplot2)
+library(tidyverse)
+library(plotly)             
+#library(reactable)
+#library(bslib)
+library(dplyr)
+#library(leaflet)
+#library(bsicons)
+#library(shiny)
+library(ggplot2)
+library(readr)
 
 # Use GitHub Actions Python when running in CI
 if (Sys.getenv("GITHUB_ACTIONS") == "true") {
@@ -28,30 +39,13 @@ from myfunctions import time_format
 E3wellDepth = '6511f7ea55264589773edcdb'
 E3Rainfall = '6643edfcc05ad60e4a75f58e'
 
+E3rain = myfunctions.get_datapoints('6643edfcc05ad60e4a75f58e',"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 
-E3rain = myfunctions.get_datapoints('6643edfcc05ad60e4a75f58e',"2024-02-01T00:00:00",ends_before=time_format(),time_type='local',name='default')
-
-print(E3rain)
-
-E3Well = myfunctions.get_datapoints('6643edfc71c87f2d574b0a35',"2024-02-01T00:00:00",ends_before=time_format(),time_type='local',name='default')
-
-print(E3Well)
-
+E3Well = myfunctions.get_datapoints('6643edfc71c87f2d574b0a35',"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 ```
 
 
 ```{r}
-library(ggplot2)
-library(tidyverse)
-library(plotly)             
-#library(reactable)
-#library(bslib)
-library(dplyr)
-#library(leaflet)
-#library(bsicons)
-#library(shiny)
-library(ggplot2)
-library(readr)
 #raindata
 E3rain_r<-py$E3rain
 colnames(E3rain_r)<-c("DateTime_utc","Rainfall_mm")
