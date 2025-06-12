@@ -91,40 +91,53 @@ E2rain_r<-py$E2rain
 colnames(E2rain_r)<-c("DateTime_utc","Rainfall_mm")
 E2well<-py$E2Well
 colnames(E2well)<-c("DateTime_utc","Depth_to_GW")
+E2well<-as.data.frame(E2well)
+E2well<-E2well[,1:2]
+E2rain_r<-E2rain_r[,1:2]
 
 #E3
 E3rain_r<-py$E3rain
 colnames(E3rain_r)<-c("DateTime_utc","Rainfall_mm")
 E3well<-py$E3Well
 colnames(E3well)<-c("DateTime_utc","Depth_to_GW")
+E3well<-E3well[,1:2]
+E3rain_r<-E3rain_r[,1:2]
 
 #E5
 E5rain_r<-py$E5rain
 colnames(E5rain_r)<-c("DateTime_utc","Rainfall_mm")
 E5well<-py$E5Well
 colnames(E5well)<-c("DateTime_utc","Depth_to_GW")
+E5well<-E5well[,1:2]
+E5rain_r<-E5rain_r[,1:2]
 
 #O2
 O2rain_r<-py$O2rain
 colnames(O2rain_r)<-c("DateTime_utc","Rainfall_mm")
+O2rain_r<-O2rain_r[,1:2]
 
 #T2
 T2well<-py$T2Well
 colnames(T2well)<-c("DateTime_utc","Depth_to_GW")
+T2well<-T2well[,1:2]
 
 #T5
 T5rain_r<-py$T5rain
 colnames(T5rain_r)<-c("DateTime_utc","Rainfall_mm")
 T5well<-py$T5Well
 colnames(T5well)<-c("DateTime_utc","Depth_to_GW")
+T5well<-T5well[,1:2]
+T5rain_r<-T5rain_r[,1:2]
 
 #T6
 T6rain_r<-py$T6rain
 colnames(T6rain_r)<-c("DateTime_utc","Rainfall_mm")
 T6well<-py$T6Well
 colnames(T6well)<-c("DateTime_utc","Depth_to_GW")
+T6well<-T6well[,1:2]
+T6rain_r<-T6rain_r[,1:2]
 ```
-
+### Row {height="50%"}
 ```{r, escondidoplots}
 # Prepare data for faceting
 hourly_data_long <- E2well %>%
@@ -207,9 +220,9 @@ b<-ggplot(O2rain_r, aes(x = DateTime_utc, y = Rainfall_mm)) +
   labs(x = "Date", y = NULL, title = "Oaks 2 Rainfall") +
   theme_minimal()
 
-ggplotly(b)
+#ggplotly(b)
 ```
-
+### Row {height="50%"}
 ```{r, Tintaplot}
 # T2
 b<-ggplot(T2well, aes(x = DateTime_utc, y =Depth_to_GW)) +
@@ -218,7 +231,7 @@ b<-ggplot(T2well, aes(x = DateTime_utc, y =Depth_to_GW)) +
   labs(x = "Date", y = NULL, title = "Tinta 2 Groundwater") +
   theme_minimal()
 
-ggplotly(b)
+#ggplotly(b)
 
 # T5
 hourly_data_long <- T5well %>%

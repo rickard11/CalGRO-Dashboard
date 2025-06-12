@@ -326,7 +326,7 @@ b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
 
 ggplotly(b)
 ```
-
+### Row {height="33%"}
 ```{r, E3}
 E3rain<-read.csv("data/rain/Dangermond- Escondido 3 Rain Gauge 20240131-20250401.csv")
 E3well<-r[r$Well_Name=="Escondido 3",]
@@ -356,7 +356,7 @@ b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
 
 ggplotly(b)
 ```
-
+### Row {height="33%"}
 ```{r, E2}
 E2rain<-read.csv("data/rain/Dangermond- Escondido 2 Rain Gauge 20231101-20250408.csv")
 E2well<-r[r$Well_Name=="Escondido 2",]
@@ -418,7 +418,7 @@ b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
 
 ggplotly(b)
 ```
-
+### Row {height="33%"}
 ```{r, T3}
 T3rain<-read.csv("data/rain/Dangermond- Tinta 3  Rain Gauge 20241001-20250214.csv")
 T3well<-r[r$Well_Name=="Tinta 3",]
@@ -448,7 +448,7 @@ b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
 
 ggplotly(b)
 ```
-
+### Row {height="33%"}
 ```{r, T5}
 T5rain<-read.csv("data/rain/Dangermond- Tinta 5 Rain Gauge 20240101-20250409.csv")
 T5well<-r[r$Well_Name=="Tinta 5",]
@@ -510,7 +510,7 @@ b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
 
 ggplotly(b)
 ```
-
+### Row {height="33%"}
 ```{r, T10}
 T10rain<-read.csv("data/rain/Dangermond- Tinta 10 Rain Gauge 20231201-20250408.csv")
 T10well<-r[r$Well_Name=="Tinta 10",]
@@ -540,7 +540,7 @@ b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
 
 ggplotly(b)
 ```
-
+### Row {height="33%"}
 ```{r, WC}
 WCrain<-read.csv("data/rain/Dangermond- Wood Canyon Rain Gauge 20241001-20250408.csv")
 WCwell<-r[r$Well_Name=="Wood Canyon",]
