@@ -2,7 +2,7 @@
 title: "Recharge calculations"
 format: 
   dashboard: 
-    orientation: rows
+    orientation: columns
 ---
 
 # Randall
