@@ -18,6 +18,12 @@ library(dplyr)
 library(ggplot2)
 library(readr)
 
+if (nzchar(Sys.getenv("GITHUB_ACTIONS"))) {
+  use_python(Sys.which("python"), required = TRUE)
+} else {
+  use_python("C:/Users/ricka/anaconda3/python.exe", required = TRUE)
+}
+
 ```
 
 
@@ -187,10 +193,21 @@ ggplotly(b)
 
 ```{r, oaksplot}
 # O2
-b<-ggplot(O2rain_r, aes(x = DateTime_utc, y = value)) +
+b<-ggplot(O2rain_r, aes(x = DateTime_utc, y = Rainfall_mm)) +
+  geom_col(fill = "lightblue") +
+  scale_y_reverse()+
+  labs(x = "Date", y = NULL, title = "Oaks 2 Rainfall") +
+  theme_minimal()
+
+ggplotly(b)
+```
+
+```{r, Tintaplot}
+# T2
+b<-ggplot(T2well, aes(x = DateTime_utc, y =Depth_to_GW)) +
   geom_line(aes(), color = "navy") +
   scale_y_reverse()+
-  labs(x = "Date", y = NULL, title = "Escondido 3 Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Tinta 2 Groundwater") +
   theme_minimal()
 
 ggplotly(b)
