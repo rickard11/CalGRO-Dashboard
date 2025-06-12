@@ -44,27 +44,87 @@ E3rain = myfunctions.get_datapoints('6643edfcc05ad60e4a75f58e',"2024-02-01T00:00
 E3Well = myfunctions.get_datapoints('6643edfc71c87f2d574b0a35',"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 
 # Use a function
-E2well_ID = '66439575eb2fb4cd16ab5316'
-E2Rainfall_ID = '66439fec826756b8928ced5e'
+E5well_ID = '6643edfd63d3626df7281fac'
+E5Rainfall_ID = '6643edfc8267564e618cedd2'
 
-E2rain = myfunctions.get_datapoints(E2Rainfall_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
+E5rain = myfunctions.get_datapoints(E5Rainfall_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 
-E2Well = myfunctions.get_datapoints(E2well_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
+E5Well = myfunctions.get_datapoints(E5well_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
+
+# Use a function
+
+O2Rainfall_ID = '6643edfe826756aade8cedd4'
+
+O2rain = myfunctions.get_datapoints(O2Rainfall_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
+
+# Use a function
+T2well_ID = '6643edffc05ad633d275f592'
+
+T2Well = myfunctions.get_datapoints(T2well_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
+
+# Use a function
+T5well_ID = '6643edfd63d3626df7281fac'
+T5Rainfall_ID = '6643edff826756530b8cedd7'
+
+T5rain = myfunctions.get_datapoints(T5Rainfall_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
+
+T5Well = myfunctions.get_datapoints(T5well_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
+
+# Use a function
+T6well_ID = '6643ee00c05ad6117675f594'
+T6Rainfall_ID = '6643ee00ab0417d848e36022'
+
+T6rain = myfunctions.get_datapoints(T6Rainfall_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
+
+T6Well = myfunctions.get_datapoints(T6well_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 ```
 
 
-```{r}
-#raindata
+```{r, TRANSFORMDATA}
+#E2
 E2rain_r<-py$E2rain
-colnames(E3rain_r)<-c("DateTime_utc","Rainfall_mm")
-
-#Well data
+colnames(E2rain_r)<-c("DateTime_utc","Rainfall_mm")
 E2well<-py$E2Well
 colnames(E2well)<-c("DateTime_utc","Depth_to_GW")
+
+#E3
+E3rain_r<-py$E3rain
+colnames(E3rain_r)<-c("DateTime_utc","Rainfall_mm")
+E3well<-py$E3Well
+colnames(E3well)<-c("DateTime_utc","Depth_to_GW")
+
+#E5
+E5rain_r<-py$E5rain
+colnames(E5rain_r)<-c("DateTime_utc","Rainfall_mm")
+E5well<-py$E5Well
+colnames(E5well)<-c("DateTime_utc","Depth_to_GW")
+
+#O2
+O2rain_r<-py$O2rain
+colnames(O2rain_r)<-c("DateTime_utc","Rainfall_mm")
+O2well<-py$O2Well
+colnames(O2well)<-c("DateTime_utc","Depth_to_GW")
+
+#T2
+T2rain_r<-py$T2rain
+colnames(T2rain_r)<-c("DateTime_utc","Rainfall_mm")
+T2well<-py$T2Well
+colnames(T2well)<-c("DateTime_utc","Depth_to_GW")
+
+#T5
+T5rain_r<-py$T5rain
+colnames(T5rain_r)<-c("DateTime_utc","Rainfall_mm")
+T5well<-py$T5Well
+colnames(T5well)<-c("DateTime_utc","Depth_to_GW")
+
+#T6
+T6rain_r<-py$T6rain
+colnames(T6rain_r)<-c("DateTime_utc","Rainfall_mm")
+T6well<-py$T6Well
+colnames(T6well)<-c("DateTime_utc","Depth_to_GW")
 ```
 
 ```{r}
-
 # Prepare data for faceting
 hourly_data_long <- E2well %>%
   mutate(DateTime_utc = as.POSIXct(DateTime_utc),variable = "Water Depth", value = Depth_to_GW) %>%
@@ -74,6 +134,30 @@ E2rain_r$Date<-as.Date(E2rain_r$DateTime_utc)
 E2rain_Daily<-aggregate(Rainfall_mm~Date,E2rain_r,FUN=sum)
 
 daily_data_long <- E2rain_Daily %>%
+  mutate(DateTime_utc = as.POSIXct(Date), variable = "Rainfall", value = Rainfall_mm) %>%
+  select(DateTime_utc, variable, value)
+
+combined <- bind_rows(hourly_data_long, daily_data_long)
+
+b<-ggplot(combined, aes(x = DateTime_utc, y = value)) +
+  geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
+  geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue") +
+  scale_y_reverse()+
+  facet_wrap(~variable, ncol = 1, scales = "free_y") +
+  labs(x = "Date", y = NULL, title = "Escondido 3 Well Depth and Rainfall") +
+  theme_minimal()
+
+ggplotly(b)
+
+# E3
+hourly_data_long <- E3well %>%
+  mutate(DateTime_utc = as.POSIXct(DateTime_utc),variable = "Water Depth", value = Depth_to_GW) %>%
+  select(DateTime_utc, variable, value)
+
+E3rain_r$Date<-as.Date(E3rain_r$DateTime_utc)
+E3rain_Daily<-aggregate(Rainfall_mm~Date,E3rain_r,FUN=sum)
+
+daily_data_long <- E3rain_Daily %>%
   mutate(DateTime_utc = as.POSIXct(Date), variable = "Rainfall", value = Rainfall_mm) %>%
   select(DateTime_utc, variable, value)
 
