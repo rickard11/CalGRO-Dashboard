@@ -107,6 +107,7 @@ daily_data_long <- daily_data %>%
 
 combined <- bind_rows(hourly_data_long, daily_data_long)
 
+x_range <- range(combined$Date.and.Time)
 # Create hline data manually
 hline_data <- data.frame(
   variable = "Water Depth",
@@ -159,7 +160,7 @@ daily_data_long <- daily_data %>%
   select(Date.and.Time, variable, value)
 
 combined <- bind_rows(hourly_data_long, daily_data_long)
-
+x_range <- range(combined$Date.and.Time)
 # Create hline data manually
 hline_data <- data.frame(
   variable = "Water Depth",
@@ -258,7 +259,7 @@ daily_data_long <- daily_data %>%
   select(Date.and.Time, variable, value)
 
 combined <- bind_rows(hourly_data_long, daily_data_long)
-
+x_range <- range(combined$Date.and.Time)
 # Create hline data manually
 hline_data <- data.frame(
   variable = "Water Depth",
@@ -571,14 +572,6 @@ ggplotly(b)
 ```
 
 # Parks Creek
-Parks Creek Recharge:
-04/04 3.58
-05/13 8.05
-
-```{r, Parkscreekrecharge}
-PCRe<-3.58-8.05
-print(PCRe)
-```
 
 ```{r, Parkscreek}
 pcrain<-read.csv("data/rain/Parks Creek Well Rain Gauge 20250101-20250530.csv")
@@ -598,7 +591,7 @@ daily_data_long <- daily_data %>%
   select(Date.and.Time, variable, value)
 
 combined <- bind_rows(hourly_data_long, daily_data_long)
-
+x_range <- range(combined$Date.and.Time)
 # Create hline data manually
 hline_data <- data.frame(
   variable = "Water Depth",
@@ -628,6 +621,15 @@ p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
 
 # Convert to interactive plot
 ggplotly(p)
+```
+
+Parks Creek Recharge:
+04/04 3.58
+05/13 8.05
+
+```{r, Parkscreekrecharge}
+PCRe<-3.58-8.05
+print(PCRe)
 ```
 
 # Santa Clara River
@@ -692,6 +694,10 @@ ggplotly(b)
 ```
 
 # Las Piletas
+
+## Column{width="50%"}
+
+### Row {height="33%"}
 ```{r, Cooper}
 Crain<-read.csv("data/rain/Las Piletas Cooper Rain Gauge 20241205-20250214.csv")
 Cwell<-r[r$Well_Name=="Cooper",]
@@ -710,7 +716,7 @@ daily_data_long <- daily_data %>%
   select(Date.and.Time, variable, value)
 
 combined <- bind_rows(hourly_data_long, daily_data_long)
-
+x_range <- range(combined$Date.and.Time)
 # Create hline data manually
 hline_data <- data.frame(
   variable = "Water Depth",
@@ -741,7 +747,7 @@ p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
 # Convert to interactive plot
 ggplotly(p)
 ```
-
+### Row {height="33%"}
 ```{r, NECorner}
 NErain<-read.csv("data/rain/Las Piletas NE Corner Rain Gauge Rain Gauge 20241211-20250530.csv")
 NEwell<-r[r$Well_Name=="NE Corner",]
@@ -760,7 +766,7 @@ daily_data_long <- daily_data %>%
   select(Date.and.Time, variable, value)
 
 combined <- bind_rows(hourly_data_long, daily_data_long)
-
+x_range <- range(combined$Date.and.Time)
 # Create hline data manually
 hline_data <- data.frame(
   variable = "Water Depth",
@@ -791,7 +797,7 @@ p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
 # Convert to interactive plot
 ggplotly(p)
 ```
-
+### Row {height="33%"}
 ```{r, Windmill}
 Wrain<-read.csv("data/rain/Las Piletas Windmill Rain Gauge Rain Gauge 20250224-20250530.csv")
 Wwell<-r[r$Well_Name=="Windmill",]
@@ -810,7 +816,7 @@ daily_data_long <- daily_data %>%
   select(Date.and.Time, variable, value)
 
 combined <- bind_rows(hourly_data_long, daily_data_long)
-
+x_range <- range(combined$Date.and.Time)
 # Create hline data manually
 hline_data <- data.frame(
   variable = "Water Depth",
@@ -841,8 +847,39 @@ p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
 # Convert to interactive plot
 ggplotly(p)
 ```
-# Tulare
-```{r}
+## Column{width="50%"}
+
+### Row {height="33%"}
+Cooper Recharge:
+12/13 29.63
+04/10 28.37
+```{r,CooperRecharge}
+CORE<-29.83-28.37
+print(CORE)
+```
+
+### Row {height="33%"}
+NE Corner Recharge:
+12/13 14.48
+05/05 14.23
+
+```{r,NEcornerRecharge}
+NERe<-14.48-14.23
+print(NERe)
+```
+
+### Row {height="33%"}
+Windmill Recharge:
+02/28 35.97
+05/04 35.17
+```{r, WindmillRecharge}
+WRe<-35.97-35.17
+print(WRe)
+```
+
+
+# Tulare, 
+```{r,Tulare}
 PTrain<-read.csv("data/rain/Pixley_Tulare Rain Gauge Rain Gauge 20241213-20250530.csv")
 PTwell<-r[r$Well_Name=="Pixley Tulare",]
 PTrain<-PTrain[PTrain$Date<="2025-05-13",]
@@ -860,7 +897,7 @@ daily_data_long <- daily_data %>%
   select(Date.and.Time, variable, value)
 
 combined <- bind_rows(hourly_data_long, daily_data_long)
-
+x_range <- range(combined$Date.and.Time)
 # Create hline data manually
 hline_data <- data.frame(
   variable = "Water Depth",
@@ -891,3 +928,5 @@ p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
 # Convert to interactive plot
 ggplotly(p)
 ```
+
+
