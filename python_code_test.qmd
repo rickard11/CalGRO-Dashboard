@@ -2,7 +2,7 @@
 title: "Python Download Escondido 3"
 format: 
   dashboard: 
-    orientation: rows
+    orientation: columns
 ---
 ```{r}
 library(reticulate)
@@ -84,6 +84,7 @@ T6rain = myfunctions.get_datapoints(T6Rainfall_ID,"2024-02-01T00:00:00",ends_bef
 T6Well = myfunctions.get_datapoints(T6well_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 ```
 
+## Column {width="50%"}
 
 ```{r, TRANSFORMDATA}
 #E2
@@ -137,8 +138,8 @@ colnames(T6well)<-c("DateTime_utc","Depth_to_GW")
 T6well<-T6well[,1:2]
 T6rain_r<-T6rain_r[,1:2]
 ```
-### Row {height="50%"}
-```{r, escondidoplots}
+### Row {height="33%"}
+```{r, escondido22plot}
 # Prepare data for faceting
 hourly_data_long <- E2well %>%
   mutate(DateTime_utc = as.POSIXct(DateTime_utc),variable = "Water Depth", value = Depth_to_GW) %>%
@@ -162,7 +163,9 @@ b<-ggplot(combined, aes(x = DateTime_utc, y = value)) +
   theme_minimal()
 
 ggplotly(b)
-
+```
+### Row {height="33%"}
+```{r,Escondido3plot}
 # E3
 hourly_data_long <- E3well %>%
   mutate(DateTime_utc = as.POSIXct(DateTime_utc),variable = "Water Depth", value = Depth_to_GW) %>%
@@ -186,7 +189,9 @@ b<-ggplot(combined, aes(x = DateTime_utc, y = value)) +
   theme_minimal()
 
 ggplotly(b)
-
+```
+### Row {height="34%"}
+```{r,escondido5plot}
 # E5
 hourly_data_long <- E5well %>%
   mutate(DateTime_utc = as.POSIXct(DateTime_utc),variable = "Water Depth", value = Depth_to_GW) %>%
@@ -222,8 +227,11 @@ b<-ggplot(O2rain_r, aes(x = DateTime_utc, y = Rainfall_mm)) +
 
 #ggplotly(b)
 ```
+
+## Column {width="50%"}
+
 ### Row {height="50%"}
-```{r, Tintaplot}
+```{r, Tinta5plot}
 # T2
 b<-ggplot(T2well, aes(x = DateTime_utc, y =Depth_to_GW)) +
   geom_line(aes(), color = "navy") +
@@ -256,7 +264,9 @@ b<-ggplot(combined, aes(x = DateTime_utc, y = value)) +
   theme_minimal()
 
 ggplotly(b)
-
+```
+### Row {height="50%"}
+```{r,Tinta6plot}
 # T6
 hourly_data_long <- T6well %>%
   mutate(DateTime_utc = as.POSIXct(DateTime_utc),variable = "Water Depth", value = Depth_to_GW) %>%

@@ -2,7 +2,7 @@
 title: "Recharge calculations"
 format: 
   dashboard: 
-    orientation: columns
+    logo: "logo/brenlogo.png"
 ---
 
 # Randall
