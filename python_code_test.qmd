@@ -33,6 +33,14 @@ import myfunctions
 from myfunctions import time_format
 
 # Use a function
+E2wellDepth = '66439575eb2fb4cd16ab5316'
+E2Rainfall = '66439fec826756b8928ced5e'
+
+E2rain = myfunctions.get_datapoints(E2Rainfall,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
+
+E2Well = myfunctions.get_datapoints(E2wellDepth,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
+
+# Use a function
 E3wellDepth = '6511f7ea55264589773edcdb'
 E3Rainfall = '6643edfcc05ad60e4a75f58e'
 
@@ -208,6 +216,54 @@ b<-ggplot(T2well, aes(x = DateTime_utc, y =Depth_to_GW)) +
   geom_line(aes(), color = "navy") +
   scale_y_reverse()+
   labs(x = "Date", y = NULL, title = "Tinta 2 Groundwater") +
+  theme_minimal()
+
+ggplotly(b)
+
+# T5
+hourly_data_long <- T5well %>%
+  mutate(DateTime_utc = as.POSIXct(DateTime_utc),variable = "Water Depth", value = Depth_to_GW) %>%
+  select(DateTime_utc, variable, value)
+
+T5rain_r$Date<-as.Date(T5rain_r$DateTime_utc)
+T5rain_Daily<-aggregate(Rainfall_mm~Date,T5rain_r,FUN=sum)
+
+daily_data_long <- T5rain_Daily %>%
+  mutate(DateTime_utc = as.POSIXct(Date), variable = "Rainfall", value = Rainfall_mm) %>%
+  select(DateTime_utc, variable, value)
+
+combined <- bind_rows(hourly_data_long, daily_data_long)
+
+b<-ggplot(combined, aes(x = DateTime_utc, y = value)) +
+  geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
+  geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue") +
+  scale_y_reverse()+
+  facet_wrap(~variable, ncol = 1, scales = "free_y") +
+  labs(x = "Date", y = NULL, title = "Tinta 5 Well Depth and Rainfall") +
+  theme_minimal()
+
+ggplotly(b)
+
+# T6
+hourly_data_long <- T6well %>%
+  mutate(DateTime_utc = as.POSIXct(DateTime_utc),variable = "Water Depth", value = Depth_to_GW) %>%
+  select(DateTime_utc, variable, value)
+
+T6rain_r$Date<-as.Date(T6rain_r$DateTime_utc)
+T6rain_Daily<-aggregate(Rainfall_mm~Date,T6rain_r,FUN=sum)
+
+daily_data_long <- T6rain_Daily %>%
+  mutate(DateTime_utc = as.POSIXct(Date), variable = "Rainfall", value = Rainfall_mm) %>%
+  select(DateTime_utc, variable, value)
+
+combined <- bind_rows(hourly_data_long, daily_data_long)
+
+b<-ggplot(combined, aes(x = DateTime_utc, y = value)) +
+  geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
+  geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue") +
+  scale_y_reverse()+
+  facet_wrap(~variable, ncol = 1, scales = "free_y") +
+  labs(x = "Date", y = NULL, title = "Escondido 5 Well Depth and Rainfall") +
   theme_minimal()
 
 ggplotly(b)
