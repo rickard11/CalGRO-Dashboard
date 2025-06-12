@@ -30,7 +30,7 @@ if (Sys.getenv("GITHUB_ACTIONS") == "true") {
 ```
 
 
-```{python}
+```{python, loaddata}
 # If in the same folder:
 import myfunctions
 from myfunctions import time_format
@@ -42,30 +42,38 @@ E3Rainfall = '6643edfcc05ad60e4a75f58e'
 E3rain = myfunctions.get_datapoints('6643edfcc05ad60e4a75f58e',"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 
 E3Well = myfunctions.get_datapoints('6643edfc71c87f2d574b0a35',"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
+
+# Use a function
+E2well_ID = '66439575eb2fb4cd16ab5316'
+E2Rainfall_ID = '66439fec826756b8928ced5e'
+
+E2rain = myfunctions.get_datapoints(E2Rainfall_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
+
+E2Well = myfunctions.get_datapoints(E2well_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 ```
 
 
 ```{r}
 #raindata
-E3rain_r<-py$E3rain
+E2rain_r<-py$E2rain
 colnames(E3rain_r)<-c("DateTime_utc","Rainfall_mm")
 
 #Well data
-E3well<-py$E3Well
-colnames(E3well)<-c("DateTime_utc","Depth_to_GW")
+E2well<-py$E2Well
+colnames(E2well)<-c("DateTime_utc","Depth_to_GW")
 ```
 
 ```{r}
 
 # Prepare data for faceting
-hourly_data_long <- E3well %>%
+hourly_data_long <- E2well %>%
   mutate(DateTime_utc = as.POSIXct(DateTime_utc),variable = "Water Depth", value = Depth_to_GW) %>%
   select(DateTime_utc, variable, value)
 
-E3rain_r$Date<-as.Date(E3rain_r$DateTime_utc)
-E3rain_Daily<-aggregate(Rainfall_mm~Date,E3rain_r,FUN=sum)
+E2rain_r$Date<-as.Date(E2rain_r$DateTime_utc)
+E2rain_Daily<-aggregate(Rainfall_mm~Date,E2rain_r,FUN=sum)
 
-daily_data_long <- E3rain_Daily %>%
+daily_data_long <- E2rain_Daily %>%
   mutate(DateTime_utc = as.POSIXct(Date), variable = "Rainfall", value = Rainfall_mm) %>%
   select(DateTime_utc, variable, value)
 

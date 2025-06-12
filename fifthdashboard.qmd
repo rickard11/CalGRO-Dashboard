@@ -878,7 +878,7 @@ print(WRe)
 ```
 
 
-# Tulare, 
+# Tulare
 ```{r,Tulare}
 PTrain<-read.csv("data/rain/Pixley_Tulare Rain Gauge Rain Gauge 20241213-20250530.csv")
 PTwell<-r[r$Well_Name=="Pixley Tulare",]
@@ -929,4 +929,11 @@ p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
 ggplotly(p)
 ```
 
-
+### Row {height="33%"}
+Tulare Recharge:
+12/24 184.12
+03/24 171
+```{r, WindmillRecharge}
+TRe<-184.12-171
+print(TRe)
+```
