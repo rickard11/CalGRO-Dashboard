@@ -234,6 +234,7 @@ B & C Ranch Well Recharge:
 #inre<-ftre*12
 #inre
 BCRe<-78.78-74.97
+print(BCRe)
 ```
 
 # Santa Cruz Island
@@ -258,20 +259,43 @@ daily_data_long <- daily_data %>%
 
 combined <- bind_rows(hourly_data_long, daily_data_long)
 
-b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
+# Create hline data manually
+hline_data <- data.frame(
+  variable = "Water Depth",
+  x = x_range[1],
+  xend = x_range[2],
+  y = c(10.81, 12.62),
+  yend = c(10.81, 12.62),
+  color = c("green4", "red3"),
+  alpha = c(0.5, 0.5)
+)
+
+p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
   geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
   geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
-  scale_y_reverse()+
+  scale_y_reverse() +
+  geom_segment(
+    data = hline_data,
+    aes(x = x, xend = xend, y = y, yend = yend),
+    inherit.aes = FALSE,
+    color = hline_data$color,
+    linetype = "dashed",
+    alpha = hline_data$alpha
+  ) +
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Santa Cruz Island Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Lower Tweedy Well Depth and Rainfall") +
   theme_minimal()
 
-ggplotly(b)
+# Convert to interactive plot
+ggplotly(p)
 ```
 
 
 # Dangermond Preserve
 
+## Column{width="50%"}
+
+### Row {height="33%"}
 ```{r, E5}
 E5rain<-read.csv("data/rain/Dangermond- Escondido 5 new Rain Gauge 20231001-20250417.csv")
 E5well<-r[r$Well_Name=="Escondido 5",]
@@ -361,7 +385,9 @@ b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
 
 ggplotly(b)
 ```
+## Column{width="50%"}
 
+### Row {height="33%"}
 ```{r, O5}
 O5rain<-read.csv("data/rain/Dangermond- Oaks 5 Rain Gauge 20240131-20250401.csv")
 O5well<-r[r$Well_Name=="Oaks 5",]
@@ -451,7 +477,9 @@ b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
 
 ggplotly(b)
 ```
+## Column{width="50%"}
 
+### Row {height="33%"}
 ```{r, T6}
 T6rain<-read.csv("data/rain/Dangermond- Tinta 6 Rain Gauge 20231101-20250408.csv")
 T6well<-r[r$Well_Name=="Tinta 6",]
@@ -543,7 +571,16 @@ ggplotly(b)
 ```
 
 # Parks Creek
-```{r}
+Parks Creek Recharge:
+04/04 3.58
+05/13 8.05
+
+```{r, Parkscreekrecharge}
+PCRe<-3.58-8.05
+print(PCRe)
+```
+
+```{r, Parkscreek}
 pcrain<-read.csv("data/rain/Parks Creek Well Rain Gauge 20250101-20250530.csv")
 pcwell<-r[r$Well_Name=="Parks Creek Well",]
 pcrain<-pcrain[pcrain$Date<="2025-05-13",]
@@ -562,15 +599,35 @@ daily_data_long <- daily_data %>%
 
 combined <- bind_rows(hourly_data_long, daily_data_long)
 
-b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
+# Create hline data manually
+hline_data <- data.frame(
+  variable = "Water Depth",
+  x = x_range[1],
+  xend = x_range[2],
+  y = c(8.05, 3.58),
+  yend = c(8.05, 3.58),
+  color = c("green4", "red3"),
+  alpha = c(0.5, 0.5)
+)
+
+p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
   geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
   geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
-  scale_y_reverse()+
+  scale_y_reverse() +
+  geom_segment(
+    data = hline_data,
+    aes(x = x, xend = xend, y = y, yend = yend),
+    inherit.aes = FALSE,
+    color = hline_data$color,
+    linetype = "dashed",
+    alpha = hline_data$alpha
+  ) +
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Parks Creek Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Lower Tweedy Well Depth and Rainfall") +
   theme_minimal()
 
-ggplotly(b)
+# Convert to interactive plot
+ggplotly(p)
 ```
 
 # Santa Clara River
@@ -654,15 +711,35 @@ daily_data_long <- daily_data %>%
 
 combined <- bind_rows(hourly_data_long, daily_data_long)
 
-b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
+# Create hline data manually
+hline_data <- data.frame(
+  variable = "Water Depth",
+  x = x_range[1],
+  xend = x_range[2],
+  y = c(28.37, 29.63),
+  yend = c(28.37, 29.63),
+  color = c("green4", "red3"),
+  alpha = c(0.5, 0.5)
+)
+
+p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
   geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
   geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
-  scale_y_reverse()+
+  scale_y_reverse() +
+  geom_segment(
+    data = hline_data,
+    aes(x = x, xend = xend, y = y, yend = yend),
+    inherit.aes = FALSE,
+    color = hline_data$color,
+    linetype = "dashed",
+    alpha = hline_data$alpha
+  ) +
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Cooper Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Lower Tweedy Well Depth and Rainfall") +
   theme_minimal()
 
-ggplotly(b)
+# Convert to interactive plot
+ggplotly(p)
 ```
 
 ```{r, NECorner}
@@ -684,15 +761,35 @@ daily_data_long <- daily_data %>%
 
 combined <- bind_rows(hourly_data_long, daily_data_long)
 
-b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
+# Create hline data manually
+hline_data <- data.frame(
+  variable = "Water Depth",
+  x = x_range[1],
+  xend = x_range[2],
+  y = c(14.23, 14.48),
+  yend = c(14.23, 14.48),
+  color = c("green4", "red3"),
+  alpha = c(0.5, 0.5)
+)
+
+p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
   geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
   geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
-  scale_y_reverse()+
+  scale_y_reverse() +
+  geom_segment(
+    data = hline_data,
+    aes(x = x, xend = xend, y = y, yend = yend),
+    inherit.aes = FALSE,
+    color = hline_data$color,
+    linetype = "dashed",
+    alpha = hline_data$alpha
+  ) +
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "NE Corner Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Lower Tweedy Well Depth and Rainfall") +
   theme_minimal()
 
-ggplotly(b)
+# Convert to interactive plot
+ggplotly(p)
 ```
 
 ```{r, Windmill}
@@ -714,15 +811,35 @@ daily_data_long <- daily_data %>%
 
 combined <- bind_rows(hourly_data_long, daily_data_long)
 
-b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
+# Create hline data manually
+hline_data <- data.frame(
+  variable = "Water Depth",
+  x = x_range[1],
+  xend = x_range[2],
+  y = c(35.97, 35.17),
+  yend = c(35.97, 35.17),
+  color = c("green4", "red3"),
+  alpha = c(0.5, 0.5)
+)
+
+p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
   geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
   geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
-  scale_y_reverse()+
+  scale_y_reverse() +
+  geom_segment(
+    data = hline_data,
+    aes(x = x, xend = xend, y = y, yend = yend),
+    inherit.aes = FALSE,
+    color = hline_data$color,
+    linetype = "dashed",
+    alpha = hline_data$alpha
+  ) +
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Windmill Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Lower Tweedy Well Depth and Rainfall") +
   theme_minimal()
 
-ggplotly(b)
+# Convert to interactive plot
+ggplotly(p)
 ```
 # Tulare
 ```{r}
@@ -744,13 +861,33 @@ daily_data_long <- daily_data %>%
 
 combined <- bind_rows(hourly_data_long, daily_data_long)
 
-b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
+# Create hline data manually
+hline_data <- data.frame(
+  variable = "Water Depth",
+  x = x_range[1],
+  xend = x_range[2],
+  y = c(171, 184.12),
+  yend = c(171, 184.12),
+  color = c("green4", "red3"),
+  alpha = c(0.5, 0.5)
+)
+
+p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
   geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
   geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue", alpha = 0.6) +
-  scale_y_reverse()+
+  scale_y_reverse() +
+  geom_segment(
+    data = hline_data,
+    aes(x = x, xend = xend, y = y, yend = yend),
+    inherit.aes = FALSE,
+    color = hline_data$color,
+    linetype = "dashed",
+    alpha = hline_data$alpha
+  ) +
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Tulare Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Lower Tweedy Well Depth and Rainfall") +
   theme_minimal()
 
-ggplotly(b)
+# Convert to interactive plot
+ggplotly(p)
 ```
