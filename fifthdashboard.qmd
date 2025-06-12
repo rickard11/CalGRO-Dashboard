@@ -933,7 +933,7 @@ ggplotly(p)
 Tulare Recharge:
 12/24 184.12
 03/24 171
-```{r, WindmillRecharge}
+```{r, TulareRecharge}
 TRe<-184.12-171
 print(TRe)
 ```
