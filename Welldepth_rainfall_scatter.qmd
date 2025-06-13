@@ -1,5 +1,5 @@
 ---
-title: "Welldepth and Rainfall"
+title: "Well Depth and Rainfall"
 format: 
   dashboard: 
     orientation: columns

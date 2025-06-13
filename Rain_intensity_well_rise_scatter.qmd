@@ -1,5 +1,5 @@
 ---
-title: "Welldepth_rainfall_scatter_1dlag"
+title: "Well Depth and Rainfall Scatter Plot"
 format: 
   dashboard: 
     orientation: rows
@@ -8,6 +8,7 @@ format:
 
 
 ```{r,E3data}
+##1 day log
 #Loading packages
 library(dplyr)
 library(dataRetrieval)

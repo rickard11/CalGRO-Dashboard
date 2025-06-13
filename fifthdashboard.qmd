@@ -1,8 +1,9 @@
 ---
-title: "Recharge calculations"
+title: "Hydrographs"
 format: 
   dashboard: 
     logo: "logo/brenlogo.png"
+      orientation: columns
 ---
 
 # Randall
@@ -132,7 +133,7 @@ p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
     alpha = hline_data$alpha
   ) +
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Lower Tweedy Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Cactus Pasture Well Depth and Rainfall") +
   theme_minimal()
 
 # Convert to interactive plot
@@ -185,7 +186,7 @@ p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
     alpha = hline_data$alpha
   ) +
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Lower Tweedy Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "B & C Well Depth and Rainfall") +
   theme_minimal()
 
 # Convert to interactive plot
@@ -326,6 +327,16 @@ b<-ggplot(combined, aes(x = Date.and.Time, y = value)) +
 
 ggplotly(b)
 ```
+
+Escondido 5 Recharge: 
+10/29 59.34
+03/17 56.53
+
+```{r}
+E5Re<-59.34-56.53
+preint(E5Re)
+```
+
 ### Row {height="33%"}
 ```{r, E3}
 E3rain<-read.csv("data/rain/Dangermond- Escondido 3 Rain Gauge 20240131-20250401.csv")
@@ -616,7 +627,7 @@ p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
     alpha = hline_data$alpha
   ) +
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Lower Tweedy Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Parks Creek Well Depth and Rainfall") +
   theme_minimal()
 
 # Convert to interactive plot
@@ -741,7 +752,7 @@ p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
     alpha = hline_data$alpha
   ) +
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Lower Tweedy Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Cooper Well Depth and Rainfall") +
   theme_minimal()
 
 # Convert to interactive plot
@@ -791,7 +802,7 @@ p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
     alpha = hline_data$alpha
   ) +
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Lower Tweedy Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "NE Corner Well Depth and Rainfall") +
   theme_minimal()
 
 # Convert to interactive plot
@@ -841,7 +852,7 @@ p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
     alpha = hline_data$alpha
   ) +
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Lower Tweedy Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Windmill Well Depth and Rainfall") +
   theme_minimal()
 
 # Convert to interactive plot
@@ -922,7 +933,7 @@ p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
     alpha = hline_data$alpha
   ) +
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Lower Tweedy Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Tulare Well Depth and Rainfall") +
   theme_minimal()
 
 # Convert to interactive plot

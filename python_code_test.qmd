@@ -1,5 +1,5 @@
 ---
-title: "Python Download Escondido 3"
+title: "Python Auto Render"
 format: 
   dashboard: 
     orientation: columns
