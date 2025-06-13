@@ -333,7 +333,7 @@ Escondido 5 Recharge:
 
 ```{r}
 E5Re<-59.34-56.53
-preint(E5Re)
+print(E5Re)
 ```
 
 ### Row {height="33%"}

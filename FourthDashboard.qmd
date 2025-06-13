@@ -62,6 +62,39 @@ leaflet() %>%
 ```
 
 
+```{r}
+library(geosphere)
+
+leaflet() %>%
+  addTiles() %>%
+  setView(lng = -118.63, lat = 35.29, zoom = 7) %>% 
+  addCircles(
+        data = gwalldaily,
+        lat = ~ y,
+        lng = ~ x,
+        radius = 4000,
+        # arbitrary scaling
+        fillColor = "gray",
+        fillOpacity = 1,
+        weight = 0.25,
+        color = "black",
+        label = lapply(gwalldaily$label, HTML),  # parse HTML for line breaks
+    labelOptions = labelOptions(
+      direction = "auto",
+      textsize = "13px")
+    )
+
+```
+
+
+
+
+
+
+
+
+
+
 ```{r,loaddatasecondplot}
  #load data
 allwells <- read_csv("data/CalGRO_well_locations_extended.csv")
@@ -81,12 +114,12 @@ pal <- colorFactor(
 # Leaflet map with colored markers based on category
 leaflet(allwells) %>%
   addTiles() %>%
-  addCircleMarkers(
+  addCircles(
      data = allwells,
         lat = ~ Latitude,
         lng = ~ Longitude,
+        radius = 4000,
     color = ~pal(PT_Y_or_N),  # color by category
-    radius = 4,
     stroke = FALSE,
     fillOpacity = 0.8,
         weight = 0.25,
