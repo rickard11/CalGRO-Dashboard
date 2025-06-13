@@ -2,6 +2,7 @@
 title: "Maps"
 format: 
   dashboard: 
+    logo: "logo/brenlogo.png"
     orientation: columns
 ---
 
@@ -38,29 +39,6 @@ gwalldaily$label <- paste0(
   "<b>Water Level:</b> ", gwalldaily$ft..below.ground.
 )
 
-
-leaflet() %>%
-  addTiles() %>%
-  setView(lng = -118.63, lat = 35.29, zoom = 7) %>% 
-  addCircleMarkers(
-        data = gwalldaily,
-        lat = ~ y,
-        lng = ~ x,
-        # arbitrary scaling
-        fillColor = "gray",
-        fillOpacity = 1,
-        weight = 0.25,
-        color = "black",
-        label = lapply(gwalldaily$label, HTML),  # parse HTML for line breaks
-    labelOptions = labelOptions(
-      direction = "auto",
-      textsize = "13px")
-    )
-
-```
-
-
-```{r}
 leaflet() %>%
   addTiles() %>%
   setView(lng = -118.63, lat = 35.29, zoom = 7) %>% 
