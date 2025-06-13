@@ -1,8 +1,7 @@
 ---
 title: "Hydrographs"
 format: 
-  dashboard: 
-    logo: "logo/brenlogo.png"
+  dashboard:
     orientation: columns
 ---
 

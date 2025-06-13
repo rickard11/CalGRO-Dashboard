@@ -1,8 +1,7 @@
 ---
 title: "Well Depth and Rainfall Scatter Plot"
 format: 
-  dashboard: 
-    logo: "logo/brenlogo.png"
+  dashboard:
     orientation: rows
 ---
 
