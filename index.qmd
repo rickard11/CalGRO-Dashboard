@@ -1,5 +1,6 @@
 ---
 title: "CalGRO-Dashboard"
+  logo: "logo/brenlogo.png"
 ---
 
 Welcome to CalGRO!!!

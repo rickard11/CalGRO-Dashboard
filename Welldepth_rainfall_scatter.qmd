@@ -2,7 +2,8 @@
 title: "Well Depth and Rainfall"
 format: 
   dashboard: 
-    orientation: columns
+    logo: "logo/brenlogo.png"
+      orientation: columns
 ---
 
 ```{r, loaddata}
