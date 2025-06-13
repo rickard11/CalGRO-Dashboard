@@ -61,8 +61,6 @@ leaflet() %>%
 
 
 ```{r}
-library(geosphere)
-
 leaflet() %>%
   addTiles() %>%
   setView(lng = -118.63, lat = 35.29, zoom = 7) %>% 
