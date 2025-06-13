@@ -22,8 +22,6 @@ library(bsicons)
 library(shiny)
 library(ggplot2)
 library(readr)
-library(sf)
-library(units)
 set.seed(4242)
 ```
 
@@ -85,15 +83,6 @@ leaflet() %>%
     )
 
 ```
-
-
-
-
-
-
-
-
-
 
 ```{r,loaddatasecondplot}
  #load data
