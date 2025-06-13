@@ -2,6 +2,7 @@
 title: "Las Piletas"
 format: 
   dashboard: 
+    logo: "logo/brenlogo.png"
     orientation: rows
 ---
 

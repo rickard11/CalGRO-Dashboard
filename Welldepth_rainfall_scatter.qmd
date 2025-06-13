@@ -1,7 +1,8 @@
 ---
 title: "Well Depth and Rainfall"
 format: 
-  dashboard:
+  dashboard: 
+    logo: "logo/brenlogo.png"
     orientation: columns
 ---
 
