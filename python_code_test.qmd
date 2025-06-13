@@ -3,7 +3,7 @@ title: "Python Auto Render"
 format: 
   dashboard: 
     logo: "logo/brenlogo.png"
-      orientation: columns
+    orientation: columns
 ---
 ```{r}
 library(reticulate)
