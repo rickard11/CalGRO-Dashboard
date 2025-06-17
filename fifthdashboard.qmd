@@ -307,6 +307,7 @@ Santa Cruz Island Recharge:
 
 Change in Depth to Water (ft) = 1.81
 Total Rainfall (inches) = 0.4
+
 # Dangermond Preserve
 
 ## Column{width="50%"}
