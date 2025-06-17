@@ -155,6 +155,15 @@ ggplotly(q)
 ```
 
 
+```{r}
+HQtank_osc
+HQtank_osc$DateTime <- round_date(HQtank_osc$DateTime, "30 minutes")
+Cooper$DateTime<-round_date(Cooper$DateTime,"30 minutes")
+new<-merge(HQtank_osc,Cooper,by="DateTime",all.x=TRUE,all.y=TRUE)
+new
+
+ggplot(new)+geom_line(aes(x=DateTime,y=Depth_to_Water_ft))
+```
 
 
 

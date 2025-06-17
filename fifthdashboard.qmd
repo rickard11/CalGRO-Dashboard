@@ -284,13 +284,17 @@ p <- ggplot(combined, aes(x = Date.and.Time, y = value)) +
     alpha = hline_data$alpha
   ) +
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Lower Tweedy Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Prisoner Well Depth and Rainfall") +
   theme_minimal()
 
 # Convert to interactive plot
 ggplotly(p)
 ```
+Santa Cruz Island Recharge:
+04/24 12.62
+05/12 10.81
 
+Rise in water level = 1.81
 
 # Dangermond Preserve
 
@@ -331,9 +335,10 @@ Escondido 5 Recharge:
 10/29 59.34
 03/17 56.53
 
+Rise in water level = 2.81
+
 ```{r}
 E5Re<-59.34-56.53
-print(E5Re)
 ```
 
 ### Row {height="33%"}
