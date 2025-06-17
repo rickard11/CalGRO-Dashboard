@@ -140,7 +140,7 @@ T6well<-T6well[,1:2]
 T6rain_r<-T6rain_r[,1:2]
 ```
 ### Row {height="33%"}
-```{r, escondido22plot}
+```{r, escondido2plot}
 # Prepare data for faceting
 hourly_data_long <- E2well %>%
   mutate(DateTime_utc = as.POSIXct(DateTime_utc),variable = "Water Depth", value = Depth_to_GW) %>%
@@ -160,7 +160,7 @@ b<-ggplot(combined, aes(x = DateTime_utc, y = value)) +
   geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue") +
   scale_y_reverse()+
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Escondido 5 Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Escondido 2 Well Depth and Rainfall") +
   theme_minimal()
 
 ggplotly(b)
@@ -287,7 +287,7 @@ b<-ggplot(combined, aes(x = DateTime_utc, y = value)) +
   geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue") +
   scale_y_reverse()+
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Escondido 5 Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Tinta 6 Well Depth and Rainfall") +
   theme_minimal()
 
 ggplotly(b)

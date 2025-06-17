@@ -202,7 +202,11 @@ Lower Tweedy Recharge:
 
 ```{r, LowerTweedyRecharge}
 LTRe<-2.34-(-18.99)
+print("Change in Depth to Water (ft)")
 print(LTRe)
+ltrainsum<-sum(ltrain$Rain..in.)
+print("Sum Rainfall (inches)")
+print(ltrainsum)
 ```
 
 ### Row {height="33%"}
@@ -218,8 +222,11 @@ Cactus Pasture Recharge:
 #inre<-ftre*12
 #inre
 CPRe<-18.34-8.64
+print("Change in Depth to Water (ft)")
 print(CPRe)
-
+cprainsum<-sum(cprain$Rain..in.)
+print("Sum Rainfall (inches)")
+print(cprainsum)
 ```
 
 ### Row {height="33%"}
@@ -235,7 +242,11 @@ B & C Ranch Well Recharge:
 #inre<-ftre*12
 #inre
 BCRe<-78.78-74.97
+print("Change in Depth to Water (ft)")
 print(BCRe)
+bcrainsum<-sum(bcrain$Rain..in.)
+print("Sum Rainfall (inches)")
+print(bcrainsum)
 ```
 
 # Santa Cruz Island
@@ -294,8 +305,8 @@ Santa Cruz Island Recharge:
 04/24 12.62
 05/12 10.81
 
-Rise in water level = 1.81
-
+Change in Depth to Water (ft) = 1.81
+Total Rainfall (inches) = 0.4
 # Dangermond Preserve
 
 ## Column{width="50%"}
@@ -335,7 +346,8 @@ Escondido 5 Recharge:
 10/29 59.34
 03/17 56.53
 
-Rise in water level = 2.81
+Rise in water level (feet)= 2.81
+Total rainfall (inches) = 11.5
 
 ```{r}
 E5Re<-59.34-56.53
@@ -644,7 +656,11 @@ Parks Creek Recharge:
 
 ```{r, Parkscreekrecharge}
 PCRe<-3.58-8.05
+print("Change in Depth to Water (ft)")
 print(PCRe)
+pcrainsum<-sum(pcrain$Rain..in.)
+print("Sum Rainfall (inches)")
+print(pcrainsum)
 ```
 
 # Santa Clara River
@@ -870,7 +886,11 @@ Cooper Recharge:
 04/10 28.37
 ```{r,CooperRecharge}
 CORE<-29.83-28.37
+print("Change in Depth to Water (ft)")
 print(CORE)
+Crainsum<-sum(Crain$Rain..in.)
+print("Sum Rainfall (inches)")
+print(Crainsum)
 ```
 
 ### Row {height="33%"}
@@ -880,7 +900,11 @@ NE Corner Recharge:
 
 ```{r,NEcornerRecharge}
 NERe<-14.48-14.23
+print("Change in Depth to Water (ft)")
 print(NERe)
+NErainsum<-sum(NErain$Rain..in.)
+print("Sum Rainfall (inches)")
+print(NErainsum)
 ```
 
 ### Row {height="33%"}
@@ -889,7 +913,11 @@ Windmill Recharge:
 05/04 35.17
 ```{r, WindmillRecharge}
 WRe<-35.97-35.17
+print("Change in Depth to Water (ft)")
 print(WRe)
+Wrainsum<-sum(Wrain$Rain..in.)
+print("Sum Rainfall (inches)")
+print(Wrainsum)
 ```
 
 
@@ -950,5 +978,9 @@ Tulare Recharge:
 03/24 171
 ```{r, TulareRecharge}
 TRe<-184.12-171
+print("Change in Depth to Water (ft)")
 print(TRe)
+PTrainsum<-sum(PTrain$Rain..in.)
+print("Sum Rainfall (inches)")
+print(PTrainsum)
 ```
