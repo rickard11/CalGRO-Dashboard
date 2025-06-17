@@ -1,12 +1,5 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "The CalGRO project is about monitoring groundwater depth and measuring rainfall quantity with a high spatial resolution.\nThere are many different tabs that will be changing as this site is currently under construction. The end goal is to have automated groundwater level updates every day and to be able to calculate groundwater recharge from the water level data."
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "CalGRO-Dashboard",
@@ -15,5 +8,12 @@
     "crumbs": [
       "Home"
     ]
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "The CalGRO project is about monitoring groundwater depth and measuring rainfall quantity with a high spatial resolution.\nThere are many different tabs that will be changing as this site is currently under construction. The end goal is to have automated groundwater level updates every day and to be able to calculate groundwater recharge from the water level data."
   }
 ]
