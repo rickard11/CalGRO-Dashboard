@@ -558,3 +558,63 @@ ggplotly(a,tooltip = "text")
 
 In this plot a storm is considered consecutive days of more than 0.15 inches of rain. The intensity, visualized by the color is the maximum daily rainfall for the duration of the storm. the value of 0.15 as the storm cutoff is somewhat arbetrary and may be changed for future analysis. For puposes here, 0.15 is the value in which we start seeing an affect on groundwater level, but this could be different for different wells. The storm number is the number storm it is in the year of the given site selection. If a site device is installed halfway through the rainy season and there is no way to tell how many storms happened prior to installation the first storm after installation is considered storm 1. All sites for this figure are from the jack and Laura Dangermond preserve.
 
+# Las Piletas and Randall Preserves
+
+```{r, Coopaddin}
+#Uploading rain data
+CoopR<-read.csv("data/rain/Las Piletas Cooper Rain Gauge 20241205-20250214.csv")
+CoopR$Date<-as.POSIXct(CoopR$Date, format="%Y-%m-%d")
+CoopR<-CoopR %>% arrange(CoopR$Date)
+CoopR$Location<-"Cooper"
+
+#Uploading well data
+CoopW<-read.csv("data/Las Piletas Cooper Well 20241211-20250505.csv")
+CoopW$Date.and.Time<-as.POSIXct(CoopW$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
+CoopW$Date<-format(CoopW$Date.and.Time,format="%Y-%m-%d")
+CoopW$Date<-as.POSIXct(CoopW$Date,format="%Y-%m-%d")
+CoopWhr<-CoopW
+
+
+#Preparing to make scatter plot of change in well depth~total storm rainfall
+# Create storm number for days with more than 0.1 in of rain
+Coop_rain_data <- CoopR %>%
+  mutate(
+    rainy = Rain..in. > 0.15,
+    gap = !rainy,  # identifies dry days
+    storm_group = cumsum(lag(gap, default = TRUE) & rainy)  # increment on first rainy day after dry
+  ) %>%
+  mutate(
+    storm_number = ifelse(rainy, storm_group, NA)  # only assign storm number to rainy days
+  )
+
+Coop_rain_data <- Coop_rain_data %>%
+  filter(!is.na(storm_number))
+
+extra_days <- Coop_rain_data %>%
+  group_by(storm_number) %>%
+  slice_tail(n = 1) %>%
+  mutate(
+    Date = Date + days(1),
+    Rain..in. = 0
+  )
+
+df_extended <- bind_rows(Coop_rain_data, extra_days) %>%
+  arrange(storm_number, Date)# Combine original and new rows
+
+Coopall<-merge(CoopWhr,Coop_rain_data,by="Date",all.x=FALSE,all.y=TRUE) #merge rain data and well data
+
+Coop_daily_rainfall <- Coopall %>%
+  select(Date, storm_number, Rain..in.) %>%
+  distinct() %>%
+  filter(!is.na(storm_number))#Extract unique rainfall per day per storm
+
+Coop_daily_rainfall$wtr_yr<-calcWaterYear(Coop_daily_rainfall$Date) #Calc water year
+
+# Step 2: Sum rainfall per storm using cleaned daily data
+Coop_storm_rainfall_summary <- Coop_daily_rainfall %>%
+  group_by(storm_number,wtr_yr) %>%
+  summarise(
+    total_rainfall = sum(Rain..in., na.rm = TRUE),
+    .groups = "drop"
+  )
+```
