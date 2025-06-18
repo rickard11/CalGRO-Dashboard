@@ -543,13 +543,17 @@ all_final_data<-rbind(all_final_data,O5_final_data)
 all_final_data<-rbind(all_final_data,T3_final_data)
 
 a<-ggplot(all_final_data)+
-  geom_point(aes(x=total_rainfall,y=well_change,color = max_intensity, size=-storm_in_year))+
+  geom_point(aes(x=total_rainfall,y=well_change,color = max_intensity, size=-storm_in_year,
+                 text = paste0("<br>Total Rain (in): ", total_rainfall, " in",
+                    "<br>Storm Number: ", storm_number,
+                    "<br>Site: ", Site,"<br>Max Intensity: ", max_intensity, " in/day",
+                    "<br>Well Change: ", well_change, " feet")))+
   scale_color_gradient(low = "lightyellow", high = "red3", name = "Max Storm intensity (in/hr)") +
   scale_size_continuous(name = "Storm number in Year")+theme_bw()+
   ggtitle("Rainfall Intensity and Well Water Rise")
 
 
-ggplotly(a)
+ggplotly(a,tooltip = "text")
 ```
 
 In this plot a storm is considered consecutive days of more than 0.15 inches of rain. The intensity, visualized by the color is the maximum daily rainfall for the duration of the storm. the value of 0.15 as the storm cutoff is somewhat arbetrary and may be changed for future analysis. For puposes here, 0.15 is the value in which we start seeing an affect on groundwater level, but this could be different for different wells. The storm number is the number storm it is in the year of the given site selection. If a site device is installed halfway through the rainy season and there is no way to tell how many storms happened prior to installation the first storm after installation is considered storm 1. All sites for this figure are from the jack and Laura Dangermond preserve.
