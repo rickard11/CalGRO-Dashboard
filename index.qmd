@@ -4,9 +4,25 @@ title: "CalGRO-Dashboard"
 
 Welcome to CalGRO!!!
 
-In the recharge tab:
+# In the recharge tab:
 
-Estimating ground water recharge using the water-table fluctuation (WTF) method https://water.usgs.gov/ogw/gwrp/methods/wtf/. We are assuming the extrapolated antecedent recession curve is continuous with the water depth at start date, since we do not have any dry season historic data to base our measurements on.
+Estimating ground water recharge using the water-table fluctuation (WTF) method https://water.usgs.gov/ogw/gwrp/methods/wtf/. We are assuming the extrapolated antecedent recession curve is continuous with the water depth at start date, since we do not have any dry season historic data to base our measurements on. 
+
+Specific yield is especially hard to estimate. Not all wells have good lithologic data or well logs. 
+https://pubs.usgs.gov/wsp/1662d/report.pdf is used to estimate Specific yield. This was the best resource available. Originally publish in the 60's.
+Since well logs are not available for all preserves I used DWR to estimate based on nearby well logs. https://dwr.maps.arcgis.com/apps/webappviewer/index.html?id=181078580a214c0986e2da28f8623b37
+
+Randall = granite and quartz, 
+Dangermond = Shale
+Las Piletas = Clay, Shale, Sandstone
+Santa Cruz island = hard gravel with sandstone
+Santa Paula = sand, gravel, clay
+
+granite specific yield = 0.01-0.03
+Shale Specific Yield = 0.01-0.03
+Sandstone Specific Yield = 0.05-0.1
+gravel specific yield = 0.12-0.35 (depends on coarseness and if mixed with sand)
+
 
 In the Well depth and Rainfall tab:
 
