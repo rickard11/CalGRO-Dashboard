@@ -494,8 +494,8 @@ b<-ggplot(combined, aes(x = DateTime_utc, y = value)) +
 ggplotly(b)
 ```
 
+
 ```{r,t5}
-```{r,t3}
 # Prepare data for faceting
 hourly_data_long <- T5Well %>%
   mutate(DateTime_utc = as.POSIXct(DateTime_utc),variable = "Water Depth", value = Depth_to_GW) %>%
