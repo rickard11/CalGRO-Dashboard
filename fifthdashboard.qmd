@@ -759,7 +759,7 @@ Crain<-read.csv("data/new rain/Las Piletas Cooper Rain Gauge 20241201-20250714.c
 Cwell<-read.csv("data/new well/Las Piletas Cooper Well 20241201-20250714.csv")
 Cwell$Date.and.Time<-as.POSIXct(Cwell$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
 Cwell$Date<-format(Cwell$Date.and.Time,format="%Y-%m-%d")
-Cwell$Date<-as.POSIXct(Cll$Date,format="%Y-%m-%d")
+Cwell$Date<-as.POSIXct(Cwell$Date,format="%Y-%m-%d")
 Crain<-Crain[Crain$Date<="2025-05-13",]
 pcall<-merge(Cwell,Crain,by="Date",all.x=TRUE,all.y=TRUE)
 hourly_data<-Cwell
