@@ -28,8 +28,11 @@ r$Date.and.Time<-as.POSIXct(r$Date.and.Time)
 ```
 
 ```{r, LowerTweedy}
-ltwell<-r[r$Well_Name=="Lower Tweedy",]
-ltrain<-read.csv("data/rain/Randall Lower tweedy rain gauge Rain Gauge 20250301-20250527.csv")
+ltwell<-read.csv("data/new well/Randall Lower Tweedy Well 20241201-20250714.csv")
+ltwell$Date.and.Time<-as.POSIXct(ltwell$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
+ltwell$Date<-format(ltwell$Date.and.Time,format="%Y-%m-%d")
+ltwell$Date<-as.POSIXct(ltwell$Date,format="%Y-%m-%d")
+ltrain<-read.csv("data/new rain/Randall Lower tweedy rain gauge Rain Gauge 20241201-20250714.csv")
 ltrain$Date<-as.Date(ltrain$Date)
 ltall<-merge(ltwell,ltrain,by="Date",all.x=TRUE,all.y=TRUE)
 ltall$Date.and.Time<-as.POSIXct(ltall$Date.and.Time)
@@ -86,9 +89,11 @@ ggplotly(p)
 
 ### Row {height="33%"}
 ```{r, CactusPasture}
-
-cprain<-read.csv("data/rain/Randall cactus pasture rain gauge Rain Gauge 20250301-20250527.csv")
-cpwell<-r[r$Well_Name=="Cactus pasture",]
+cpwell<-read.csv("data/new well/Randall cactus pasture Well 20241201-20250714.csv")
+cpwell$Date.and.Time<-as.POSIXct(cpwell$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
+cpwell$Date<-format(cpwell$Date.and.Time,format="%Y-%m-%d")
+cpwell$Date<-as.POSIXct(cpwell$Date,format="%Y-%m-%d")
+cprain<-read.csv("data/new rain/Randall cactus pasture rain gauge Rain Gauge 20241130-20250714.csv")
 cpall<-merge(cpwell,cprain,by="Date",all.x=TRUE,all.y=TRUE)
 
 
@@ -142,8 +147,11 @@ ggplotly(p)
 ### Row {height="33%"}
 ```{r,BCWell}
 
-bcrain<-read.csv("data/rain/Randall B and C Ranch. Rain gauge Rain Gauge 20250301-20250527.csv")
-bcwell<-r[r$Well_Name=="B&C Ranch Well",]
+bcrain<-read.csv("data/new rain/Randall B and C Ranch. Rain gauge Rain Gauge 20250101-20250714.csv")
+bcwell<-read.csv("data/new well/Randall B and C ranch well Well 20241201-20250714.csv")
+bcwell$Date.and.Time<-as.POSIXct(bcwell$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
+bcwell$Date<-format(bcwell$Date.and.Time,format="%Y-%m-%d")
+bcwell$Date<-as.POSIXct(bcwell$Date,format="%Y-%m-%d")
 bcall<-merge(bcwell,bcrain,by="Date",all.x=TRUE,all.y=TRUE)
 
 bcrain<-bcrain[bcrain$Date<="2025-05-01",]
@@ -253,9 +261,13 @@ print(bcrainsum)
 
 ```{r,SCI}
 
-scirain<-read.csv("data/rain/Prisoners wells Rain Gauge 20250301-20250530.csv")
-sciwell<-r[r$Well_Name=="Prisoners Harbor Well",]
-scirain<-scirain[scirain$Date<="2025-05-13",]
+scirain<-read.csv("data/new rain/Prisoners wells Rain Gauge 20250301-20250714.csv")
+sciwell<-read.csv("data/new well/Prisoners well Well 20250301-20250714.csv")
+sciwell$Date.and.Time<-as.POSIXct(sciwell$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
+sciwell$Date<-format(sciwell$Date.and.Time,format="%Y-%m-%d")
+sciwell$Date<-as.POSIXct(sciwell$Date,format="%Y-%m-%d")
+sciwell<-sciwell[sciwell$Date>="2025-04-24",]
+#scirain<-scirain[scirain$Date<="2025-05-13",]
 sciall<-merge(sciwell,scirain,by="Date",all.x=TRUE,all.y=TRUE)
 hourly_data<-sciwell
 daily_data<-scirain
@@ -602,8 +614,12 @@ ggplotly(b)
 # Parks Creek
 
 ```{r, Parkscreek}
-pcrain<-read.csv("data/rain/Parks Creek Well Rain Gauge 20250101-20250530.csv")
-pcwell<-r[r$Well_Name=="Parks Creek Well",]
+pcrain<-read.csv("data/new rain/Parks Creek Well Rain Gauge 20250201-20250714.csv")
+pcwell<-read.csv("data/new well/Parks Creek Well Well 20250201-20250714.csv")
+pcwell$Date.and.Time<-as.POSIXct(pcwell$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
+pcwell$Date<-format(pcwell$Date.and.Time,format="%Y-%m-%d")
+pcwell$Date<-as.POSIXct(pcwell$Date,format="%Y-%m-%d")
+#pcwell<-r[r$Well_Name=="Parks Creek Well",]
 pcrain<-pcrain[pcrain$Date<="2025-05-13",]
 pcall<-merge(pcwell,pcrain,by="Date",all.x=TRUE,all.y=TRUE)
 hourly_data<-pcwell
@@ -666,8 +682,12 @@ print(pcrainsum)
 
 # Santa Clara River
 ```{r, aflalo}
-Arain<-read.csv("data/rain/Aflalo Rain Gauge 20250508-20250530.csv")
-Awell<-r[r$Well_Name=="Aflalo",]
+Arain<-read.csv("data/new rain/Aflalo Rain Gauge 20250201-20250714.csv")
+#Awell<-r[r$Well_Name=="Aflalo",]
+Awell<-read.csv("data/new well/Aflalo Well 20250201-20250714.csv")
+Awell$Date.and.Time<-as.POSIXct(Awell$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
+Awell$Date<-format(Awell$Date.and.Time,format="%Y-%m-%d")
+pcwell$Date<-as.POSIXct(pcwell$Date,format="%Y-%m-%d")
 Arain<-Arain[Arain$Date<="2025-05-13",]
 pcall<-merge(Awell,Arain,by="Date",all.x=TRUE,all.y=TRUE)
 hourly_data<-Awell
@@ -696,8 +716,11 @@ ggplotly(b)
 ```
 
 ```{r, Hanson Retired}
-Hrain<-read.csv("data/rain/Hanson Retired Rain Gauge 20250508-20250530.csv")
-Hwell<-r[r$Well_Name=="Hanson Retired Well",]
+Hrain<-read.csv("data/new rain/Hanson Retired Rain Gauge 20250201-20250714.csv")
+Hwell<-read.csv("data/new well/Hanson Retired Well 20250201-20250714.csv")
+Hwell$Date.and.Time<-as.POSIXct(Hwell$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
+Hwell$Date<-format(Hwell$Date.and.Time,format="%Y-%m-%d")
+Hwell$Date<-as.POSIXct(Hwell$Date,format="%Y-%m-%d")
 Hrain<-Hrain[Hrain$Date<="2025-05-13",]
 pcall<-merge(Hwell,Hrain,by="Date",all.x=TRUE,all.y=TRUE)
 hourly_data<-Hwell
@@ -731,8 +754,12 @@ ggplotly(b)
 
 ### Row {height="33%"}
 ```{r, Cooper}
-Crain<-read.csv("data/rain/Las Piletas Cooper Rain Gauge 20241205-20250214.csv")
-Cwell<-r[r$Well_Name=="Cooper",]
+Crain<-read.csv("data/new rain/Las Piletas Cooper Rain Gauge 20241201-20250714.csv")
+#Cwell<-r[r$Well_Name=="Cooper",]
+Cwell<-read.csv("data/new well/Las Piletas Cooper Well 20241201-20250714.csv")
+Cwell$Date.and.Time<-as.POSIXct(Cwell$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
+Cwell$Date<-format(Cwell$Date.and.Time,format="%Y-%m-%d")
+Cwell$Date<-as.POSIXct(Cll$Date,format="%Y-%m-%d")
 Crain<-Crain[Crain$Date<="2025-05-13",]
 pcall<-merge(Cwell,Crain,by="Date",all.x=TRUE,all.y=TRUE)
 hourly_data<-Cwell
@@ -781,8 +808,12 @@ ggplotly(p)
 ```
 ### Row {height="33%"}
 ```{r, NECorner}
-NErain<-read.csv("data/rain/Las Piletas NE Corner Rain Gauge Rain Gauge 20241211-20250530.csv")
-NEwell<-r[r$Well_Name=="NE Corner",]
+NErain<-read.csv("data/new rain/Las Piletas NE Corner Rain Gauge Rain Gauge 20241201-20250714.csv")
+NEwell<-read.csv("data/new well/Las Piletas NE Corner Well 20241201-20250714.csv")
+NEwell$Date.and.Time<-as.POSIXct(NEwell$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
+NEwell$Date<-format(NEwell$Date.and.Time,format="%Y-%m-%d")
+NEwell$Date<-as.POSIXct(NEwell$Date,format="%Y-%m-%d")
+#NEwell<-r[r$Well_Name=="NE Corner",]
 NErain<-NErain[NErain$Date<="2025-05-13",]
 pcall<-merge(NEwell,NErain,by="Date",all.x=TRUE,all.y=TRUE)
 hourly_data<-NEwell
@@ -831,9 +862,14 @@ ggplotly(p)
 ```
 ### Row {height="33%"}
 ```{r, Windmill}
-Wrain<-read.csv("data/rain/Las Piletas Windmill Rain Gauge Rain Gauge 20250224-20250530.csv")
-Wwell<-r[r$Well_Name=="Windmill",]
-Wrain<-Wrain[Wrain$Date<="2025-05-13",]
+Wrain<-read.csv("data/new rain/Las Piletas Windmill Rain Gauge Rain Gauge 20241201-20250714.csv")
+#Wwell<-r[r$Well_Name=="Windmill",]
+Wwell<-read.csv("data/new well/Las Piletas Windmill Well 20250101-20250714.csv")
+Wwell$Date.and.Time<-as.POSIXct(Wwell$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
+Wwell$Date<-format(Wwell$Date.and.Time,format="%Y-%m-%d")
+Wwell$Date<-as.POSIXct(Wwell$Date,format="%Y-%m-%d")
+Wwell<-Wwell[Wwell$Date.and.Time>="2025-02-28",]
+#Wrain<-Wrain[Wrain$Date<="2025-05-13",]
 pcall<-merge(Wwell,Wrain,by="Date",all.x=TRUE,all.y=TRUE)
 hourly_data<-Wwell
 daily_data<-Wrain
@@ -924,8 +960,12 @@ print(Wrainsum)
 
 # Tulare
 ```{r,Tulare}
-PTrain<-read.csv("data/rain/Pixley_Tulare Rain Gauge Rain Gauge 20241213-20250530.csv")
-PTwell<-r[r$Well_Name=="Pixley Tulare",]
+PTrain<-read.csv("data/new rain/Pixley_Tulare Rain Gauge Rain Gauge 20241201-20250714.csv")
+#PTwell<-r[r$Well_Name=="Pixley Tulare",]
+PTwell<-read.csv("data/new well/Pixley_ Tulare_ Capinero creek Well 20241201-20250714.csv")
+PTwell$Date.and.Time<-as.POSIXct(PTwell$Date.and.Time,format="%Y-%m-%d %H:%M:%S")
+PTwell$Date<-format(PTwell$Date.and.Time,format="%Y-%m-%d")
+PTwell$Date<-as.POSIXct(PTwell$Date,format="%Y-%m-%d")
 PTrain<-PTrain[PTrain$Date<="2025-05-13",]
 pcall<-merge(PTwell,PTrain,by="Date",all.x=TRUE,all.y=TRUE)
 hourly_data<-PTwell
