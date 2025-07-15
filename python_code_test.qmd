@@ -418,8 +418,8 @@ daily_data_long <- QCrain_Daily %>%
 combined2 <- bind_rows(hourly_data_long, daily_data_long)
 
 q<-ggplot(combined2, aes(x = DateTime_utc, y = value)) +
-  geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
-  geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue") +
+  geom_line(data = filter(combined2, variable == "Water Depth"), color = "navy") +
+  geom_col(data = filter(combined2, variable == "Rainfall"), fill = "lightblue") +
   scale_y_reverse()+
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
   labs(x = "Date", y = NULL, title = "Quail Canyon Well Depth and Rainfall") +
