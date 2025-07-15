@@ -103,8 +103,8 @@ O5Well = myfunctions.get_datapoints(O5wellDepth,"2024-02-01T00:00:00",ends_befor
 #O1,3,4, well data not available
 
 #T3
-T3wellDepth = '68678db07b005b2f782f4a36'
-T3Rainfall = '68678db0676af7290120ccfb'
+T3wellDepth = '68678db11b70a064ee6db2ad'
+T3Rainfall = '68678db1da5b0cef22763f65'
 
 T3rain = myfunctions.get_datapoints(T3Rainfall,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 T3Well = myfunctions.get_datapoints(T3wellDepth,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
