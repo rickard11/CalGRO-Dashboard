@@ -123,6 +123,7 @@ T11Rainfall =  '68678db0676af7290120ccfb'
 T11rain = myfunctions.get_datapoints(T11Rainfall,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 T11Well = myfunctions.get_datapoints(T11wellDepth,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 #1,4,10,11a,11b
+
 ```
 
 ## Column {width="33%"}
@@ -193,6 +194,7 @@ colnames(QCrain_r)<-c("DateTime_utc","Rainfall_mm")
 QCwell<-py$QCWell
 colnames(QCwell)<-c("DateTime_utc","Depth_to_GW")
 QCwell<-QCwell[,1:2]
+QCwell<-QCwell[QCwell$DateTime_utc>="2025-03-02",]
 QCrain_r<-QCrain_r[,1:2]
 
 #O5
@@ -227,6 +229,7 @@ colnames(T11well)<-c("DateTime_utc","Depth_to_GW")
 T11well<-T11well[,1:2]
 T11rain_r<-T11rain_r[,1:2]
 ```
+
 ### Row {height="25%"}
 ```{r, escondido2plot}
 # Prepare data for faceting
@@ -412,9 +415,9 @@ daily_data_long <- QCrain_Daily %>%
   mutate(DateTime_utc = as.POSIXct(Date), variable = "Rainfall", value = Rainfall_mm) %>%
   select(DateTime_utc, variable, value)
 
-combined <- bind_rows(hourly_data_long, daily_data_long)
+combined2 <- bind_rows(hourly_data_long, daily_data_long)
 
-b<-ggplot(combined, aes(x = DateTime_utc, y = value)) +
+q<-ggplot(combined2, aes(x = DateTime_utc, y = value)) +
   geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
   geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue") +
   scale_y_reverse()+
@@ -422,7 +425,7 @@ b<-ggplot(combined, aes(x = DateTime_utc, y = value)) +
   labs(x = "Date", y = NULL, title = "Quail Canyon Well Depth and Rainfall") +
   theme_minimal()
 
-ggplotly(b)
+ggplotly(q)
 ```
 
 ## Column {width="33%"}
