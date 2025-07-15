@@ -470,7 +470,7 @@ ggplotly(b)
 
 ```{r,t3}
 # Prepare data for faceting
-hourly_data_long <- T3Well %>%
+hourly_data_long <- T3well %>%
   mutate(DateTime_utc = as.POSIXct(DateTime_utc),variable = "Water Depth", value = Depth_to_GW) %>%
   select(DateTime_utc, variable, value)
 
@@ -488,7 +488,7 @@ b<-ggplot(combined, aes(x = DateTime_utc, y = value)) +
   geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue") +
   scale_y_reverse()+
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Jalama Vaqueros Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Tinta 3 Well Depth and Rainfall") +
   theme_minimal()
 
 ggplotly(b)
