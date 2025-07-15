@@ -91,8 +91,8 @@ JVWell = myfunctions.get_datapoints(JVwellDepth,"2024-02-01T00:00:00",ends_befor
 QCwellDepth = '68678daeda5b0c3b96763f5f'
 QCRainfall = '68678daef044bf5f040d7fd5'
 
-QCrain = myfunctions.get_datapoints(JVRainfall,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
-QCWell = myfunctions.get_datapoints(JVwellDepth,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
+QCrain = myfunctions.get_datapoints(QCRainfall,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
+QCWell = myfunctions.get_datapoints(QCwellDepth,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 
 # Use a function
 O5wellDepth = '6643edfeeb2fb4419cab5396'
@@ -113,8 +113,8 @@ T3Well = myfunctions.get_datapoints(T3wellDepth,"2024-02-01T00:00:00",ends_befor
 T5wellDepth = '6643ee0063d3623b8a281fb0'
 T5Rainfall = '6643edff826756530b8cedd7'
 
-T5rain = myfunctions.get_datapoints(T3Rainfall,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
-T5Well = myfunctions.get_datapoints(T3wellDepth,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
+T5rain = myfunctions.get_datapoints(T5Rainfall,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
+T5Well = myfunctions.get_datapoints(T5wellDepth,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 
 #T11A
 T11wellDepth = '68678db07b005b2f782f4a36'
