@@ -39,7 +39,6 @@ E2wellDepth = '66439575eb2fb4cd16ab5316'
 E2Rainfall = '66439fec826756b8928ced5e'
 
 E2rain = myfunctions.get_datapoints(E2Rainfall,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
-
 E2Well = myfunctions.get_datapoints(E2wellDepth,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 
 # Use a function
@@ -55,18 +54,15 @@ E5well_ID = '6643edfd63d3626df7281fac'
 E5Rainfall_ID = '6643edfc8267564e618cedd2'
 
 E5rain = myfunctions.get_datapoints(E5Rainfall_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
-
 E5Well = myfunctions.get_datapoints(E5well_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 
 # Use a function
 
 O2Rainfall_ID = '6643edfe826756aade8cedd4'
-
 O2rain = myfunctions.get_datapoints(O2Rainfall_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 
 # Use a function
 T2well_ID = '6643edffc05ad633d275f592'
-
 T2Well = myfunctions.get_datapoints(T2well_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 
 # Use a function
@@ -74,7 +70,6 @@ T5well_ID = '6643edfd63d3626df7281fac'
 T5Rainfall_ID = '6643edff826756530b8cedd7'
 
 T5rain = myfunctions.get_datapoints(T5Rainfall_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
-
 T5Well = myfunctions.get_datapoints(T5well_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 
 # Use a function
@@ -82,7 +77,6 @@ T6well_ID = '6643ee00c05ad6117675f594'
 T6Rainfall_ID = '6643ee00ab0417d848e36022'
 
 T6rain = myfunctions.get_datapoints(T6Rainfall_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
-
 T6Well = myfunctions.get_datapoints(T6well_ID,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 
 ##nEWONES
@@ -94,8 +88,8 @@ JVrain = myfunctions.get_datapoints(JVRainfall,"2024-02-01T00:00:00",ends_before
 JVWell = myfunctions.get_datapoints(JVwellDepth,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 
 # Use a function
-QCwellDepth = '6643edfd604ca19527c90ab2'
-QCRainfall = '6643edfd71c87fcf1f4b0a37'
+QCwellDepth = '68678daeda5b0c3b96763f5f'
+QCRainfall = '68678daef044bf5f040d7fd5'
 
 QCrain = myfunctions.get_datapoints(JVRainfall,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 QCWell = myfunctions.get_datapoints(JVwellDepth,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
@@ -122,7 +116,7 @@ T5Rainfall = '6643edff826756530b8cedd7'
 T5rain = myfunctions.get_datapoints(T3Rainfall,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 T5Well = myfunctions.get_datapoints(T3wellDepth,"2024-02-01T00:00:00",ends_before=time_format(),time_type ='local',name='default')
 
-#T5
+#T11A
 T11wellDepth = '68678db07b005b2f782f4a36'
 T11Rainfall =  '68678db0676af7290120ccfb'
 
@@ -332,7 +326,7 @@ b<-ggplot(combined, aes(x = DateTime_utc, y = value)) +
   geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue") +
   scale_y_reverse()+
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Jalama Vaqueros Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Tinta 11 Well Depth and Rainfall") +
   theme_minimal()
 
 ggplotly(b)
@@ -352,41 +346,6 @@ b<-ggplot(O2rain_r, aes(x = DateTime_utc, y = Rainfall_mm)) +
 
 ## Column {width="33%"}
 
-### Row {height="25%"}
-```{r, Tinta5plot}
-# T2
-b<-ggplot(T2well, aes(x = DateTime_utc, y =Depth_to_GW)) +
-  geom_line(aes(), color = "navy") +
-  scale_y_reverse()+
-  labs(x = "Date", y = NULL, title = "Tinta 2 Groundwater") +
-  theme_minimal()
-
-#ggplotly(b)
-
-# T5
-hourly_data_long <- T5well %>%
-  mutate(DateTime_utc = as.POSIXct(DateTime_utc),variable = "Water Depth", value = Depth_to_GW) %>%
-  select(DateTime_utc, variable, value)
-
-T5rain_r$Date<-as.Date(T5rain_r$DateTime_utc)
-T5rain_Daily<-aggregate(Rainfall_mm~Date,T5rain_r,FUN=sum)
-
-daily_data_long <- T5rain_Daily %>%
-  mutate(DateTime_utc = as.POSIXct(Date), variable = "Rainfall", value = Rainfall_mm) %>%
-  select(DateTime_utc, variable, value)
-
-combined <- bind_rows(hourly_data_long, daily_data_long)
-
-b<-ggplot(combined, aes(x = DateTime_utc, y = value)) +
-  geom_line(data = filter(combined, variable == "Water Depth"), color = "navy") +
-  geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue") +
-  scale_y_reverse()+
-  facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Tinta 5 Well Depth and Rainfall") +
-  theme_minimal()
-
-ggplotly(b)
-```
 ### Row {height="25%"}
 ```{r,Tinta6plot}
 # T6
@@ -460,7 +419,7 @@ b<-ggplot(combined, aes(x = DateTime_utc, y = value)) +
   geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue") +
   scale_y_reverse()+
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Jalama Vaqueros Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Quail Canyon Well Depth and Rainfall") +
   theme_minimal()
 
 ggplotly(b)
@@ -541,7 +500,7 @@ b<-ggplot(combined, aes(x = DateTime_utc, y = value)) +
   geom_col(data = filter(combined, variable == "Rainfall"), fill = "lightblue") +
   scale_y_reverse()+
   facet_wrap(~variable, ncol = 1, scales = "free_y") +
-  labs(x = "Date", y = NULL, title = "Jalama Vaqueros Well Depth and Rainfall") +
+  labs(x = "Date", y = NULL, title = "Oaks 5 Well Depth and Rainfall") +
   theme_minimal()
 
 ggplotly(b)
