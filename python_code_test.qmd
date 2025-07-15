@@ -194,7 +194,7 @@ JVwell<-JVwell[,1:2]
 JVrain_r<-JVrain_r[,1:2]
 
 #QC
-QCrain_r<-py$JVQCrain
+QCrain_r<-py$QCrain
 colnames(QCrain_r)<-c("DateTime_utc","Rainfall_mm")
 QCwell<-py$QCWell
 colnames(QCwell)<-c("DateTime_utc","Depth_to_GW")
